@@ -909,10 +909,10 @@ In [this other 2024 video](https://youtu.be/5dyR4zNMsmA?t=840):
 - This statement seems to be correct: on the run subplot of the men's olympic format figure, **`London 2012` was the fastest until 2023**.
 - This [article from triathlon.org](https://www.triathlon.org/news/article/a_chance_for_history_breaking_down_the_stats_of_past_olympic_games), released **just before Paris ( :fr: ) 2024**, confirms: "Brownlee’s times (London ( :gb: ) 2012) will likely come under threat. Indeed, it seems highly likely that we could see the **first ever sub-29** and **sub-33** minute 10km times in an Olympic triathlon this summer."
   - The 5-9th men **ran** at the 2024 Paris Olympics **much slower** that the year before for the **test event**.
-  - Also Alex Yee ( :gb: ) won in 2024 with a **29:49** run, compared to **29:00 in 2023**. 
-  - Because of the **heat** (the men's race started at **10am** instead of 8am)?
+  - Also, Alex Yee ( :gb: ) won in 2024 with a **29:49** run, compared to **29:00 in 2023**.
+  - Because of the **heat** (the men's race started at **10:45 am** instead of 8:00 am)?
   - Or the fatigue caused by the very long swim?
-  - Or was the **run course longer** in 2024? In this case the **women's run time improvement** would be even more **impressive**: Beth Potter ( :gb: ) did 32:57 in 2023, compared to **32:42** for Cassandre Beaugrand ( :fr: ) in 2024.
+  - Or was the **run course longer** in 2024? In this case the **women's run time improvement** would be even more **impressive**: Beth Potter ( :gb: ) did 32:57 in 2023, compared to **32:42** for Cassandre Beaugrand ( :fr: ) in 2024, who run faster than 30% of men finishers (15 / 50)!
 
 ---
 
