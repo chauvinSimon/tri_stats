@@ -603,17 +603,6 @@ def get_events_results() -> pd.DataFrame:
                             else:
                                 events_result[f"wetsuit{suffix}"] = True
 
-            if str(prog_data["event_id"]) in [
-                "183764",  # '2024 World Triathlon Championship Series Cagliari'
-                "183763",  # '2024 World Triathlon Championship Series Yokohama'
-            ]:
-                if prog_data["prog_name"] == "Elite Men":
-                    events_result[f"wetsuit{suffix}"] = False
-                elif prog_data["prog_name"] == "Elite Women":
-                    events_result[f"wetsuit{suffix}"] = True
-                else:
-                    raise ValueError(f"{prog_data['prog_name'] = }")
-
             df_results = get_prog_results_df(prog_data=prog_data)
             n_results = len(df_results)
             if n_results < n_results_min:
