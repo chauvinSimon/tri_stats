@@ -305,7 +305,7 @@ Findings:
 - :swimmer: The **swim** is the sport where the **relative difference** between women and men is the **smallest**.
   - Swimming is highly **technique-oriented**.
   - Women often excel in technical sports because these **rely less on raw strength** and more on skill, coordination, and efficiency.
-  - (Do men have less fat, leading to poorer buoyancy? I have not taken the time to verify this statement.)
+  - Women and men have **different buoyancy**, as explained by Maria Francesca Piacentini, in [this episode](https://scientifictriathlon.com/tts392/) (at 19:00) of the [triathlon show podcast](https://scientifictriathlon.com/podcast/).
 - :runner: The **run** is where the difference is the **largest**.
   - Men typically have **greater muscle mass** and **aerobic capacity**, which can provide an advantage in endurance activities like running.
 - The **standard deviation** is **higher for swim and lower for run**.
@@ -546,6 +546,8 @@ Here are **some findings of related scientific works**:
 - [This 2022 meta study by Gay et al.](https://www.mdpi.com/2673-9488/2/4/16) concludes from 26 studies, a _"**3.2–12.9% velocity increments** in distances ranging from 25 to 1500 m"_ for the **full-body wetsuit**.
   - The range is broad: it depends on many factors such as the **profile of the swimmer** (age, level, triathlete or swimmer), the **swimming conditions** (temperature, 25m pool vs open water) and the **wetsuit** itself.
   - [This interview of Ana Gay in triathlete.com](https://www.triathlete.com/gear/swim/how-much-faster-does-a-wetsuit-make-you-swim/) gives a good introduction to her study.
+- In [this episode by scientifictriathlon.com](https://scientifictriathlon.com/tts392/), [Maria Francesca Piacentini](https://www.researchgate.net/profile/Maria-Francesca-Piacentini) mentions some of her research on wetsuit, and **claims 6% to 11% improvements**.
+  - Apart from the time reduction, her team found that **wetsuit usage** can make athletes **feel less fatigued**: during the [2x7x200m tests](https://www.researchgate.net/publication/366991271_The_Effects_of_a_Wetsuit_on_Biomechanical_Physiological_and_Perceptual_Variables_in_Experienced_Triathletes), the [**stroke index**](https://blog.tritonwear.com/interpreting-to-improving-stroke-index#:~:text=It's%20called%20the%20Stroke%20Index,dig%20further%20into%20this%20shortly.) and the **stroke length** significantly **decreased in the swimsuit** condition, whereas they remained relatively **stable in the wetsuit condition**.
 - [This article from sports-performance-bulletin](https://www.sportsperformancebulletin.com/training/triathlon-clothing-the-benefits-of-wearing-a-wetsuit) reports **improvements by 3% to 7%**.
   - Sources are not explicitly referenced, but the article probably mentions [this 1995 research by Chatard et al.](https://www.researchgate.net/publication/15406796_Wet_suit_effect_A_comparison_between_competitive_swimmers_and_triathletes) which apart from computing improvements, shows that the **impact of the wetsuit** is very different for **competitive swimmers than for competitive triathletes**.
 
@@ -1593,6 +1595,7 @@ Here is one **possible explanation**:
 - This **edge** could give an advantage to kids and teenagers born in the first months of a year during their early **races in youth categories**.
 - They are **more likely** to **perform well, stand out, gain experience, and get selected for international competitions**, eventually **becoming professional**. :trophy:
   - Similar to a snowball effect. :cyclone:
+- This phenomenon, known as [**relative age effect**](https://en.wikipedia.org/wiki/Relative_age_effect), was observed on young Spanish triathletes by [Ferriz et al.](https://www.mdpi.com/2071-1050/12/17/6792) in 2020.
 
 ---
 
