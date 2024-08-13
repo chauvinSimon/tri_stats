@@ -1793,7 +1793,7 @@ Plots can be reproduced:
 - For instance **race-averages** are computed from the 5th to 9th best times of **each leg**, and sometimes **averaged** over multiples years.
 
 Here are some **key takeaways**:
-- :stopwatch: The three sports account for **16.4%** (:swimmer:), **53.1%** (:bicyclist:), **28.9%** (:runner:) of the overall time. Transitions for 1.1% and 0.5%.
+- :stopwatch: The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%.
 - :athletic_shoe: While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k.
 - :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**.
 - :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**.
