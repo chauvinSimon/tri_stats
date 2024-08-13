@@ -1,4 +1,4 @@
-This document **analyses data** of the [**International Triathlon Union (ITU)**](https://triathlon.org/) to **try** to answer questions such as:
+This document **analyses data** of [**World Triathlon**](https://triathlon.org/), formerly International Triathlon Union (ITU), to **try** to answer questions such as:
 
 - :penguin: Should bad swimmers be happy when the **wetsuit is allowed**?
 - :one_piece_swimsuit: Can the **benefit of swim wetsuits** be estimated?
@@ -12,7 +12,7 @@ This document **analyses data** of the [**International Triathlon Union (ITU)**]
 - :rocket: How often is the win decided with a **sprint finish**?
 - :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**?
 - :muscle: What is the typical **age** of performing athletes and how has it evolved over years?
-- :next_track_button: **How old** are athletes when they **stop racing** ITU races?
+- :next_track_button: **How old** are athletes when they **stop racing**?
 - :weight_lifting: What is the **body mass index** of performing triathletes?
 - :birthday: Are two kids, born the same year but **on two different months**, equally likely to become professional triathletes?
 
@@ -49,7 +49,7 @@ Why consider the **`5`-th to `9`-th best times**?
   - Athletes ranked `5`-th to `9`-th are more likely to **give their all without strategic calculations**, resulting in **more robust and consistent comparative times across races**.
 
 What about the data quality?
-- The ITU puts efforts to uniform/standardize race reports and race timings. 
+- [World Triathlon](https://triathlon.org) puts efforts to uniform/standardize race reports and race timings.
 - But some **manual cleaning** is required.
   - Some information, such as the permission of **wearing wetsuit**, is often missing.
   - Also, I could not find any way to **access the rankings of past years** via the API.
@@ -57,6 +57,7 @@ What about the data quality?
   - Fortunately, the **number of races** is large enough to smooth out these variations and provide interesting insights.
 - **Comparing swim-times** can be tricky, not just because the **distances vary** between events, but also because the **positions of timing mats** are not consistent.
   - Most mats are placed directly at the exit of the water, while others are located at the entrance of transition area, which can be hundreds of meters further.
+  - Future results should be more consistent: World Triathlon is currently working on **standardising placement** of timing mats for all to be at swim exit as well as T-In.
 
 # :card_index_dividers: CONTENT
 
@@ -454,7 +455,7 @@ time_with_wetsuit = (1 - improve_percent) * time_without_wetsuit
 ```
 
 Reminder:
-- The scope here is **elite triathletes**, going **5-9th** out of water on top ITU events.
+- The scope here is **elite triathletes**, going **5-9th** out of water on top World Triathlon events.
 - Results would certainly **differ for beginners** and hobby triathletes.
 
 The idea of the **derivation** is as follows:
@@ -548,7 +549,7 @@ Here are **some findings of related scientific works**:
 - [This article from sports-performance-bulletin](https://www.sportsperformancebulletin.com/training/triathlon-clothing-the-benefits-of-wearing-a-wetsuit) reports **improvements by 3% to 7%**.
   - Sources are not explicitly referenced, but the article probably mentions [this 1995 research by Chatard et al.](https://www.researchgate.net/publication/15406796_Wet_suit_effect_A_comparison_between_competitive_swimmers_and_triathletes) which apart from computing improvements, shows that the **impact of the wetsuit** is very different for **competitive swimmers than for competitive triathletes**.
 
-The **5.5% improvement** for top swimmer (5th-9th) **derived from the ITU data** seems **compatible** with the findings of these research publications.
+The **5.5% improvement** for top swimmer (5th-9th) **derived from the World Triathlon data** seems **compatible** with the findings of these research publications.
 
 ---
 
@@ -855,7 +856,7 @@ Not many highly contested finishes on **women's world-series** for a while!
 
 ---
 
-By the way, the ITU rules that the **win must be contested**:
+By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World-Triathlon_Competition-Rules_2024_20240416.pdf) that the **win must be contested**:
 - Triathletes **should not** _"finish in a **contrived tie situation where no effort** to separate the finish times has been made"._
 - At Tokyo ( :jp: ) 2019, Jessica Learmonth ( :gb: ) and Georgia Taylor-Brown ( :gb: ) were **[disqualified after crossing line hand-in-hand](https://www.theguardian.com/sport/2019/aug/15/winning-triathletes-jess-learmonth-georgia-taylor-brown-disqualified-tokyo-hand-in-hand-triathlon)**.
 
@@ -974,7 +975,7 @@ The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/
   - Weather conditions, particularly **wind** and **rain**, can influence bike times.
   - Variations in **course profiles (hilly vs. flat)** can make direct comparisons of bike times unfair.
 - Run :running:
-  - Run times are generally **more comparable** as ITU run courses tend to be **predominantly flat**, reducing variability.
+  - Run times are generally **more comparable** as World Triathlon run courses tend to be **predominantly flat**, reducing variability.
 
 ---
 
@@ -1137,11 +1138,11 @@ Regarding the **competition season**: from 2009 to 2019, it **became longer**.
   - The ranking process became complicated: e.g., some 2021 races were considered for the 2022 ranking.
 
 Regarding the **athletes' season**: it **follows** the competition season.
-- Their ITU season extended **from 130 days in 2009** to **200 days in 2023**.
+- Their World Triathlon season extended **from 130 days in 2009** to **200 days in 2023**.
 - On average, athletes raced **10 times in 2019** and **2023**, compared to **6 times in 2009**.
 
 The results found (**number of races** and **season duration**) are **lower bounds**:
-- Athletes participate in **other formats besides ITU olympic and sprint** races.
+- Athletes participate in **other formats besides World Triathlon olympic and sprint** races.
   - For instance, the [French Grand Prix](https://en.wikipedia.org/wiki/Grand_Prix_de_Triathlon) was very popular in the 2010s.
   - Some athletes are racing the **Ironman 70.3** format as well.
 - Their competition season is probably longer, including **indoor races** in the **winter**.
@@ -1190,8 +1191,8 @@ Considering nations with a high percentage of athletes in top-50, let's estimate
   - :us: : ~6.1% => ~0.4 top-50 athlete rejected. :disappointed:
 
 The estimated **numbers of rejections** are probably **lower bounds**:
-- The ITU **limits the number of athletes per nation** for its races too.
-  - As a result, some strong athletes, such as US women, cannot participate in important ITU races, and thus do not gain points for the ranking.
+- World Triathlon **limits the number of athletes per nation** for its races too.
+  - As a result, some strong athletes, such as US women, cannot participate in important World Triathlon races, and thus do not gain points for the ranking.
 
 The percentages are **averages** since 2009. Some years, they can be **much higher**:
 - For instance, **8 women in the top-50** (**16.0%**) for:
@@ -1231,7 +1232,7 @@ Athletes finishing 5th-9th are, on average, **26.5 to 27.5** years old.
 
 The **average age** of the last race is **similar for women and men**: around **31 years**.
 
-The **distribution is broad** (`~4y std`), because there are **various reasons** for ending an ITU short-distance top career, such as:
+The **distribution is broad** (`~4y std`), because there are **various reasons** for ending a World Triathlon sprint- and olympic-distance top career, such as:
 - **Age limit** for elite sport.
 - Transitioning to **longer-distance** triathlons
 - **Injury**.
@@ -1437,7 +1438,7 @@ Some **extreme values**:
 # :date: MONTH OF BIRTH
 
 For this section and the next one about [Body mass index](#weight_lifting-BODY-MASS-INDEX), a **larger dataset** is used:
-- **All athletes registered with the ITU**, aged between 15 and 45 years, are considered.
+- **All athletes registered with World Triathlon**, aged between 15 and 45 years, are considered.
 - The vast majority are strong triathletes, but **not all are professional**.
 
 The **month-of-birth** is retrieved, when available, and its distribution is analysed and compared to **two reference distributions**:
@@ -1445,26 +1446,26 @@ The **month-of-birth** is retrieved, when available, and its distribution is ana
   - It could be **expected** that each month accounts for **`1/12 = 8.3%`** of the births.
 - Reference #2: Birth data collected by the **United Nation**: [data.un.org](https://data.un.org/Data.aspx?d=POP&f=tableCode%3A55).
   - Birth data of people aged between 20 and 30 years are considered, leading to **over 230 million entries**.
-  - It could be **expected** that the ITU and UN month-of-birth distributions **match**.
+  - It could be **expected** that World Triathlon (formerly **ITU**) and **UN** month-of-birth distributions **match**.
 
-|     ![](res/birth_months.png)     |
-|:---------------------------------:|
-| *Month-of-birth of ITU athletes.* |
+|                    ![](res/birth_months.png)                     |
+|:----------------------------------------------------------------:|
+| *Month-of-birth of World Triathlon (formerly **ITU**) athletes.* |
 
 The results are even more striking when considering the **year quarters**.
 
-|       ![](res/birth_quarters.png)        |
-|:----------------------------------------:|
-| *Year-quarter-of-birth of ITU athletes.* |
+|                       ![](res/birth_quarters.png)                       |
+|:-----------------------------------------------------------------------:|
+| *Year-quarter-of-birth of World Triathlon (formerly **ITU**) athletes.* |
 
 ---
 
 <details>
   <summary>Click to expand - 📊 <strong>Reference distribution from the United Nations.</strong></summary>
 
-|                                                                ![](res/birth_months_un.png)                                                                 |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| *Month-of-birth distribution of the population aged 20-30 recorded by UN. Data source: [data.un.org](https://data.un.org/Data.aspx?d=POP&f=tableCode%3A55)* |
+|                                                                  ![](res/birth_months_un.png)                                                                   |
+|:---------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| *Month-of-birth distribution of the population aged 20-30 recorded by **UN**. Data source: [data.un.org](https://data.un.org/Data.aspx?d=POP&f=tableCode%3A55)* |
 
 </details>
 
@@ -1475,14 +1476,14 @@ The results are even more striking when considering the **year quarters**.
 <details>
   <summary>Click to expand - 🌍 <strong>Continent analysis.</strong></summary>
 
-The **continent distributions** differ between the ITU and the UN datasets:
+The **continent distributions** differ between the World Triathlon and the UN datasets:
 
 - **ITU dataset:** Europe is predominant (~59%). Asia  (~13%) and North America (~11%) follow.
 - **UN dataset:** Asia (~34%), Europe (29%) and North America (24%) form a more uniform top-3.
 
-|          ![](res/birth_continents.png)           |
-|:------------------------------------------------:|
-| *Continents distribution of the **ITU** dataset* |
+|                        ![](res/birth_continents.png)                        |
+|:---------------------------------------------------------------------------:|
+| *Continents distribution of the World Triathlon (formerly **ITU**) dataset* |
 
 |                   ![](res/birth_continents_un.png)                   |
 |:--------------------------------------------------------------------:|
@@ -1513,7 +1514,7 @@ The month-of-birth and quarter-of-birth distributions for **each continent** can
 ---
 
 <details>
-  <summary>Click to expand - 🎂 <strong>Age distribution of ITU athletes used for this analysis.</strong></summary>
+  <summary>Click to expand - 🎂 <strong>Age distribution of World Triathlon athletes used for this analysis.</strong></summary>
 
 The UN and ITU datasets share the **same average age (25)**, but the **ITU age distribution is not uniform**, unlike the UN one.
 - Importance sampling could be applied to the UN dataset to make the two distributions match, but I would be very surprised if that had an **impact on the overall conclusion**. 
@@ -1531,7 +1532,7 @@ The UN and ITU datasets share the **same average age (25)**, but the **ITU age d
 <details>
   <summary>Click to expand - 🧮 <strong>Statistical test.</strong></summary>
 
-**3,439 birth entries** have been collected (**"observed"**) from the ITU data.
+**3,439 birth entries** have been collected (**"observed"**) from the World Triathlon (formerly **ITU**) data.
 - A priori there is **no link** between the **quarter-of-birth** and the **fact of being a high-level triathlete**.
 - Therefore, it can be **assumed** that the ITU observations **follow the UN distribution**.
 
@@ -1570,7 +1571,7 @@ There is a mathematical formula that, given this computed number (`33.10`), answ
 For `33.10`, the formula gives `p = 0.0000003`, i.e. `0.00003%`.
 
 **Conclusion:**
-- The extremely low probability (`0.00003%`) indicates that the **observed differences** in quarters-of-birth among ITU triathletes are **highly unlikely to be due to random chance**.
+- The extremely low probability (`0.00003%`) indicates that the **observed differences** in quarters-of-birth among World Triathlon athletes are **highly unlikely to be due to random chance**.
 - Therefore, the observed differences are **statistically significant**.
 - This suggests a **systematic deviation from the expected UN distribution**.
 - In other words, the quarters-of-birth of high-level triathletes **do not align with the general population** as represented by the UN distribution.
@@ -1582,7 +1583,7 @@ For more details about the derivation:
 
 ---
 
-:warning: These findings **do NOT indicate** that _"ITU athletes born in January **are more performant** than others born in later months"_!
+:warning: These findings **do NOT indicate** that _"World Triathlon athletes born in January **are more performant** than others born in later months"_!
 - This birth-of-month analysis rather shows that **someone born earlier** in one year **is MORE LIKELY TO BECOME PRO TRIATHLETE** than one born later in the same year.
 
 Here is one **possible explanation**:
@@ -1601,7 +1602,7 @@ Here is one **possible explanation**:
 
 > "The [BMI](https://en.wikipedia.org/wiki/Body_mass_index) is defined as the **body mass** divided by the **square of the body height**, and is expressed in units of kg/m^2"
 
-To maximize the amount of data, **all athletes registered with the ITU** are considered (not just those participating in world-cups and world-series).
+To maximize the amount of data, **all athletes registered with World Triathlon** are considered (not just those participating in world-cups and world-series).
 - In total, **504 athletes** aged between 15 and 53 (average is 27) are included.
 
 | ![bmi.png](res/bmi.png) | 
@@ -1619,7 +1620,7 @@ First, is the BMI a **relevant metric** here? No!
 - Many athletes may have a high BMI due to increased **muscle mass**, yet they are fit and healthy.
 
 Second, there is no enough data.
-- **Only 14%** of ITU registered athletes have valid weight and height information (504 out of 3560).
+- **Only 14%** of athletes registered with World Triathlon have valid weight and height information (504 out of 3560).
 - Most athletes did not input their dimensions.
 - Sometimes for privacy reasons, e.g. the entry for Kristian Blummenfelt's ( :norway: ) weight: _"None of your business"_.
 
@@ -1720,7 +1721,7 @@ As mentioned by Alex Yee in [this video](https://youtu.be/zoYeVlM28J4?t=689):
 
 > "You are doing a **full gas effort** at the start of a race which is **2 hours long**. If you told somebody to do that on a marathon, they would laugh in your face."
 
-ITU data provides **a single time** for **each leg**: swim, t1, bike, t2, run. There is no detail about the pace evolution **during each segment**. For instance:
+World Triathlon data provides **a single time** for **each leg**: swim, t1, bike, t2, run. There is no detail about the pace evolution **during each segment**. For instance:
 - Fast swim start to reach the first buoy.
 - Fast bike start to break away or catch a pack.
 - Fast run start - _I have never really understood the benefit compared to a steady effort._
@@ -1743,7 +1744,7 @@ In addition to **paces**, it would be interesting to access **data** such as:
 
 **Activity trackers** would be needed for these recordings, but athletes **rarely wear them** while racing, making **swim** and **run data recording** difficult.
 - _This is also something I find puzzling: such data should be **invaluable for elite athletes**, shouldn't it?_ 
-  - I first thought it was **forbidden** during the swim. The [**ITU rules**](https://www.triathlon.org/about/downloads/category/competition_rules) are **not very clear** to me:
+  - I first thought it was **forbidden** during the swim. [**World Triathlon rules**](https://www.triathlon.org/about/downloads/category/competition_rules) are **not very clear** to me:
     - "Athletes may not use **communication devices** of any type, including but not limited to cell phones, **smart watches** ...".
     - "Propulsion devices that create an advantage for the athlete, or a risk to others, are forbidden". _Could a sport-watch increase the propulsion surface or be harmful to others in case of contact?_
     - On the other hand, the **swim section** states: "**Electronic devices may be used** in the **competition** unless they are distracting the athlete from paying full attention to their surroundings".
@@ -1765,7 +1766,7 @@ In addition to **paces**, it would be interesting to access **data** such as:
 #### :moneybag: 3) MONEY
 
 It would be interesting to investigate the **financial aspects** of the competitions, such as:
-- The **prize money** for the different ITU race categories.
+- The **prize money** for the different World Triathlon race categories.
 - The event **registration costs**.
 - Eventually, to estimate **from which rank an athlete can make a descent living**. (Of course sponsoring and federation support also play a role).
 
@@ -1780,7 +1781,7 @@ It would be interesting to investigate the **financial aspects** of the competit
 
 Plots can be reproduced:
 
-- Create a key for the ITU API: https://apps.api.triathlon.org/ and add it to a `api_key.txt` file placed in `itu_stats/`.
+- Create a key for the World Triathlon API: https://apps.api.triathlon.org/ and add it to a `api_key.txt` file directly placed in `tri_stats/`.
 - Install the required python packages.
 - Run the different scripts of this repository.
 
@@ -1809,10 +1810,10 @@ Here are some **key takeaways**:
 - :straight_ruler: The gaps between the winner and second place are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
 - :calendar: On average, athletes raced **10 times** (in world cups or world series) in 2019 and 2023, compared to **6 times in 2009**.
-- :calendar: Their ITU season has extended from **130 days** in 2009 to **200 days** in 2023.
+- :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
 - :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:.
 - :birthday: Athletes finishing 5th-9th are, on average, **26.5 to 27.5 years old**.
-- :checkered_flag: Women and men typically race their last ITU world-cup or WTCS at an average age of **31 years**, thought there are significant variations.
+- :checkered_flag: Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations.
 - :bar_chart: Someone **born earlier in the year** are **more likely** to become professional triathletes compared to those born later in the same year.
 
 ---
