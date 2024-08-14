@@ -301,15 +301,35 @@ Notes about **swim data**:
   - **27%** at [2023 World Triathlon Cup Valencia ( :es: )](https://www.triathlon.org/events/event/2023_world_triathlon_cup_valencia) (olympic): 5th women and men in resp. [`22:18`](https://triathlon.org/results/result/2023_world_triathlon_cup_valencia/582219) and [`17:30`](https://www.triathlon.org/results/result/2023_world_triathlon_cup_valencia/582218).
   - **28%** at [2009 Dextro Energy Triathlon - ITU World Championship Grand Final Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas) (olympic): Liz Blatchford and Javier Gomez are 5th out of water in resp. [`21:47`](https://www.triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4818) and [`17:02`](https://triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4819).  
 
+|                                 ![wm_over_years.png](res/wm_over_years.png)                                 | 
+|:-----------------------------------------------------------------------------------------------------------:| 
+|                            *By how much are women slower? Evolution over years.*                            |
+
+<details>
+  <summary>Click to expand - 📈 <strong>Evolution over years, considering only WTCS and games-related events.</strong></summary>
+
+|           ![wm_over_years_no_world_cup.png](res/wm_over_years_no_world_cup.png)           | 
+|:-----------------------------------------------------------------------------------------:| 
+| *By how much are women slower? Evolution over years. Only WTCS and games-related events.* |
+
+<\details>
+
+---
+
 Findings:
 - :swimmer: The **swim** is the sport where the **relative difference** between women and men is the **smallest**.
   - Swimming is highly **technique-oriented**.
   - Women often excel in technical sports because these **rely less on raw strength** and more on skill, coordination, and efficiency.
   - Women and men have **different buoyancy**, as explained by Maria Francesca Piacentini, in [this episode](https://scientifictriathlon.com/tts392/) (at 19:00) of the [triathlon show podcast](https://scientifictriathlon.com/podcast/).
+  - As reported by [this 2019 article](https://www.researchgate.net/publication/334664495_Sex_Difference_in_Triathlon_Performance) by Romuald Lepers: "elite female athletes generally have **7–12% more body fat** than males (Fleck, 1983; Heydenreich et al., 2017). As fat is buoyant in water, **women are less penalized than men in swimming** than they are within **terrestrial events** such as cycling and running. Male triathletes also possess a **larger muscle mass**, greater **muscular strength** and **lower relative body fat** than female triathletes (Knechtle et al., 2010a)."
 - :runner: The **run** is where the difference is the **largest**.
   - Men typically have **greater muscle mass** and **aerobic capacity**, which can provide an advantage in endurance activities like running.
 - The **standard deviation** is **higher for swim and lower for run**.
-  - Because **swim conditions can vary** and athletes may follow non-straight swim lines leading to larger swim distances.
+  - Because **swim conditions (wind, current, temperature) can vary** and athletes may follow non-straight swim lines leading to larger swim distances?
+- The **w/m difference has not significantly reduced** on the years, except for the **run leg of the sprint-format races (-0.13 % / year)**.
+  - Note: The line fitting feeds all the points to [`np.polyfit`](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html). Probably some **data processing should be applied**.
+    - For instance year-normalization to account for the very low number of points during the covid pandemic?
+  - In WTCS and games-related events, the **w/m swim gap has reduced (-0.11 % / year)**.
 
 Would these differences remains similar if the run were done first and the swim last?
 - **Fatigue resistance** might vary more significantly between men and women.
@@ -1802,6 +1822,7 @@ Here are some **key takeaways**:
 - :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**.
 - :runner: Women run the 10k at **3:34 min/km** (3:27 for 5k), men at **3:08 min/km** (3:01 for 5k). 
 - :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
+- :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
 - :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.
 - :one_piece_swimsuit: Swim times are **~5.5% faster with wetsuit**.
 - :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**.

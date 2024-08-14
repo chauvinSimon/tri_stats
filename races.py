@@ -1359,6 +1359,107 @@ def process_results_w_vs_m(df):
     max_diff_percent = 0.21
     max_diff_percent += 0.01
 
+    # compute number of days since date, formatter as a string: YYYY-MM-DD
+    first_year = int(min(df["event_date_m"].apply(lambda x: int(x[:4]))))
+
+    df[f"event_date_since_{first_year}"] = df["event_date_m"].apply(
+        lambda x: (datetime(int(x[:4]), int(x[5:7]), int(x[8:10])) - datetime(first_year, 1, 1)).days
+    )
+
+    for use_world_cup in [True, False]:
+        df_2 = df.copy()
+        if not use_world_cup:
+            df_2 = df_2[df_2["event_category"] != "world-cup"]
+
+        fig, axes = plt.subplots(nrows=len(sports), ncols=2, figsize=(16, 16))
+        for i_distance_category, distance_category in enumerate(distance_categories):
+            print(distance_category)
+            for i_sport, sport in enumerate(sports):
+                data = df_2[df_2['prog_distance_category'] == distance_category]
+
+                if i_sport == 0:
+                    print(df_2[(df_2['prog_distance_category'] == distance_category) & (df_2[f"{sport}_diff_percent"] > 0.22)])
+                    # fair to consider same swim equipment
+                    data = df_2[
+                        (df_2['prog_distance_category'] == distance_category) &
+                        (df_2[f"{sport}_diff_percent"] < 0.22) &
+                        (df_2["wetsuit_m"] == df_2["wetsuit_w"])
+                        ]
+
+                if not use_world_cup:
+                    data = data[data["event_category"] != "world-cup"]
+
+                data_x = data[f"event_date_since_{first_year}"]
+                data_y = data[f"{sport}_diff_percent"]
+                axes[i_sport, i_distance_category].scatter(
+                    data_x,
+                    data_y,
+                    alpha=0.5
+                )
+                mean_y = data_y.mean()
+                std_y = data_y.std()
+                axes[i_sport, i_distance_category].axhline(
+                    mean_y,
+                    color="gray",
+                    linestyle='--',
+                    linewidth=1,
+                    alpha=0.5,
+                    label=f"avg: {mean_y:.1%} ± {std_y:.1%}"
+                )
+                m, b = np.polyfit(data_x, data_y, 1)
+
+                reg_colour = "deepskyblue" if m > 0 else "violet"
+                import seaborn as sns
+                sns.regplot(
+                    x=data_x,
+                    y=data_y,
+                    color="gray",
+                    line_kws={"color": reg_colour, "linewidth": 2, "alpha": 0.5, "linestyle": "--"},
+                    ax=axes[i_sport, i_distance_category],
+                    # robust=True,
+                    # label=f"sns.regplot"
+                )
+
+                m_per_year = m * 365
+                axes[i_sport, i_distance_category].plot(data_x, m * data_x + b, color=reg_colour, linewidth=1, label=f'm = {m_per_year:.2%} / year')
+
+                axes[i_sport, i_distance_category].tick_params(axis='x', labelsize=12)
+                axes[i_sport, i_distance_category].set_ylabel("")
+                axes[i_sport, i_distance_category].legend(loc="upper right", fontsize=14)
+
+        max_year = max(df_2["event_date_m"].apply(lambda x: int(x[:4])))
+        additional_title = "" if use_world_cup else "\nONLY WTCS AND GAMES-RELATED EVENTS"
+        fig.suptitle(f"WOMEN vs MEN (%)\n{first_year} - {max_year}\n({len(df_2)} events){additional_title}", fontsize=20)
+
+        cols = [f"{cat} ({len(df_2[df_2.prog_distance_category == cat])})" for cat in distance_categories]
+        rows = sports
+        for ax, col in zip(axes[0], cols):
+            ax.set_title(col.replace("standard", "olympic").upper(), fontsize=16)
+        for ax, row in zip(axes[:, 0], rows):
+            ax.set_ylabel(row.upper(), fontsize=16)
+
+        for ax in axes.flat:
+            ax.set_xlabel("")
+            x_ticks = []
+            for year in range(2009, max_year + 1):
+                x_ticks.append((datetime(year, 1, 1) - datetime(2009, 1, 1)).days)
+            ax.set_xticks(x_ticks)
+            ax.set_xticklabels([str(year) for year in range(2009, max_year + 1)], fontsize=10, rotation=90)
+
+        # use same percent y range for all subplots
+        for ax in axes.flat:
+            ax.set_ylim(0, max_diff_percent)
+            ax.yaxis.set_major_formatter(PercentFormatter(1))
+            ax.grid()
+
+        plt.tight_layout()
+        add_watermark(fig)
+        saving_name = f"wm_over_years" if use_world_cup else f"wm_over_years_no_world_cup"
+        plt.savefig(str(res_dir / saving_name), dpi=300)
+        plt.show()
+
+    # histograms
+
     fig, axes = plt.subplots(nrows=len(sports), ncols=2, figsize=(16, 16))
     for i_distance_category, distance_category in enumerate(distance_categories):
         print(distance_category)
@@ -2906,8 +3007,8 @@ def main():
     df = add_year_and_event_cat(df)
 
     # process_sports(df.copy())
-    process_results_wetsuit(df.copy())
-    # process_results_w_vs_m(df.copy())
+    # process_results_wetsuit(df.copy())
+    process_results_w_vs_m(df.copy())
     # process_results_repeated_events(df.copy())
     # process_scenarios(df.copy())
     # process_sprint_finish(df.copy())
