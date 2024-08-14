@@ -312,7 +312,7 @@ Notes about **swim data**:
 |:-----------------------------------------------------------------------------------------:| 
 | *By how much are women slower? Evolution over years. Only WTCS and games-related events.* |
 
-<\details>
+</details>
 
 ---
 
