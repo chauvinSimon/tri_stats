@@ -301,6 +301,8 @@ Notes about **swim data**:
   - **27%** at [2023 World Triathlon Cup Valencia ( :es: )](https://www.triathlon.org/events/event/2023_world_triathlon_cup_valencia) (olympic): 5th women and men in resp. [`22:18`](https://triathlon.org/results/result/2023_world_triathlon_cup_valencia/582219) and [`17:30`](https://www.triathlon.org/results/result/2023_world_triathlon_cup_valencia/582218).
   - **28%** at [2009 Dextro Energy Triathlon - ITU World Championship Grand Final Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas) (olympic): Liz Blatchford and Javier Gomez are 5th out of water in resp. [`21:47`](https://www.triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4818) and [`17:02`](https://triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4819).  
 
+---
+
 |                                 ![wm_over_years.png](res/wm_over_years.png)                                 | 
 |:-----------------------------------------------------------------------------------------------------------:| 
 |                            *By how much are women slower? Evolution over years.*                            |
@@ -321,12 +323,12 @@ Findings:
   - Swimming is highly **technique-oriented**.
   - Women often excel in technical sports because these **rely less on raw strength** and more on skill, coordination, and efficiency.
   - Women and men have **different buoyancy**, as explained by Maria Francesca Piacentini, in [this episode](https://scientifictriathlon.com/tts392/) (at 19:00) of the [triathlon show podcast](https://scientifictriathlon.com/podcast/).
-  - As reported by [this 2019 article](https://www.researchgate.net/publication/334664495_Sex_Difference_in_Triathlon_Performance) by Romuald Lepers: "elite female athletes generally have **7–12% more body fat** than males (Fleck, 1983; Heydenreich et al., 2017). As fat is buoyant in water, **women are less penalized than men in swimming** than they are within **terrestrial events** such as cycling and running. Male triathletes also possess a **larger muscle mass**, greater **muscular strength** and **lower relative body fat** than female triathletes (Knechtle et al., 2010a)."
+  - As reported by [this 2019 article](https://www.researchgate.net/publication/334664495_Sex_Difference_in_Triathlon_Performance) by Romuald Lepers: "Elite female athletes generally have **7–12% more body fat** than males (Fleck, 1983; Heydenreich et al., 2017). As fat is buoyant in water, **women are less penalized than men in swimming** than they are within **terrestrial events** such as cycling and running. Male triathletes also possess a **larger muscle mass**, greater **muscular strength** and **lower relative body fat** than female triathletes (Knechtle et al., 2010a)."
 - :runner: The **run** is where the difference is the **largest**.
   - Men typically have **greater muscle mass** and **aerobic capacity**, which can provide an advantage in endurance activities like running.
-- The **standard deviation** is **higher for swim and lower for run**.
+- :straight_ruler: The **standard deviation** is **higher for swim and lower for run**.
   - Because **swim conditions (wind, current, temperature) can vary** and athletes may follow non-straight swim lines leading to larger swim distances?
-- The **w/m difference has not significantly reduced** on the years, except for the **run leg of the sprint-format races (-0.13 % / year)**.
+- :chart_with_downwards_trend: The **w/m difference has not significantly reduced** on the years, except for the **run leg of the sprint-format races (-0.13 % / year)**.
   - Note: The line fitting feeds all the points to [`np.polyfit`](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html). Probably some **data processing should be applied**.
     - For instance year-normalization to account for the very low number of points during the covid pandemic?
   - In WTCS and games-related events, the **w/m swim gap has reduced (-0.11 % / year)**.
