@@ -492,7 +492,7 @@ The idea of the **derivation** is as follows:
   - **Proper environment**: data comes from **real races**, as opposed to studies in 50m or even 25m pools.
   - **No need to know the exact swim distance**: what matters is that men and women swim the **exact same course**. This assumption is **reasonable** because the buoys should not move between the two races.
   - **Data-based**: the 8.8% should be **robust** since it leverages results from many races (230 events).
-  - **Free**: all the data is available online.
+  - **Low cost**: all the data is available online for free.
 
 - Limitations:
   - The **swim conditions** are not guaranteed to be equal.
@@ -550,13 +550,8 @@ The idea of the **derivation** is as follows:
 - Put differently, top swimmers (top 5-9) swim **~5.8% slower without wetsuit**.
   - `0.055 / (1-0.055) = 0.058`.
 
-:warning: Criticisms:
-- Data sources:
-  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that all **are recent olympic-WTCS**.
-  - `wm_percent = 8.8%` was obtained by considering **all** the sprint and olympic WCTS, world-cups and games-related events since 2009, totaling 230 events.
-  - Ideally `wm_percent` should be estimated considering **only olympic-WTCS** events.
-    - This would lead to a **slightly lower estimate** (around 8.4%), resulting in an **`improve_percent` closer to 5%**.
-- Uncertainty:
+:warning: **Criticisms and Ideas for Improvement**:
+- **Uncertainty**:
   - How to **account for uncertainties** in `wm_percent_w_fast` and `wm_percent` in the `improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)` formula?
     - `wm_percent = 8.8% ± 3.0%`.
     - `wm_percent_w_fast = 2.9% ± 0.5%`.
@@ -565,13 +560,16 @@ The idea of the **derivation** is as follows:
       - Here, applying the combinations (-3.00%, -0.50%), (-3.00%, +0.50%), (+3.00%, -0.50%) and (+3.00%, +0.50%) to (`wm_percent = 8.8%`, `wm_percent_w_fast = 2.9%`).
       - This results in the interval **`improve_percent = 5.5% ± 3.0%`**.
     - Approach #2 (using [partial derivatives](https://en.wikipedia.org/wiki/Propagation_of_uncertainty#Simplification)):
-      - Using this [webpage](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5% ± 2.6%`**.
-- Ideas for improvement:
-  - Try to use **similar swim conditions** to estimate `wm_percent_w_fast` and `wm_percent`:
-    - `wm_percent_w_fast` is estimated from five olympic-WTCS: Yokohama (twice), Cagliari, Stockholm and Edmonton.
-  - **Filter the events used to compute `wm_percent`** (currently using 230 events):
+      - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5% ± 2.6%`**.
+- **Data used**:
+  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples.
+    - All are **recent olympic-WTCS**: Yokohama (twice), Cagliari, Stockholm and Edmonton.
+  - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint and olympic WCTS, world-cups and games-related events since 2009, totaling **230 events**.
+  - Ideally `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
     - Idea #1: Only consider events with the **same format** (olympic) and **event-category** (WTCS).
-    - Idea #2: Only consider the **same venues**. The four venues mentioned have **hosted multiple** olympic-WTCS.
+      - This would lead to a **slightly lower estimate** (around 8.4%), resulting in an **`improve_percent` closer to 5%**.
+    - Idea #2: Only consider the **same venues**.
+      - The four venues mentioned have **hosted multiple** olympic-WTCS.
   - This should reduce the 3.0% uncertainty of `wm_percent`, and consequently, the uncertainty in `improve_percent`.
 
 <details>
@@ -1828,7 +1826,15 @@ It would be interesting to investigate the **financial aspects** of the competit
 
 #### :spaghetti: 4) MISCELLANEOUS
 
-- Analyse the **correlation** between **transition ranking** and **finish ranking**. Especially for T2.
+- Analyse the **correlation** between **transition ranking** and **finish ranking**.
+  - Especially for T2.
+- Further compare **WTCS** and **world-cups**.
+  - In most sections of this document, these two event-categories have been merged to **increase the dataset size** and hopefully obtain more statistically significant results.
+  - However, in some cases, this approach may not be ideal, and it would be interesting to analyse the differences.
+- The [decision to focus on the **top 5-9**](#books-data) is, I believe, relevant for capturing a stable and consistent **representation of the general competitive field**.
+  - However, focusing on the **top performance** (e.g. best time or top-3) or using a **broader range** could also provide valuable insights.
+- Performing advanced analyses of **cycling performances** would be interesting.
+  - Only using **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
 - ...
 
 ---
