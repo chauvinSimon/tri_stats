@@ -552,24 +552,28 @@ The idea of the **derivation** is as follows:
   - How to **account for uncertainties** in `wm_percent_w_fast` and `wm_percent` in the `improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)` formula?
     - `wm_percent = 8.8% ± 3.0%`.
     - `wm_percent_w_fast = 2.9% ± 0.5%`.
+    - These `± 3.0%` and `± 0.5%` are [**standard deviations**](https://en.wikipedia.org/wiki/Standard_deviation), telling **how spread out** the observed w/m-swim-diff percentages are.
+      - Concretely, in the case of `wm_percent`, `± 3.0%` [can be interpreted](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) as: "~68% of the observed w/m-swim-diff percentages lie between 8.8%-3% and 8.8%+3%".
+    - From what I understood, in order to produce a **confidence interval** for `improve_percent`, the **[standard errors](https://en.wikipedia.org/wiki/Standard_error) (`SE`)** should be used instead:
+      - `SE(wm_percent) = 3.0% / sqrt(230) = 0.2%`.
+      - `SE(wm_percent_w_fast) = 0.5% / sqrt(5) = 0.2%`.
   - In statistics, this question is known as [Propagation of Uncertainty](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).
-    - Approach #1 (intuitive): perform calculations using the extremes of the uncertainty intervals to see where `improve_percent` falls.
-      - Here, applying the combinations (-3.00%, -0.50%), (-3.00%, +0.50%), (+3.00%, -0.50%) and (+3.00%, +0.50%) to (`wm_percent = 8.8%`, `wm_percent_w_fast = 2.9%`).
-      - This results in the interval **`improve_percent = 5.5% ± 3.0%`**.
+    - Approach #1 (simple): perform calculations using the extremes of the error intervals to see where `improve_percent` falls.
+      - Here, applying the combinations (-0.2%, -0.2%), (-0.2%, +0.2%), (+0.2%, -0.2%) and (+0.2%, +0.2%) to (`wm_percent = 8.8%`, `wm_percent_w_fast = 2.9%`).
+      - This results in the interval **`improve_percent = 5.5%` with `0.4%` standard error**.
     - Approach #2 (using [partial derivatives](https://en.wikipedia.org/wiki/Propagation_of_uncertainty#Simplification)):
-      - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5% ± 2.6%`**.
-  - Quite a big uncertainty!
+      - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5%` with `0.3%` standard error**.
 - **2) Events consistency**:
-  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that all have the following properties: **recent**, **WTCS**, **olympic-format**.
+  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that **all have the following properties**: **WTCS** and **olympic-format**.
     - The five **venues** are: Yokohama ( :jp: ), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
   - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **230 events**.
-  - Ideally `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
+    - This is inconsistent.
+  - Instead, `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
     - Idea #1: Only consider events with the **same format** (olympic) and **event-category** (WTCS).
-      - This leads to a **slightly lower estimate** with a lower std (`wm_percent = 8.4% ± 2.6%`), resulting in an **`improve_percent` closer to 5%**.
-    - Idea #2: Further restrict Idea #1 (same format and event-category), by considering only with the **same venue**.
-      - The four venues mentioned have **hosted multiple** olympic-WTCS: 20 times, from which **15** had men and women sharing the same equipment for the swim.
-      - This gives `wm_percent = 7.4% ± 1.6%`, leading to **`improve_percent = 4.2% ± 1.5%`**
-      - Apart from improving the **reliability of the estimate**, this reduces the uncertainty on `wm_percent`, and consequently, the **uncertainty on `improve_percent`**.
+      - This leads to a **slightly lower estimate** (`wm_percent = 8.4% ± 2.6%`), resulting in an **`improve_percent` closer to 5%**.
+    - Idea #2: Further restrict Idea #1 (same format and event-category), by considering only with the **same venues**.
+      - The four venues mentioned have **hosted multiple** olympic-WTCS: 20 times, from which **15** had women and men sharing the same equipment for the swim.
+      - This gives `wm_percent = 7.4% ± 1.6%` (`SE = 1.6/sqrt(15) = 0.4%`), leading to **`improve_percent = 4.2%` with `0.3%` standard error**.
 - **3) Additional examples**:
   - Several **other events** feature the "women-with / men-without" scenario.
     - Tongyeong ( :kr: ) ([2011](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup), [2014](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2016](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup)), [Arzachena ( :it: ) (2020)](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup), [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) are **world-cups** events, so they have not been included.
