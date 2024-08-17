@@ -966,6 +966,7 @@ def process_results_wetsuit(df):
     swim_diff_percent_women_fast = df_different_wetsuit[df_different_wetsuit['wetsuit_w']]
     swim_diff_percent_women_slow = df_different_wetsuit[~df_different_wetsuit['wetsuit_w'].astype(bool)]
     print(f"men with wetsuit, while women without wetsuit: {len(swim_diff_percent_women_fast)}:")
+    print(swim_diff_percent_women_fast.event_venue.tolist())
     for listing in list(swim_diff_percent_women_slow["event_listing"]):
         print(listing)
 
@@ -2767,6 +2768,9 @@ def process_swim_gaps(df):
     #     ax.set_title(col.replace("standard", "olympic").upper())
     for ax, row in zip(axes[:, 0], rows):
         ax.set_ylabel(row, rotation=90, size='large')
+
+    for ax, row in zip(axes[1, :], rows):
+        ax.set_xlabel("gap [s]", size='large')
 
     for ax in axes.flat:
         ax.set_yticklabels([])
