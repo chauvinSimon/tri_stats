@@ -558,11 +558,11 @@ The idea of the **derivation** is as follows:
 :warning: **CRITICISMS AND IDEAS FOR IMPROVEMENT**:
 - **1) Uncertainty**:
   - How to **account for uncertainties** in `wm_percent_w_fast` and `wm_percent` in the `improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)` formula?
-    - `wm_percent = 8.8% ± 3.0%`.
-    - `wm_percent_w_fast = 2.9% ± 0.5%`.
-    - These `± 3.0%` and `± 0.5%` are [**standard deviations**](https://en.wikipedia.org/wiki/Standard_deviation), telling **how spread out** the observed w/m-swim-diff percentages are.
+    - So far, the [**standard deviations**](https://en.wikipedia.org/wiki/Standard_deviation) were computed (`± 3.0%` and `± 0.5%`), telling **how spread out** the observed w/m-swim-diff percentages are:
+      - `wm_percent = 8.8% ± 3.0%`.
+      - `wm_percent_w_fast = 2.9% ± 0.5%`.
       - Concretely, in the case of `wm_percent`, `± 3.0%` [can be interpreted](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) as: "~68% of the observed w/m-swim-diff percentages lie between 8.8%-3% and 8.8%+3%".
-    - From what I understood, in order to produce a **confidence interval** for `improve_percent`, the **[standard errors](https://en.wikipedia.org/wiki/Standard_error) (`SE`)** should be used instead:
+    - I am not sure, but from what I understood, in order to produce a **confidence interval** for `improve_percent`, the **[standard errors](https://en.wikipedia.org/wiki/Standard_error) (`SE`)** should be used instead:
       - `SE(wm_percent) = 3.0% / sqrt(230) = 0.2%`.
       - `SE(wm_percent_w_fast) = 0.5% / sqrt(5) = 0.2%`.
   - In statistics, this question is known as [Propagation of Uncertainty](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).
