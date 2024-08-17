@@ -966,6 +966,8 @@ def process_results_wetsuit(df):
     swim_diff_percent_women_fast = df_different_wetsuit[df_different_wetsuit['wetsuit_w']]
     swim_diff_percent_women_slow = df_different_wetsuit[~df_different_wetsuit['wetsuit_w'].astype(bool)]
     print(f"men with wetsuit, while women without wetsuit: {len(swim_diff_percent_women_fast)}:")
+    for row in swim_diff_percent_women_fast.itertuples():
+        print(f"{row.event_venue} ( {country_emojis[row.event_country_noc] if row.event_country_noc in country_emojis else row.event_country_noc} ) ({row.event_year}): {row.swim_diff_percent:.1%} {row.event_listing}")
     print(swim_diff_percent_women_fast.event_venue.tolist())
     for listing in list(swim_diff_percent_women_slow["event_listing"]):
         print(listing)

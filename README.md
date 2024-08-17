@@ -333,9 +333,6 @@ Findings:
     - For instance year-normalization to account for the very low number of points during the covid pandemic?
   - In WTCS and games-related events, the **w/m swim gap has reduced (-0.11 % / year)**.
 
-Would these differences remains similar if the run were done first and the swim last?
-- **Fatigue resistance** might vary more significantly between men and women.
-
 These **percentages can be compared** with those of **swim, bike or run competitions**:
 
 <details>
@@ -498,7 +495,7 @@ The idea of the **derivation** is as follows:
   - The **swim conditions** are not guaranteed to be equal.
     - For instance in [Cagliari ( :it: ) 2024](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) the **seawater** was [more **choppy** :ocean: for the men](https://youtu.be/-Su5kpPz0hY?t=79) than [for the women](https://youtu.be/vFV-kB8727I&t=69s).
     - This might explain why the gap between men and women was slightly smaller than average.
-  - The **limited number of races** where the "women-with / men-without" scenario occurs.
+  - The **limited number of events** where the "women-with / men-without" scenario occurs.
     - Only five races fit this scenario, but the **variance is low**: `std = 0.5%`.
 
 <details>
@@ -550,8 +547,8 @@ The idea of the **derivation** is as follows:
 - Put differently, top swimmers (top 5-9) swim **~5.8% slower without wetsuit**.
   - `0.055 / (1-0.055) = 0.058`.
 
-:warning: **Criticisms and Ideas for Improvement**:
-- **Uncertainty**:
+:warning: **CRITICISMS AND IDEAS FOR IMPROVEMENT**:
+- **1) Uncertainty**:
   - How to **account for uncertainties** in `wm_percent_w_fast` and `wm_percent` in the `improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)` formula?
     - `wm_percent = 8.8% ± 3.0%`.
     - `wm_percent_w_fast = 2.9% ± 0.5%`.
@@ -561,16 +558,25 @@ The idea of the **derivation** is as follows:
       - This results in the interval **`improve_percent = 5.5% ± 3.0%`**.
     - Approach #2 (using [partial derivatives](https://en.wikipedia.org/wiki/Propagation_of_uncertainty#Simplification)):
       - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5% ± 2.6%`**.
-- **Data used**:
-  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples.
-    - All are **recent olympic-WTCS**: Yokohama (twice), Cagliari, Stockholm and Edmonton.
-  - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint and olympic WCTS, world-cups and games-related events since 2009, totaling **230 events**.
+  - Quite a big uncertainty!
+- **2) Events consistency**:
+  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that all have the following properties: **recent**, **WTCS**, **olympic-format**.
+    - The five **venues** are: Yokohama ( :jp: ), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
+  - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **230 events**.
   - Ideally `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
     - Idea #1: Only consider events with the **same format** (olympic) and **event-category** (WTCS).
-      - This would lead to a **slightly lower estimate** (around 8.4%), resulting in an **`improve_percent` closer to 5%**.
-    - Idea #2: Only consider the **same venues**.
-      - The four venues mentioned have **hosted multiple** olympic-WTCS.
-  - This should reduce the 3.0% uncertainty of `wm_percent`, and consequently, the uncertainty in `improve_percent`.
+      - This leads to a **slightly lower estimate** with a lower std (`wm_percent = 8.4% ± 2.6%`), resulting in an **`improve_percent` closer to 5%**.
+    - Idea #2: Further restrict Idea #1 (same format and event-category), by considering only with the **same venue**.
+      - The four venues mentioned have **hosted multiple** olympic-WTCS: 20 times, from which **15** had men and women sharing the same equipment for the swim.
+      - This gives `wm_percent = 7.4% ± 1.6%`, leading to **`improve_percent = 4.2% ± 1.5%`**
+      - Apart from improving the **reliability of the estimate**, this reduces the uncertainty on `wm_percent`, and consequently, the **uncertainty on `improve_percent`**.
+- **3) Additional examples**:
+  - Several **other events** feature the "women-with / men-without" scenario.
+    - Tongyeong ( :kr: ) ([2011](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup), [2014](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2016](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup)), [Arzachena ( :it: ) (2020)](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup), [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) are **world-cups** events, so they have not been included.
+    - [Sydney ( :australia: ) (2012)](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney),  despite being a WTCS, was excluded due to an **unusual w/m swim difference**: women swam 10.1% slower than men, even with the wetsuit advantage.
+  - It would be valuable to include events with the **opposite scenario**: "women-without / men-with".
+    - I have found only one: [New Plymouth ( :new_zealand: ) 2017](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup).
+  - Future events may **provide additional examples** to further refine the estimate.
 
 <details>
   <summary>Click to expand - 🌍 <strong>Events used for the derivation.</strong></summary>
@@ -1863,7 +1869,7 @@ Here are some **key takeaways**:
 - :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
 - :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
 - :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.
-- :one_piece_swimsuit: Swim times are **~5.5% faster with wetsuit**.
+- :one_piece_swimsuit: Swim times are **~5% faster with wetsuit** (to be refined).
 - :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**.
 - :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** (28% for men and 7% for women) in the olympic format and is getting even rarer.
 - :bicyclist: The **size of the front group** after bike averages around **15**, decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races.
