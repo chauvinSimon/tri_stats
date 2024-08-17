@@ -424,9 +424,9 @@ Approach:
   - To be honest, I would have **expected the opposite!**
 
 **POSSIBLE INTERPRETATION #1**:
-- Wetsuits are typically worn in cold waters, often in seas and oceans, where waves can make swimming more challenging, potentially spreading out the pack.
+- Wetsuits are typically worn in **cold waters**, often in **seas and oceans**, where waves can make swimming more challenging, potentially spreading out the pack.
 - However, there are many examples of sea and ocean swims that occur without wetsuits!
-- Therefore, I would dismiss this hypothesis.
+- Therefore, I would **dismiss this hypothesis**.
 
 **POSSIBLE INTERPRETATION #2**:
 - True, the **swim is shorter in time**.
