@@ -417,19 +417,27 @@ Approach:
 |:--------------------------------------------------------------------------------------:| 
 | *Comparing **average gaps between good and "bad" swimmers** with and without wetsuit.* |
 
-Findings:
+:bulb: **FINDINGS**:
 - **Variations in the swim-pack length** between **event with-wetsuit and without-wetsuit** are **very small**.
 - There is **no evidence** that worse swimmers should be happy about the wetsuit.
   - The **wetsuit even tends to stretch the swim pack**, especially for women. 
   - To be honest, I would have **expected the opposite!**
-- How can that be explained?
-  - True, the **swim is shorter in time**.
-  - Gaps **do not significantly reduce** because the **benefit provided by the wetsuit differs** between good and worse swimmers:
-    - For **5-9th** top swimmer: **5.5%**.
-    - For **20-24th** top swimmer: **5.2%**.
-    - For last **9-5th** top swimmer: **4.9%**.
-    - More details on this derivation can be found in the [dedicated section](#penguin-wetsuit-benefit).
-  - In other words, despite the shorter swim duration, gaps do not reduce because **top swimmers gain more benefits** from the wetsuit.
+
+**POSSIBLE INTERPRETATION #1**:
+- Wetsuits are typically worn in cold waters, often in seas and oceans, where waves can make swimming more challenging, potentially spreading out the pack.
+- However, there are many examples of sea and ocean swims that occur without wetsuits!
+- Therefore, I would dismiss this hypothesis.
+
+**POSSIBLE INTERPRETATION #2**:
+- True, the **swim is shorter in time**.
+- But gaps **do not significantly reduce** because the **benefit provided by the wetsuit differs** between good and worse swimmers:
+  - For **5-9th** top swimmer: **5.5%**.
+  - For **20-24th** top swimmer: **5.2%**.
+  - For last **9-5th** top swimmer: **4.9%**.
+  - More details on this derivation can be found in the [dedicated section](#penguin-wetsuit-benefit).
+- In other words, despite the shorter swim duration, **gaps do not reduce** because **top swimmers gain more benefits** from the wetsuit.
+
+**QUESTION**:
 - Would the wetsuit enable the **slowest swimmers** (last 9-5th) to **catch the good swimmers** (first 5-9th)?
   - On the olympic format, the **gap is about 50s and 45s** without wetsuit, while the fast women and men swim on average in 19:32 and 17:58.
   - A **4.9% improvement** for the slowest swimmers represent `0.049 * (19:32 + 0:50) =` **60s**, and  `0.049 * (17:58 + 0:45) =` **55s**.
@@ -496,7 +504,7 @@ The idea of the **derivation** is as follows:
     - For instance in [Cagliari ( :it: ) 2024](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) the **seawater** was [more **choppy** :ocean: for the men](https://youtu.be/-Su5kpPz0hY?t=79) than [for the women](https://youtu.be/vFV-kB8727I&t=69s).
     - This might explain why the gap between men and women was slightly smaller than average.
   - The **limited number of events** where the "women-with / men-without" scenario occurs.
-    - Only five races fit this scenario, but the **variance is low**: `std = 0.5%`.
+    - Only five races fit this scenario, but the **variability is low**: `std = 0.5%`.
 
 <details>
   <summary>Click to expand - ✏️ <strong>Derivation of the formula.</strong></summary>
@@ -632,7 +640,7 @@ Over **300m** a **wetsuit should save ~12s** (derivation below).
 - Most of the time, athletes spend **just a bit less than 6s in transition to remove their wetsuit**, and put it correctly into their box.
   - Maybe 4s or 5s when everything goes well? But up to 10s when one leg does not want to get out.
 - **Conclusion**: the **overall time gain of wearing the wetsuit for 300m seems to be positive: around 6s**.
-  - Apart from time saving, wetsuits offer additional benefits: temperature **comfort** and probably saving some energy in the legs.
+  - Apart from time saving, wetsuits offer additional benefits: temperature **comfort** and probably saving some **energy in the legs**. Also, athletes may a couple of seconds to breath while removing it at T1.
 - Conversely, assuming an **overall 6s spent** for removal, wearing a **wetsuit is beneficial above ~150m** for top athletes. Under ~150m, time is lost overall.
 
 **Derivation:** The time for a 300m swim is probably **around 3:30 - 4:00**.
@@ -649,6 +657,11 @@ Over **300m** a **wetsuit should save ~12s** (derivation below).
 
 | Benefit | 03:30 | 03:35 |  03:40   |  03:45   |  03:50   | 03:55 | 04:00 | 04:05 | 04:10 |
 |:-------:|:-----:|:-----:|:--------:|:--------:|:--------:|:-----:|:-----:|:-----:|:-----:|
+|  4.0%   |  8.4  |  8.6  |   8.8    |   9.0    |   9.2    |  9.4  |  9.6  |  9.8  | 10.0  |
+|  4.2%   |  8.8  |  9.0  |   9.2    |   9.5    |   9.7    |  9.9  | 10.1  | 10.3  | 10.5  |
+|  4.4%   |  9.2  |  9.5  |   9.7    |   9.9    |   10.1   | 10.3  | 10.6  | 10.8  | 11.0  |
+|  4.6%   |  9.7  |  9.9  |   10.1   |   10.4   |   10.6   | 10.8  | 11.0  | 11.3  | 11.5  |
+|  4.8%   | 10.1  | 10.3  |   10.6   |   10.8   |   11.0   | 11.3  | 11.5  | 11.8  | 12.0  |
 |  5.0%   | 10.5  | 10.8  |   11.0   |   11.2   |   11.5   | 11.8  | 12.0  | 12.2  | 12.5  |
 |  5.2%   | 10.9  | 11.2  |   11.4   |   11.7   |   12.0   | 12.2  | 12.5  | 12.7  | 13.0  |
 |  5.4%   | 11.3  | 11.6  | **11.9** | **12.2** | **12.4** | 12.7  | 13.0  | 13.2  | 13.5  |
@@ -1207,7 +1220,7 @@ Regarding the **athletes' season**: it **follows** the competition season.
 The results found (**number of races** and **season duration**) are **lower bounds**:
 - Athletes participate in **other formats besides World Triathlon olympic and sprint** races.
   - For instance, the [French Grand Prix](https://en.wikipedia.org/wiki/Grand_Prix_de_Triathlon) was very popular in the 2010s.
-  - Some athletes are racing the **Ironman 70.3** format as well.
+  - Some athletes are racing the [supertri](https://supertri.com/) and **Ironman 70.3** formats as well.
 - Their competition season is probably longer, including **indoor races** in the **winter**.
 
 ---
@@ -1823,9 +1836,10 @@ In addition to **paces**, it would be interesting to access **data** such as:
 - However, as mentioned, almost **no swim or run** information is recorded during **races**.
 
 #### :shopping: 2) EQUIPMENT CHOICE
-- For instance, which **wetsuits and running shoes** athletes **prefer**.
-- Not all athletes are **sponsored** by swimming or running brands.
-- Therefore, **some are free to try, compare, and select** the equipment they believe will **make them faster**.
+- This includes **preferences**, e.g. for wetsuits and running shoes, among athletes.
+- Not all athletes are **sponsored** by swimming or running brands. Therefore, many have the **freedom** to experiment, compare, and choose the equipment **they believe will enhance their performance**.
+  - Specifically: track how many athletes wore Asics, Adidas, Nike, New Balance, etc., at major events, noting the models used, and **exclude those provided by sponsors**.
+- _I recall reading about a similar project but can no longer find the reference._
 
 #### :moneybag: 3) MONEY
 
@@ -1843,8 +1857,9 @@ It would be interesting to investigate the **financial aspects** of the competit
   - However, in some cases, this approach may not be ideal, and it would be interesting to analyse the differences.
 - The [decision to focus on the **top 5-9**](#books-data) is, I believe, relevant for capturing a stable and consistent **representation of the general competitive field**.
   - However, focusing on the **top performance** (e.g. best time or top-3) or using a **broader range** could also provide valuable insights.
-- Performing advanced analyses of **cycling performances** would be interesting.
+- Perform advanced analyses of **cycling performances** would be interesting.
   - Only using **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
+- Analyze the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
 - ...
 
 ---
