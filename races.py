@@ -949,7 +949,8 @@ def process_results_wetsuit(df):
         ax.set_title(col, fontsize=16)
     for ax, row in zip(axes[:, 0], rows_names):
         ax.set_ylabel(row, rotation=90, fontsize=16)
-
+    for ax in axes.flat:
+        ax.xaxis.set_major_formatter(PercentFormatter(1))
     plt.tight_layout()
     add_watermark(fig, y=0.94)
     plt.savefig(str(res_dir / "wm_swim.png"), dpi=300)
