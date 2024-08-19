@@ -1306,6 +1306,22 @@ def process_sports(df):
                     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 54303)][
                         f"{sport}_mean_{suffix}"]
 
+                # if i_sport == 1 and distance_category == "standard":
+                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 165396)][
+                #         f"{sport}_mean_{suffix}"]
+                #
+                # if i_sport == 1 and distance_category == "sprint":
+                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 184828)][
+                #         f"{sport}_mean_{suffix}"]
+                #
+                # if i_sport == 2 and distance_category == "standard":
+                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 80081)][
+                #         f"{sport}_mean_{suffix}"]
+                #
+                # if i_sport == 2 and distance_category == "sprint":
+                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 78733) & (df['event_id'] != 153774)][
+                #         f"{sport}_mean_{suffix}"]
+
                 data_mean = data.mean()
                 data_std = data.std()
 
