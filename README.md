@@ -573,7 +573,7 @@ The idea of the **derivation** is as follows:
       - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.5%` with `0.3%` standard error**.
 - **2) Events consistency**:
   - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that **all have the following properties**: **WTCS** and **olympic-format**.
-    - The five **venues** are: Yokohama ( :jp: ), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
+    - The five **venues** are: Yokohama ( :jp: ) (twice), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
   - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **230 events**.
     - This is inconsistent.
   - Instead, `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
@@ -609,8 +609,8 @@ The idea of the **derivation** is as follows:
 
 Here are **some findings of related scientific works**:
 
-- [This 2019 research by Gay et al.](https://pubmed.ncbi.nlm.nih.gov/30958047/) asked 33 swimmers to perform 2×400-m maximal front crawl in a 25-m swimming pool (with wetsuit and swimsuit).
-  - The **wetsuit** allows for a **6% improvement** (p < 0.001).
+- [This 2019 research by Gay et al.](https://pubmed.ncbi.nlm.nih.gov/30958047/) asked 33 swimmers to perform 2×400-m maximal front crawl in a 25-m swimming pool, with wetsuit and with swimsuit. Participants were good swimmers, but not as fast as ITU elite athletes: **1:27 / 100m** average on the 400m with swimsuit.
+  - The **wetsuit** allows for a **~6% improvement**.
   - Interestingly: _"Swimmers **reduced stroke rate** and **increased stroke length** (by 4%) to benefit from the hydrodynamic reduction of the wetsuit and increase their swimming efficiency."_
 - [This 2022 meta study by Gay et al.](https://www.mdpi.com/2673-9488/2/4/16) concludes from 26 studies, a _"**3.2–12.9% velocity increments** in distances ranging from 25 to 1500 m"_ for the **full-body wetsuit**.
   - The range is broad: it depends on many factors such as the **profile of the swimmer** (age, level, triathlete or swimmer), the **swimming conditions** (temperature, 25m pool vs open water) and the **wetsuit** itself.
@@ -628,7 +628,7 @@ The **5.5% improvement** for top swimmer (5th-9th) **derived from the World Tria
 
 When they can choose, **pro athletes decide to use the wetsuit** for **~300m swim**, e.g. during **mixed team relay**. Examples:
   - [2018 Nottingham ( :gb: ) ](https://www.triathlon.org/results/result/2018_itu_world_triathlon_mixed_relay_series_nottingham/323321): [video](https://www.youtube.com/watch?v=B4LHN6GeTF4).
-  - [2022 Leeds ( :gb: )](https://triathlon.org/results/result/2022_world_triathlon_championship_series_leeds/550671): [pic1](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2553.jpg) and [pic2](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2448.jpg)
+  - [2022 Leeds ( :gb: )](https://triathlon.org/results/result/2022_world_triathlon_championship_series_leeds/550671): [pic1](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2553.jpg) and [pic2](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2448.jpg).
   - [2023 Sunderland ( :gb: ) ](https://triathlon.org/results/result/2023_world_triathlon_championship_series_sunderland/576189): [video](https://www.youtube.com/watch?v=xufIoKMYlLo). (Here the wetsuit was mandatory: 13.7°C water :cold_face:)
 
 **_Is this decision sound?_**
