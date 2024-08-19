@@ -484,8 +484,13 @@ def get_events_results() -> pd.DataFrame:
 
     # todo: these params are important and should be set outside
     n_results_min = 25
-    i_first = 4  # 5-th
-    i_last = 9  # 10-th
+    # 5th-9th
+    i_first = 4
+    i_last = 9
+
+    # top3
+    # i_first = 0
+    # i_last = 3
     use_best_in_each_sport = True
     # use_best_in_each_sport = False
 
@@ -631,7 +636,7 @@ def get_events_results() -> pd.DataFrame:
                     events_result[f"{column.replace('_s', '')}_mean{suffix}"] = times.mean()
                     events_result[f"{column.replace('_s', '')}_std{suffix}"] = times.std()
 
-                    times_last = np.array(sorted(list(column_results))[-i_last: -i_first])
+                    times_last = np.array(sorted(list(column_results))[-i_last: -i_first if i_first > 0 else None])
                     # times_last = np.array(sorted(list(column_results))[19: 24])
                     if column in [f"{s}_s" for s in sports]:
                         assert times_last[0] > 1, times_last
@@ -1271,7 +1276,8 @@ def process_sports(df):
     fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(16, 16))
 
     fig.suptitle(
-        f"TIMES AND PACES\n({len(df)} events)",
+        f"TIMES AND PACES\n({len(df)} events)\n 5th-9th IN EACH LEG",
+        # f"TIMES AND PACES\n({len(df)} events)\nTOP-3 IN EACH LEG",
         fontsize=20
     )
 
@@ -1354,6 +1360,7 @@ def process_sports(df):
 
     add_watermark(fig)
     plt.savefig(str(res_dir / "sports_paces.png"), dpi=300)
+    # plt.savefig(str(res_dir / "sports_paces_top3.png"), dpi=300)
 
     plt.show()
 
@@ -1917,12 +1924,14 @@ def process_results_repeated_events(df):
             )
 
             fig.suptitle(
-                f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'}",
+                f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'} - 5th-9th IN EACH LEG",
+                # f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'} - TOP-3 IN EACH LEG",
                 fontsize=20
             )
             plt.tight_layout()
             add_watermark(fig)
             plt.savefig(str(res_dir / f"repeated_events_{distance_category}_{suffix}.png"), dpi=300)
+            # plt.savefig(str(res_dir / f"repeated_events_{distance_category}_{suffix}_top3.png"), dpi=300)
             plt.show()
 
 

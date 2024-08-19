@@ -206,6 +206,15 @@ It is worth recalling the [data](#books-data) settings:
 Note: The distribution of swim times includes races **with and without wetsuit**. A [subsequent section](#penguin-wetsuit-benefit) does the distinction (see its _"second method"_ subsection), which reduces the standard deviation by 5-10s.
 
 <details>
+  <summary>Click to expand - 🚀 <strong>Same plots for the Top-3.</strong></summary>
+
+|  ![sports_paces_top3.png](res/sports_paces_top3.png)  | 
+|:-----------------------------------------------------:| 
+| *Times and paces, considering the Top-3 in each leg.* |
+
+</details>
+
+<details>
   <summary>Click to expand - ⏱️ <strong>Pace/speed/5k/10k conversion for the run.</strong></summary>
 
 | Run Pace (M:SS) | Speed (km/h) | 5k Time (MM:SS) | 10k Time (MM:SS) |
@@ -962,6 +971,21 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 | ![repeated_events_sprint_m.png](res/repeated_events_sprint_m.png) | 
 |:-----------------------------------------------------------------:| 
 |                       *Sprint format. Men.*                       |
+
+</details>
+
+---
+
+<details>
+  <summary>Click to expand - 🚀 <strong>Same plots for the Top-3.</strong></summary>
+
+| ![repeated_events_standard_w_top3.png](res/repeated_events_standard_w_top3.png) | 
+|:-------------------------------------------------------------------------------:| 
+|                   *Olympic format. Top-3 Women in each leg.*                    |
+
+| ![repeated_events_standard_w_top3.png](res/repeated_events_standard_m_top3.png) | 
+|:-------------------------------------------------------------------------------:| 
+|                    *Olympic format. Top-3 Men in each leg.*                     |
 
 </details>
 
