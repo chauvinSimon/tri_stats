@@ -484,8 +484,8 @@ def get_events_results() -> pd.DataFrame:
 
     # todo: these params are important and should be set outside
     n_results_min = 25
-    i_first = 5
-    i_last = 10  # excluded
+    i_first = 4  # 5-th
+    i_last = 9  # 10-th
     use_best_in_each_sport = True
     # use_best_in_each_sport = False
 
@@ -632,7 +632,7 @@ def get_events_results() -> pd.DataFrame:
                     events_result[f"{column.replace('_s', '')}_std{suffix}"] = times.std()
 
                     times_last = np.array(sorted(list(column_results))[-i_last: -i_first])
-                    # times_last = np.array(sorted(list(column_results))[20: 25])
+                    # times_last = np.array(sorted(list(column_results))[19: 24])
                     if column in [f"{s}_s" for s in sports]:
                         assert times_last[0] > 1, times_last
                     events_result[f"{column.replace('_s', '')}_mean{suffix}_last"] = times_last.mean()
