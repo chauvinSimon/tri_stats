@@ -299,7 +299,7 @@ Notes about **swim data**:
 - Some outliers have been removed - can it be due to the **swim being in an ocean/sea? :ocean:**:
   - **25%** at [2022 World Triathlon Cup Miyazaki ( :jp: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_miyazaki) (sprint): 5th women and men in resp. [`11:03`](https://triathlon.org/results/result/2022_world_triathlon_cup_miyazaki/550760) and [`08:47`](https://www.triathlon.org/results/result/2022_world_triathlon_cup_miyazaki/550759).
   - **27%** at [2023 World Triathlon Cup Valencia ( :es: )](https://www.triathlon.org/events/event/2023_world_triathlon_cup_valencia) (olympic): 5th women and men in resp. [`22:18`](https://triathlon.org/results/result/2023_world_triathlon_cup_valencia/582219) and [`17:30`](https://www.triathlon.org/results/result/2023_world_triathlon_cup_valencia/582218).
-  - **28%** at [2009 Dextro Energy Triathlon - ITU World Championship Grand Final Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas) (olympic): Liz Blatchford and Javier Gomez are 5th out of water in resp. [`21:47`](https://www.triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4818) and [`17:02`](https://triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4819).  
+  - **28%** at [2009 Dextro Energy Triathlon - ITU World Championship Grand Final Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas) (olympic): Liz Blatchford ( :gb: ) and Javier Gomez ( :es: ) are 5th out of water in resp. [`21:47`](https://www.triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4818) and [`17:02`](https://triathlon.org/results/result/2009_dextro_energy_triathlon_-_itu_world_championship_grand_final_gold_coas/4819).
 
 ---
 
@@ -953,7 +953,7 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 ---
 
 <details>
-  <summary>Click to expand - 🚀 <strong>Sprint format.</strong></summary>
+  <summary>Click to expand - 🚀 <strong>Same plots for the Sprint format.</strong></summary>
 
 | ![repeated_events_sprint_w.png](res/repeated_events_sprint_w.png) | 
 |:-----------------------------------------------------------------:| 
@@ -1621,7 +1621,7 @@ From the UN distribution, the **expected** number of births for each quarter is 
 | Q3 |       820        |     893.717     |
 | Q4 |       773        |     845.592     |
 
-The number of births in the **two columns are very different**: more observations than expected for `Q1`, fewer for `Q3` and `Q4`.
+The number of births in the **two columns look very different**: more observations than expected for `Q1`, fewer for `Q3` and `Q4`.
 - The situation is similar to the case of a **6-sided dice**, which is **suspected to be biased**. :game_die:
   - After rolling the die many times and counting each outcome, one can ask:
   - _Is just due to **randomness** or is it because the **dice is unfair**?_
@@ -1664,12 +1664,12 @@ For more details about the derivation:
 
 Here is one **possible explanation**:
 - Kids born on **January, 1st and December 31st** of the same year compete in the **same age category**.
-- For example, at the aged of 12, a 12-month difference represents **10% of their lifetime**.
+- For example, at the age of 12, a 12-month difference represents **10% of their lifetime**.
 - A 12-year kid born in January could, in theory, be ~10% **physically more developed (in terms of strength and stamina)** than one born in December.
 - This **edge** could give an advantage to kids and teenagers born in the first months of a year during their early **races in youth categories**.
 - They are **more likely** to **perform well, stand out, gain experience, and get selected for international competitions**, eventually **becoming professional**. :trophy:
   - Similar to a snowball effect. :cyclone:
-- This phenomenon, known as [**relative age effect**](https://en.wikipedia.org/wiki/Relative_age_effect), was observed on young Spanish triathletes by [Ferriz et al.](https://www.mdpi.com/2071-1050/12/17/6792) in 2020.
+- This phenomenon, known as [**relative age effect**](https://en.wikipedia.org/wiki/Relative_age_effect), was also observed on young Spanish triathletes by [Ferriz et al.](https://www.mdpi.com/2071-1050/12/17/6792) in 2020.
 
 ---
 
@@ -1684,7 +1684,7 @@ To maximize the amount of data, **all athletes registered with World Triathlon**
 
 | ![bmi.png](res/bmi.png) | 
 |:-----------------------:| 
-|   *Body mass index.*    |
+|   *Body Mass Index.*    |
 
 | ![weight_height.png](res/weight_height.png) | 
 |:-------------------------------------------:| 
@@ -1825,9 +1825,9 @@ In addition to **paces**, it would be interesting to access **data** such as:
     - "Athletes may not use **communication devices** of any type, including but not limited to cell phones, **smart watches** ...".
     - "Propulsion devices that create an advantage for the athlete, or a risk to others, are forbidden". _Could a sport-watch increase the propulsion surface or be harmful to others in case of contact?_
     - On the other hand, the **swim section** states: "**Electronic devices may be used** in the **competition** unless they are distracting the athlete from paying full attention to their surroundings".
-- A recent exception was [Cassandre Beaugrand ( :fr: ) in Gagliari ( :it: )](https://youtu.be/vFV-kB8727I?t=189). Also at the [Olympics in Paris](https://www.francetvinfo.fr/les-jeux-olympiques/triathlon/triathlon-aux-jo-de-paris-2024-cassandre-beaugrand-de-princesse-a-reine-du-triathlon_6698148.html). _Maybe to pace her 10k?_
+- A recent exception was [Cassandre Beaugrand ( :fr: ) holding a watch in Gagliari ( :it: )](https://youtu.be/vFV-kB8727I?t=189). Also at the [Olympics in Paris](https://www.francetvinfo.fr/les-jeux-olympiques/triathlon/triathlon-aux-jo-de-paris-2024-cassandre-beaugrand-de-princesse-a-reine-du-triathlon_6698148.html). _Maybe to pace her 10k?_
 - The **GPS features** of activity trackers could also provide **more precise estimations of the course distances**.
-  - Especially for the **run**, and even for the **swim, to compare the lines**.
+  - Especially for the **run**, and even for the **swim, to compare the trajectories**.
 - Some athletes seem to use **heart rate monitor (HRM) belts**, such as [Kristian Blummenfeld ( :norway: ) at Tokyo 2021](https://triathlon.org/news/article/kristian_blummenfelt_crowned_tokyo_2020_olympic_champion).
   - But as far as I know, no **stroke rate**, **cadence** or **GPS** data can be recorded with these devices.
 
@@ -1836,30 +1836,36 @@ In addition to **paces**, it would be interesting to access **data** such as:
 - However, as mentioned, almost **no swim or run** information is recorded during **races**.
 
 #### :shopping: 2) EQUIPMENT CHOICE
-- This includes **preferences**, e.g. for wetsuits and running shoes, among athletes.
-- Not all athletes are **sponsored** by swimming or running brands. Therefore, many have the **freedom** to experiment, compare, and choose the equipment **they believe will enhance their performance**.
-  - Specifically: track how many athletes wore Asics, Adidas, Nike, New Balance, etc., at major events, noting the models used, and **exclude those provided by sponsors**.
-- _I recall reading about a similar project but can no longer find the reference._
+
+What is the **best wetsuit**? What are the **fastest running shoes**?
+- There are already some tests and reports conducted by researchers.
+- However, I believe that **examining athletes' preferences** would provide **more reliable and valuable** results.
+
+Not all athletes are **sponsored** by swimming or running brands.
+- Therefore, many have the **freedom** to **experiment, compare, and choose** the equipment **they believe will enhance their performance**.
+- As an example, one could track how many athletes wore Asics, Adidas, Nike, New Balance, etc., at major events, noting the models used, and **exclude those provided by sponsors**.
+
+_I recall reading about a similar project but can no longer find the reference._
 
 #### :moneybag: 3) MONEY
 
 It would be interesting to investigate the **financial aspects** of the competitions, such as:
 - The **prize money** for the different World Triathlon race categories.
 - The event **registration costs**.
-- Eventually, to estimate **from which rank an athlete can make a descent living**. (Of course sponsoring and federation support also play a role).
+- Eventually, to estimate **from which rank an athlete can make a descent living**. (Of course, sponsoring and federation support also play a role).
 
 #### :spaghetti: 4) MISCELLANEOUS
 
 - Analyse the **correlation** between **transition ranking** and **finish ranking**.
   - Especially for T2.
 - Further compare **WTCS** and **world-cups**.
-  - In most sections of this document, these two event-categories have been merged to **increase the dataset size** and hopefully obtain more statistically significant results.
+  - In multiple sections of this document, these two event-categories have been merged to **increase the dataset size** and hopefully obtain more statistically significant results.
   - However, in some cases, this approach may not be ideal, and it would be interesting to analyse the differences.
 - The [decision to focus on the **top 5-9**](#books-data) is, I believe, relevant for capturing a stable and consistent **representation of the general competitive field**.
   - However, focusing on the **top performance** (e.g. best time or top-3) or using a **broader range** could also provide valuable insights.
 - Perform advanced analyses of **cycling performances** would be interesting.
-  - Only using **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
-- Analyze the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
+  - Additional data may be needed: drawing conclusions from the **bike split times** alone is challenging, due to the influence of **drafting** and pack dynamics.
+- Analyse the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
 - ...
 
 ---
@@ -1879,7 +1885,7 @@ Plots can be reproduced:
 :warning: Most **summary numbers** given in this section are **AVERAGES**.
 - For instance **race-averages** are computed from the 5th to 9th best times of **each leg**, and sometimes **averaged** over multiples years.
 
-Here are some **key takeaways**:
+Here are some simplified **key takeaways**:
 - :stopwatch: The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%.
 - :athletic_shoe: While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k.
 - :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**.
@@ -1888,21 +1894,21 @@ Here are some **key takeaways**:
 - :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
 - :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
 - :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.
-- :one_piece_swimsuit: Swim times are **~5% faster with wetsuit** (to be refined).
+- :one_piece_swimsuit: Swim is **~5% faster with wetsuit** (to be refined).
 - :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**.
-- :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** (28% for men and 7% for women) in the olympic format and is getting even rarer.
-- :bicyclist: The **size of the front group** after bike averages around **15**, decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races.
+- :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer.
+- :bicyclist: The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races.
 - :athletic_shoe: Over **2/3 of races** are won by the **best runner**.
 - :camera_flash: Winning via **sprint finish** is more common in men's races, occurring **50% more frequently**.
 - :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**.
-- :straight_ruler: The gaps between the winner and second place are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
+- :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
-- :calendar: On average, athletes raced **10 times** (in world cups or world series) in 2019 and 2023, compared to **6 times in 2009**.
+- :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**.
 - :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
 - :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:.
 - :birthday: Athletes finishing 5th-9th are, on average, **26.5 to 27.5 years old**.
 - :checkered_flag: Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations.
-- :bar_chart: Someone **born earlier in the year** are **more likely** to become professional triathletes compared to those born later in the same year.
+- :bar_chart: Someone **born earlier in the year** is **more likely** to become professional triathletes compared to those born later in the same year.
 
 ---
 
