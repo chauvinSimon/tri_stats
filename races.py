@@ -861,6 +861,32 @@ def compute_diff(df):
     return df
 
 
+def drop_outliers(data, i_sport):
+    # todo: decide how many outliers to remove
+    for _i_sport, event_id in [
+        (0, 54303),  # 2012 Mooloolaba ITU Triathlon World Cup
+
+        (1, 165396),  # 2022 World Triathlon Cup Pontevedra
+        (1, 184828),  # 2024 World Triathlon Cup Hong Kong
+
+        (2, 80081),  # 2014 Tongyeong ITU Triathlon World Cup
+        (2, 78733),  # 2014 New Plymouth ITU Triathlon World Cup
+        (2, 153774),  # 2021 World Triathlon Cup Huatulco
+        (2, 109660),  # 2017 Madrid ITU Triathlon World Cup
+        (2, 45133),  # 2011 Huatulco ITU Triathlon World Cup
+
+        # (2, 175736),  # 2023 World Triathlon Cup Brasilia
+    ]:
+        if i_sport == _i_sport:
+            if event_id in data['event_id'].values:
+                # event_row = data[data['event_id'] == event_id].iloc[0]
+                # print(f"dropping {sports[_i_sport]} of {event_id}: {event_row['event_title']}")
+                # sport_emoji = [":swimmer:", ":bicyclist:", ":runner:"]
+                # print(f"dropping {sport_emoji[_i_sport]} [{event_row['event_year']} {event_row['event_venue']} ( {country_emojis[event_row['event_country_noc']] if event_row['event_country_noc'] in country_emojis else event_row['event_country_noc']} )]({event_row['event_listing']}) ({event_row['prog_distance_category'].replace('standard', 'olympic')}).")
+                data = data[data['event_id'] != event_id]
+    return data
+
+
 def process_results_wetsuit(df):
     # remove outliers?
     outliers = df[df["swim_diff_percent"] >= 0.22]
@@ -1285,13 +1311,13 @@ def process_sports(df):
         for i_sport, sport in enumerate(sports):
 
             x_max = max(
-                df[df['prog_distance_category'] == distance_category][f"{sport}_mean_m"].max(),
-                df[df['prog_distance_category'] == distance_category][f"{sport}_mean_w"].max()
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_m"].max(),
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_w"].max()
             ) + 10
 
             x_min = min(
-                df[df['prog_distance_category'] == distance_category][f"{sport}_mean_m"].min(),
-                df[df['prog_distance_category'] == distance_category][f"{sport}_mean_w"].min()
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_m"].min(),
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_w"].min()
             ) - 10
 
             for i_suffix, suffix in enumerate(["w", "m"]):
@@ -1299,29 +1325,9 @@ def process_sports(df):
                     "w": "pink",
                     "m": "deepskyblue"
                 }
-                data = df[df['prog_distance_category'] == distance_category][f"{sport}_mean_{suffix}"]
-
-                if i_sport == 0 and distance_category == "standard":
-                    # remove Mooloolaba 2012 outlier
-                    data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 54303)][
-                        f"{sport}_mean_{suffix}"]
-
-                # if i_sport == 1 and distance_category == "standard":
-                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 165396)][
-                #         f"{sport}_mean_{suffix}"]
-                #
-                # if i_sport == 1 and distance_category == "sprint":
-                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 184828)][
-                #         f"{sport}_mean_{suffix}"]
-                #
-                # if i_sport == 2 and distance_category == "standard":
-                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 80081)][
-                #         f"{sport}_mean_{suffix}"]
-                #
-                # if i_sport == 2 and distance_category == "sprint":
-                #     data = df[(df['prog_distance_category'] == distance_category) & (df['event_id'] != 78733) & (df['event_id'] != 153774)][
-                #         f"{sport}_mean_{suffix}"]
-
+                data = df[df['prog_distance_category'] == distance_category]
+                data = drop_outliers(data, i_sport)
+                data = data[f"{sport}_mean_{suffix}"]
                 data_mean = data.mean()
                 data_std = data.std()
 
@@ -1731,6 +1737,7 @@ def process_results_repeated_events(df):
             for i_sport, sport in enumerate(sports):
                 # add std to bars
                 data = df[df['prog_distance_category'] == distance_category]
+                data = drop_outliers(data, i_sport)
 
                 year_grouping = data.groupby("event_year")
                 n_entries = dict(year_grouping["prog_distance_category"].count())
@@ -3038,10 +3045,10 @@ def main():
     df = compute_diff(df)
     df = add_year_and_event_cat(df)
 
-    # process_sports(df.copy())
+    process_sports(df.copy())
     # process_results_wetsuit(df.copy())
-    process_results_w_vs_m(df.copy())
-    # process_results_repeated_events(df.copy())
+    # process_results_w_vs_m(df.copy())
+    process_results_repeated_events(df.copy())
     # process_scenarios(df.copy())
     # process_sprint_finish(df.copy())
     # process_ages(df.copy())

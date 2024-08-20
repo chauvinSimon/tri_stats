@@ -206,7 +206,7 @@ It is worth recalling the [data](#books-data) settings:
 Note: The distribution of swim times includes races **with and without wetsuit**. A [subsequent section](#penguin-wetsuit-benefit) does the distinction (see its _"second method"_ subsection), which reduces the standard deviation by 5-10s.
 
 <details>
-  <summary>Click to expand - 🚀 <strong>Same plots for the Top-3.</strong></summary>
+  <summary>Click to expand - 🏅 <strong>Same plots for the Top-3.</strong></summary>
 
 |  ![sports_paces_top3.png](res/sports_paces_top3.png)  | 
 |:-----------------------------------------------------:| 
@@ -268,11 +268,22 @@ Note: The distribution of swim times includes races **with and without wetsuit**
 
 </details>
 
-Outliers:
-- The swim of [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) has been dropped - see the previous section about [T1](#T1).
-- The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) is kept, despite the **current** on the way back which made it very though:
-  - 20:26 (**01:22** /100m) for men.
-  - 22:33 (**01:30** /100m) for women.
+---
+
+Some **outliers** have been **dropped**:
+- :swimmer: [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) (olympic).
+  - See the previous section about [T1](#T1)
+- :bicyclist: [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) (olympic).
+- :bicyclist: [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong) (sprint).
+- :runner: [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup) (olympic).
+- :runner: [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup) (sprint).
+- :runner: [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) (olympic).
+- :runner: [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) (olympic).
+- :runner: [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup) (sprint).
+
+The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) is kept, despite the **current** on the way back which made it very though, but kept:
+- 20:26 (**01:22** /100m) for men.
+- 22:33 (**01:30** /100m) for women.
 
 **Sprint vs olympic** format:
 - :swimmer: Swim **paces are almost identical** for 750m and 1500m: about **1s / 100m** difference.
@@ -951,6 +962,8 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 
 # :spiral_calendar: LEVEL OVER YEARS
 
+The same **outlier removal** is applied as described in the [PACE section](#stopwatch-paces).
+
 | ![repeated_events_standard_w.png](res/repeated_events_standard_w.png) | 
 |:---------------------------------------------------------------------:| 
 |                       *Olympic format. Women.*                        |
@@ -977,7 +990,7 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 ---
 
 <details>
-  <summary>Click to expand - 🚀 <strong>Same plots for the Top-3.</strong></summary>
+  <summary>Click to expand - 🏅 <strong>Same plots for the Top-3.</strong></summary>
 
 | ![repeated_events_standard_w_top3.png](res/repeated_events_standard_w_top3.png) | 
 |:-------------------------------------------------------------------------------:| 
@@ -986,6 +999,14 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 | ![repeated_events_standard_w_top3.png](res/repeated_events_standard_m_top3.png) | 
 |:-------------------------------------------------------------------------------:| 
 |                    *Olympic format. Top-3 Men in each leg.*                     |
+
+| ![repeated_events_sprint_w_top3.png](res/repeated_events_sprint_w_top3.png) | 
+|:---------------------------------------------------------------------------:| 
+|                  *Sprint format. Top-3 Women in each leg.*                  |
+
+| ![repeated_events_sprint_w_top3.png](res/repeated_events_sprint_m_top3.png) | 
+|:---------------------------------------------------------------------------:| 
+|                   *Sprint format. Top-3 Men in each leg.*                   |
 
 </details>
 
