@@ -271,14 +271,11 @@ Note: The distribution of swim times includes races **with and without wetsuit**
 ---
 
 Some **outliers** have been **dropped**:
-- **Swim** of [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) (olympic).
-  - See the previous section about [T1](#T1).
-- **Bike** of [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) (olympic) and [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong) (sprint).
-- **Run** of [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup) (olympic), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup) (sprint), [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) (olympic), [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) (olympic) and [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup) (sprint).
+- :swimmer: of [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup): see the previous section about [T1](#T1).
+- :bicyclist: of [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) and [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong).
+- :runner: of [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup), [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) and [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup).
 
-The **swim** of **[2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) is kept**, despite the **current** on the way back which made it very though, but kept:
-- 20:26 (**01:22** /100m) for men.
-- 22:33 (**01:30** /100m) for women.
+---
 
 **Sprint vs olympic** format:
 - :swimmer: Swim **paces are almost identical** for 750m and 1500m: about **1s / 100m** difference.
