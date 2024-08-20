@@ -29,35 +29,45 @@ Data are collected from the [Triathlon.org API](https://developers.triathlon.org
 - **Event**: only **`world-cups`**, **`world-series`** (called **WTCS**) and **`games related events`** (Commonwealth, Olympics and Olympic test events).
 - **Distance**: only **`sprint`** (`750 - 20 - 5`) and **`olympic`** (also called "standard": `1500 - 40 - 10`) formats.
 - **Minimum number of finishers**: `25`.
-- IMPORTANT: How to **summarize** all split-times of one race?
+- :warning: **IMPORTANT**: How to **summarize** all split-times of one race?
   - For each leg (`swim`, `t1`, `bike`, `t2`, `run`), **an average of `5` times** is computed.
-  - **The `5`-th to `9`-th best times** of **each sport** are used to compute this average.
+  - Specifically, **the `5`-th to `9`-th best times** in **each sport** are used to compute this average.
+  - This **choice is arbitrary** but, as explained below, **relevant for my goal**: "Analysing the **general competitive field** in **each sport**".
+  - Other settings, e.g. Top-3, Top-10 and Top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
+  - :medal_sports: Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** offer **Top-3 analyses** as well.
+
+---
 
 Why consider **split-times** based on the **ranking in each sport**?
-- Considering the time splits of athletes based **only on their finish ranking** is **problematic** for comparison.
-  - A race might feature a strong breakaway group of swimmers reaching T1 with a significant lead, filling the top-10 positions.
-  - In the same race, a large pack might arrive at T1 together, with the strongest runners then dominating the overall finish.
-  - The split times of the finish-top-10 athletes would vary greatly in these different scenarios, making overall comparisons between races **unreliable**.
-- On the other hand, considering the **ranking in each sport** allows for **consistent comparisons** across races, irrespective of overall finish dynamics.
+- The split times of the **finish-top-10 athletes** can vary greatly depending on the **race scenario**:
+  - For instance, a race might feature a **strong breakaway group of swimmers** reaching T2 with a significant lead, filling the top-10 positions.
+  - In the same race, a large pack might arrive at T2 together, with the **strongest runners** then dominating the overall finish.
+  - See **[this dedicated section](#dart-race-scenario)** for an **analysis of race scenarios**.
+- On the other hand, considering the **ranking in each sport** allows for more **consistent and reliable comparisons** across races.
+
+---
 
 Why consider the **`5`-th to `9`-th best times**?
 - To **mitigate outliers**:
-  - The **best athletes** might miss a race due to injury, scheduling conflicts, or other reasons. They might also have an exceptionally good or bad day.
-  - By focusing on the `5`-th to `9`-th times, the analysis becomes less sensitive to these anomalies, providing a **more stable and consistent representation** of the general competitive field.
+  - **Outstanding swimmers, riders, or runners** might **miss a race** due to injury, scheduling conflicts, or other reasons, or they might have **unusually good or bad performances**.
+  - Focusing on the `5`-th to `9`-th times reduces the impact of these anomalies, providing a **more robust representation** of the **general competitive field**.
 - Against **strategic variability** among top performers:
-  - The top-4 athletes might employ strategic tactics, such as testing each other and waiting for a final sprint, leading to **varying performances**.
-  - Athletes ranked `5`-th to `9`-th are more likely to **give their all without strategic calculations**, resulting in **more robust and consistent comparative times across races**.
+  - The top-4 athletes might engage in **strategic tactics** on the **run**, such as testing each other or waiting for a final sprint, leading to **varying performances**.
+    - Similarly, a top athlete may **slow down to celebrate a secured win** or **push hard** for gold in a close race, leading to **significantly different run times**.
+  - Conversely, I believe athletes ranked `5`-th to `9`-th are more likely to **give their all without strategic calculations**, resulting in **more robust and consistent comparative times across races**.
+
+---
 
 What about the data quality?
 - [World Triathlon](https://triathlon.org) puts efforts to uniform/standardize race reports and race timings.
 - But some **manual cleaning** is required.
   - Some information, such as the permission of **wearing wetsuit**, is often missing.
-  - Also, I could not find any way to **access the rankings of past years** via the API.
+  - Also, I could not find any way to **access the rankings of past years** via the [API](https://developers.triathlon.org/reference/ranking-detail).
 - Obviously, **variations in distances**, weather conditions, athlete levels and scenarios make **comparisons between race difficult**.
   - Fortunately, the **number of races** is large enough to smooth out these variations and provide interesting insights.
 - **Comparing swim-times** can be tricky, not just because the **distances vary** between events, but also because the **positions of timing mats** are not consistent.
-  - Most mats are placed directly at the exit of the water, while others are located at the entrance of transition area, which can be hundreds of meters further.
-  - Future results should be more consistent: World Triathlon is currently working on **standardising placement** of timing mats for all to be at swim exit as well as T-In.
+  - Most mats are placed directly at the **exit of the water**, while others are located at the entrance of transition area, which can be **hundreds of meters further**.
+  - Future results should be more consistent: World Triathlon is currently working on **standardising placement** of timing mats for all to be at **swim exit** as well as **T-In**.
 
 # :card_index_dividers: CONTENT
 
