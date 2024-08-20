@@ -33,8 +33,8 @@ Data are collected from the [Triathlon.org API](https://developers.triathlon.org
   - For each leg (`swim`, `t1`, `bike`, `t2`, `run`), **an average of `5` times** is computed.
   - Specifically, **the `5`-th to `9`-th best times** in **each sport** are used to compute this average.
   - This **choice is arbitrary** but, as explained below, **relevant for my goal**: "Analysing the **general competitive field** in **each sport**".
-  - Other settings, e.g. Top-3, Top-10 and Top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
-  - :medal_sports: Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** offer **Top-3 analyses** as well.
+  - Other settings, e.g. Top-1, Top-3, Top-10 and Top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
+  - Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** include **Top-3 analyses** as well. :medal_sports:
 
 ---
 
@@ -50,10 +50,11 @@ Why consider **split-times** based on the **ranking in each sport**?
 Why consider the **`5`-th to `9`-th best times**?
 - To **mitigate outliers**:
   - **Outstanding swimmers, riders, or runners** might **miss a race** due to injury, scheduling conflicts, or other reasons, or they might have **unusually good or bad performances**.
-  - Focusing on the `5`-th to `9`-th times reduces the impact of these anomalies, providing a **more robust representation** of the **general competitive field**.
+    - Example: Therese Feuersinger ( :austria: ) [exits the water](https://youtu.be/WVCUotrmyqY?si=EBgAs7FLYr8uSKxS&t=128) with [~50s](https://triathlon.org/results/result/2024_world_triathlon_cup_chengdu/630187) advance in 2024 Chengdu ( :cn: ). Considering her swim time, in an e.g. **Top-10 average**, is **not appropriate to get a reliable picture of the general level**.
+  - Conversely, the `5`-th to `9`-th times are usually denser, providing a **more robust representation** of the **general competitive field**.
 - Against **strategic variability** among top performers:
   - The top-4 athletes might engage in **strategic tactics** on the **run**, such as testing each other or waiting for a final sprint, leading to **varying performances**.
-    - Similarly, a top athlete may **slow down to celebrate a secured win** or **push hard** for gold in a close race, leading to **significantly different run times**.
+    - Similarly, a top athlete may [**slow down to celebrate a secured win**](https://youtu.be/XMa5Soyx498?si=mR0m4P5DcYQFjg87&t=192) or [**push hard** for gold in a close race](https://youtu.be/zTFx6ha7Kos?si=hPv60RpJjL__v9CT&t=7), leading to **significantly different run times**.
   - Conversely, I believe athletes ranked `5`-th to `9`-th are more likely to **give their all without strategic calculations**, resulting in **more robust and consistent comparative times across races**.
 
 ---
@@ -292,7 +293,7 @@ Some **outliers** have been **excluded**:
 - :bicyclist: There is **less than 1km/h difference** between the 20k and 40k bike.
 - :runner: The 10k run requires **7s/km more** than the 5k.
 
-The next section analyses the time differences between **women and men**.
+The next section analyses the time differences between **women's and men's** performance.
 
 ---
 
@@ -351,9 +352,9 @@ Findings:
 - :straight_ruler: The **standard deviation** is **higher for swim and lower for run**.
   - Because **swim conditions (wind, current, temperature) can vary** and athletes may follow non-straight swim lines leading to larger swim distances?
 - :chart_with_downwards_trend: The **w/m difference has not significantly reduced** on the years, except for the **run leg of the sprint-format races (-0.13 % / year)**.
-  - Note: The line fitting feeds all the points to [`np.polyfit`](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html). Probably some **data processing should be applied**.
-    - For instance year-normalization to account for the very low number of points during the covid pandemic?
-  - In WTCS and games-related events, the **w/m swim gap has reduced (-0.11 % / year)**.
+  - Note: Probably some **data processing should be applied** to the [line fitting](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html).
+    - E.g. to account for the very low number of points during the covid pandemic?
+  - In WTCS and games-related events, the **w/m swim gap has reduced (-0.11 % / year)** as well.
 
 These **percentages can be compared** with those of **swim, bike or run competitions**:
 
@@ -431,9 +432,9 @@ This section tries to answer the question **_"Should worse swimmers be happy whe
   - => => => **Worse swimmers are happy**.
 
 Approach:
-- For each race, the gap between the **5-9th top swimmer** and **5-9th worse swimmer** is computed.
+- For each race, the gap between the **5-9th first swimmers** and **5-9th last swimmers** is computed.
 - These **gaps are split into two groups**: `with-wetsuit` and `without-wetsuit`.
-- The **average gap of both group** are compared to determine **if the wetsuit makes swim gaps smaller or larger**. 
+- The **averages of both group** are compared to determine **if the wetsuit makes swim gaps smaller or larger**. 
 
 |                          ![swim_gaps.png](res/swim_gaps.png)                           | 
 |:--------------------------------------------------------------------------------------:| 
@@ -1029,16 +1030,16 @@ In [this early-2024 video](https://youtu.be/iCpi2sUh6Ko?t=1838), **Vincent Luis*
 The above plots seem **consistent** with this statement. :chart_with_upwards_trend:
 - The figures for women's and men's olympic-format show recent **improvements of the 10k run pace** (green bars) on **WTCS races**. For 2019 -> 2021 -> 2023, paces were:
   - `3:33 -> 3:28 -> 3:23` for women.
-  - `3:05 -> 3:04 -> 2:59` for men.
-- In 2023, `3:00 /km` was **hardly enough to finish between `5`-th and `9`-th on WTCS men's races**.
-- The **`3:00 /km` pace mention by Luis was likely enough to win a WTCS in 2019**, since the `5`-th to `9`-th places were about `3:04`.
+  - `3:06 -> 3:04 -> 2:59` for men.
+- The `3:00 /km` pace mention by Luis was, in **2023**, **hardly enough to finish between `5`-th and `9`-th on WTCS men's races**.
+- The same **`3:00 /km` was, in **2019**, probably enough to win a WTCS**, since the `5`-th to `9`-th places were about `3:06 /km` at that time.
 
 ---
 
 In [this other 2024 video](https://youtu.be/5dyR4zNMsmA?t=840):
 - **Alex Yee** ( :gb: ) mentions that the **run of 2012 London ( :gb: ) Olympics** is a reference: "The run was held as the **best run that has ever been done in triathlon**".
 - He explains: "In the last season _(2023)_, we had a few races which came very close to that".
-- This statement seems to be correct: on the run subplot of the men's olympic format figure, **`London 2012` was the fastest until 2023**.
+- This statement seems also to be correct: on the run subplot of the men's olympic format figure, **`London 2012` was the fastest until 2023**.
 - This [article from triathlon.org](https://www.triathlon.org/news/article/a_chance_for_history_breaking_down_the_stats_of_past_olympic_games), released **just before Paris ( :fr: ) 2024**, confirms: "Brownlee’s times (London ( :gb: ) 2012) will likely come under threat. Indeed, it seems highly likely that we could see the **first ever sub-29** and **sub-33** minute 10km times in an Olympic triathlon this summer."
   - The 5-9th men **ran** at the 2024 Paris Olympics **much slower** that the year before for the **test event**.
   - Also, Alex Yee ( :gb: ) won in 2024 with a **29:49** run, compared to **29:00 in 2023**.
@@ -1053,16 +1054,17 @@ In [this other 2024 video](https://youtu.be/5dyR4zNMsmA?t=840):
   - I do not know if the courses have changed.
   - But if not, the **comparison** should be **very relevant**.
 - **Run times have decreased in the last five editions.** :athletic_shoe: 
-  - Leading to the best ever times in 2024.
-- It is interesting to note that runs were particularly **good on olympics years** (2012, 2016, 2021, 2024), especially for **women**.
-  - Can it be that this race (usually happening early in the season) was used as **qualification criteria** or as a rehearsal and therefore attracting very fit and motivated athletes?
+  - Leading to the best ever times in [2024](https://triathlon.org/results/result/2023_world_triathlon_championship_series_yokohama1/627954).
+- It is interesting to note that runs were particularly **good on olympics years** ([2012](https://triathlon.org/results/result/2012_itu_world_triathlon_yokohama/7817), [2016](https://triathlon.org/results/result/2016_itu_world_triathlon_yokohama/280982), [2021](https://triathlon.org/results/result/2021_world_triathlon_yokohama/452691), [2024](https://triathlon.org/results/result/2023_world_triathlon_championship_series_yokohama1/627955)), especially for **women**.
+  - Can it be that this race (usually happening early in the season) was used as **qualification criteria** or as a rehearsal, and therefore attracting very fit and motivated athletes?
 
 ---
 
 **Hamburg** :de:
 - The event took place **12 times** between 2009 and 2024 in a **sprint** format.
-- **Run times** have been constant until **2024**, where a **clear improvement** can be seen.
-  - The 2024 race was used by many athletes as a **final repetition** before the Olympics.
+- **Run times** have been constant until [**2024**](https://www.triathlon.org/results/result/2024_world_triathlon_championship_series_hamburg/627964), where a **clear improvement** can be seen.
+  - The 2024 race was used by many athletes as a **final repetition** before the Olympics. But still, the **improvement is huge**.
+  - Can it be that the 2024 run course was shorter? Indeed, the [2024 result page](https://www.triathlon.org/results/result/2024_world_triathlon_championship_series_hamburg/627964) indicates `Run 4.905km (2 laps)` for 2024, compared to `Run 5km (2 laps)` for [2022](https://www.triathlon.org/results/result/2022_world_triathlon_championship_series_hamburg/546857).
 
 ---
 
@@ -1080,6 +1082,7 @@ The **bike(s)** :bike:
 - On olympic format, bike times have been **drastically improving** (ignoring covid 2020 year) over the past 6 years, especially for the men.
 - Can it be due to **tech innovations?**
 - Maybe the level has gone up: **it is no longer just about being a good swimmer and an excellent runner?**
+- Maybe some athletes tend to **take more risks** on the bike, sometimes reckless as reports Vincent Luis ( :fr: ) in [this interview](https://youtu.be/iCpi2sUh6Ko?si=PFnh-Cgg24PQTSJZ&t=1250).
 
 ---
 
@@ -1101,11 +1104,11 @@ The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/
 
 **Criticisms** :warning:
 - Not all events have **identical distances** and conditions.
-  - However, **averaging many events** _(the number below the year on the x-axis)_ helps to **mitigate this variability**.
+  - However, **averaging many events** _(the number below the year on the x-axis)_, with multiple venues **repeating every year**, helps to **mitigate this variability**.
 - Swim :swimmer:
   - Distances can vary based on **buoy positions**.
-  - Differences in **water conditions** (e.g. rough sea, current) can significantly affect swim times, making comparisons challenging.
-  - The **wetsuit** may be allowed or not.  
+  - Differences in **water conditions** (e.g. rough sea, current) can also significantly affect swim times, making comparisons challenging.
+  - Last but not least, the **wetsuit** may be allowed or not.  
 - Bike :bicyclist:
   - Weather conditions, particularly **wind** and **rain**, can influence bike times.
   - Variations in **course profiles (hilly vs. flat)** can make direct comparisons of bike times unfair.
@@ -1917,21 +1920,26 @@ It would be interesting to investigate the **financial aspects** of the competit
 
 - Analyse the **correlation** between **transition ranking** and **finish ranking**.
   - Especially for T2.
-- Further compare **WTCS** and **world-cups**.
-  - In multiple sections of this document, these two event-categories have been merged to **increase the dataset size** and hopefully obtain more statistically significant results.
-  - However, in some cases, this approach may not be ideal, and it would be interesting to analyse the differences.
-- The [decision to focus on the **top 5-9**](#books-data) is, I believe, relevant for capturing a stable and consistent **representation of the general competitive field**.
-  - However, focusing on the **top performance** (e.g. best time or top-3) or using a **broader range** could also provide valuable insights.
-- Perform advanced analyses of **cycling performances** would be interesting.
-  - Additional data may be needed: drawing conclusions from the **bike split times** alone is challenging, due to the influence of **drafting** and pack dynamics.
-- Analyse the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
+- Compare **WTCS** and **world-cups** more thoroughly.
+  - These two event-categories have been combined in several sections of this document to **increase the dataset size** and hopefully improve statistical significance.
+  - However, in some cases this approach may not be optimal, and it would be insightful to explore the differences between these categories.
+- The [arbitrary decision to focus on the **top 5-9**](#books-data) was made to capture a stable and consistent **representation of the general competitive field**.
+  - However, examining the **top performance** (e.g. Top-1 or Top-3) or using a **broader range** could also yield valuable insights.
+- Conduct advanced analyses of **cycling performances** would be interesting.
+  - Additional data may be required: drawing conclusions based solely on **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
+- Investigate the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
+- Take a closer look at the **critical start of the bike segment**.
+  - For example, given a lag at T1, how likely is it to catch the first group?
+- Understand the system of **penalties** and their impact on race dynamics.
+  - The 2024 Paris Olympics ( :fr: ) saw a surprising number of penalties: **[6 women out of 51](https://triathlon.org/results/result/paris_2024_olympic_games/655048) and [10 men out of 50](https://triathlon.org/results/result/paris_2024_olympic_games/655047)** received a **15s penalty**.
+  - Before focusing on gaining seconds, some athletes may need to **prioritize avoiding penalties**, such as by **correctly timing their dive** and making sure to **place their helmet inside** the transition box.
 - ...
 
 ---
 
 ## :computer: CODE
 
-Plots can be reproduced:
+The **python code** to fetch the data, set the parameters and generate plots is available in [this GitHub repository](https://github.com/chauvinSimon/tri_stats). To use it,
 
 - Create a key for the World Triathlon API: https://apps.api.triathlon.org/ and add it to a `api_key.txt` file directly placed in `tri_stats/`.
 - Install the required python packages.
