@@ -271,17 +271,12 @@ Note: The distribution of swim times includes races **with and without wetsuit**
 ---
 
 Some **outliers** have been **dropped**:
-- :swimmer: [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) (olympic).
-  - See the previous section about [T1](#T1)
-- :bicyclist: [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) (olympic).
-- :bicyclist: [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong) (sprint).
-- :runner: [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup) (olympic).
-- :runner: [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup) (sprint).
-- :runner: [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) (olympic).
-- :runner: [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) (olympic).
-- :runner: [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup) (sprint).
+- **Swim** of [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) (olympic).
+  - See the previous section about [T1](#T1).
+- **Bike** of [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) (olympic) and [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong) (sprint).
+- **Run** of [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup) (olympic), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup) (sprint), [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) (olympic), [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) (olympic) and [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup) (sprint).
 
-The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) is kept, despite the **current** on the way back which made it very though, but kept:
+The **swim** of **[2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) is kept**, despite the **current** on the way back which made it very though, but kept:
 - 20:26 (**01:22** /100m) for men.
 - 22:33 (**01:30** /100m) for women.
 
@@ -962,7 +957,7 @@ By the way, [World Triathlon rules](https://www.triathlon.org/uploads/docs/World
 
 # :spiral_calendar: LEVEL OVER YEARS
 
-The same **outlier removal** is applied as described in the [PACE section](#stopwatch-paces).
+The same **outlier removal** is applied as described in the [:stopwatch: PACES section](#stopwatch-paces).
 
 | ![repeated_events_standard_w.png](res/repeated_events_standard_w.png) | 
 |:---------------------------------------------------------------------:| 
@@ -1079,13 +1074,13 @@ The **bike(s)** :bike:
 
 ---
 
-**Care** is needed when comparing **swim times**:
-- In the WTCS (green bars), **women's times appear to have reached historic lows**, while 2024 men's times are the third **slowest** since 2009.
-- This is likely because, in the two 2024 olympic WTCS events considered (Yokohama ( :jp: ) and Cagliari  ( :it: )), **women swam with wetsuits while men did not**.
-
 The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/paris_2024_olympic_games/655047) was very though because of the **current** on the way back:
 - 20:26 (**01:22** /100m) for men.
 - 22:33 (**01:30** /100m) for women.
+
+**Care** is needed when comparing **swim times**:
+- In the WTCS (green bars), **women's times appear to have reached historic lows**, while 2024 men's times are the third **slowest** since 2009.
+- This is likely because, in the two 2024 olympic WTCS events considered (Yokohama ( :jp: ) and Cagliari  ( :it: )), **women swam with wetsuits while men did not**.
 
 ---
 

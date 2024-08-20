@@ -881,8 +881,8 @@ def drop_outliers(data, i_sport):
             if event_id in data['event_id'].values:
                 # event_row = data[data['event_id'] == event_id].iloc[0]
                 # print(f"dropping {sports[_i_sport]} of {event_id}: {event_row['event_title']}")
-                # sport_emoji = [":swimmer:", ":bicyclist:", ":runner:"]
-                # print(f"dropping {sport_emoji[_i_sport]} [{event_row['event_year']} {event_row['event_venue']} ( {country_emojis[event_row['event_country_noc']] if event_row['event_country_noc'] in country_emojis else event_row['event_country_noc']} )]({event_row['event_listing']}) ({event_row['prog_distance_category'].replace('standard', 'olympic')}).")
+                # sport_emoji = [":one_piece_swimsuit:", ":bike:", ":athletic_shoe:"]
+                # print(f"dropping {sport_emoji[_i_sport]} of [{event_row['event_year']} {event_row['event_venue']} ( {country_emojis[event_row['event_country_noc']] if event_row['event_country_noc'] in country_emojis else event_row['event_country_noc']} )]({event_row['event_listing']}) ({event_row['prog_distance_category'].replace('standard', 'olympic')}).")
                 data = data[data['event_id'] != event_id]
     return data
 
