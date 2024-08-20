@@ -203,7 +203,7 @@ It is worth recalling the [data](#books-data) settings:
 |:-----------------------------------------:| 
 |    *Distributions of times and paces.*    |
 
-Note: The distribution of swim times includes races **with and without wetsuit**. A [subsequent section](#penguin-wetsuit-benefit) does the distinction (see its _"second method"_ subsection), which reduces the standard deviation by 5-10s.
+Note: The distribution of swim times includes races both **with- and without wetsuit**. A [subsequent section](#penguin-wetsuit-benefit) does the distinction (see its _"second method"_ subsection).
 
 <details>
   <summary>Click to expand - 🏅 <strong>Same plots for the Top-3.</strong></summary>
@@ -270,10 +270,10 @@ Note: The distribution of swim times includes races **with and without wetsuit**
 
 ---
 
-Some **outliers** have been **dropped**:
-- :swimmer: of [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup): see the previous section about [T1](#T1).
-- :bicyclist: of [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) and [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong).
-- :runner: of [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup), [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) and [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup).
+Some **outliers** have been **excluded**:
+- :swimmer: from [2012 Mooloolaba ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup): see the previous section on [T1](#T1).
+- :bicyclist: from [2022 Pontevedra ( :es: )](https://www.triathlon.org/events/event/2022_world_triathlon_cup_pontevedra) and [2024 Hong Kong ( :hong_kong: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_hong_kong).
+- :runner: from [2011 Huatulco, Santa Cruz Bay ( :mexico: )](https://www.triathlon.org/events/event/2011_huatulco_itu_triathlon_world_cup), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/events/event/2014_new_plymouth_itu_triathlon_world_cup), [2014 Tongyeong ( :kr: )](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2017 Madrid ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup) and [2021 Huatulco ( :mexico: )](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup).
 
 ---
 
@@ -699,16 +699,24 @@ The benefit of the wetsuit could be estimated with a second method (less reliabl
 |:------------------------------------------------------------:| 
 |   *Comparing duration of swims with and without wetsuit.*    |
 
-The idea is to compute `improve_percent = (time_no_wetsuit - time_wetsuit) / time_no_wetsuit` with `time_wetsuit` and `time_no_wetsuit` being the **average swim durations** with- and without wetsuit, **using all race results**.
-
-This method leverages **more data**, but its results are **less reliable** since the **swim course distances differ**:
-- For instance, the difference between the fastest and the slowest `sprint`+`men`+`same-equipment` swim is more than 2min. In particular **Mooloolaba** ( :australia: ) swim times (without wetsuit) are **unusually low**.
-- The difference for `olympic`+`men`+`no-wetsuit` is 5min45s.
-- Clearly **swim distances**, or **how swim times are measured**, **differ** despite being given the **same format**.
+The idea is to compare the **average swim durations**, **with-** and **without wetsuit**:
+- `improve_percent = (time_no_wetsuit - time_wetsuit) / time_no_wetsuit`.
+- This formula is applied to **four cases**: W-sprint, W-olympic, M-sprint, M-olympic. And results are written in the title of the above figure.
+- Note how the **swim histograms** of the [:stopwatch: PACES](#stopwatch-paces) section **reveals two distinct modes**: **with-** (in violet, with lower times) and **without wetsuit** (larger times).  
 
 Outliers:
-- The swim of [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) has been dropped - see the previous section about [T1](#T1).
-- The **slowest swim** on the olympic format without wetsuit are for both men and women the **Paris 2024 Olympic Games** ( :fr: ).
+- The swim from [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) has been dropped, see the previous section on [T1](#T1).
+- The **slowest swim** in the **olympic format**, for both men and women, occurred during **Paris 2024 Olympic Games** ( :fr: ).
+
+:warning: **CRITICISMS**.
+- This method incorporates **more data**, but yields **less reliable** results to the following factors:
+  - :straight_ruler: **Swim course distances** vary between races.
+  - :stopwatch: **Timing methods** (e.g., timing mat locations) are **not always consistent**.
+- For exemple:
+  - The **difference** between the fastest and the slowest `sprint`+`men`+`same-equipment` swim exceeds **2 minutes**.
+    - Specifically, swim times at **Mooloolaba** ( :australia: ) are **unusually fast** considering the **absence of wetsuit**.
+  - For `olympic`+`men`+`no-wetsuit`, the difference is **5:45**.
+- Clearly, **swim distances** or **timing methods** vary between races, even when they are **labeled with the same format**.
 
 </details>
 

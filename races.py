@@ -1183,13 +1183,13 @@ def process_results_wetsuit(df):
 
     for i_distance_category, distance_category in enumerate(distance_categories):
         x_max = max(
-            df[df['prog_distance_category'] == distance_category][f"swim_mean_m"].max(),
-            df[df['prog_distance_category'] == distance_category][f"swim_mean_w"].max()
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_m"].max(),
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_w"].max()
         ) + 10
 
         x_min = min(
-            df[df['prog_distance_category'] == distance_category][f"swim_mean_m"].min(),
-            df[df['prog_distance_category'] == distance_category][f"swim_mean_w"].min()
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_m"].min(),
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_w"].min()
         ) - 10
 
         for i_suffix, suffix in enumerate(["w", "m"]):
