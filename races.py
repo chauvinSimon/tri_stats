@@ -3045,10 +3045,14 @@ def main():
     df = compute_diff(df)
     df = add_year_and_event_cat(df)
 
-    process_sports(df.copy())
-    # process_results_wetsuit(df.copy())
+    # df = df[df["event_category"] != "world-cup"]
+    # df = df[df["prog_distance_category"] != "sprint"]
+    # df = df[df["event_venue"].isin(["Yokohama", "Edmonton", "Cagliari", "Stockholm"])]
+
+    # process_sports(df.copy())
+    process_results_wetsuit(df.copy())
     # process_results_w_vs_m(df.copy())
-    process_results_repeated_events(df.copy())
+    # process_results_repeated_events(df.copy())
     # process_scenarios(df.copy())
     # process_sprint_finish(df.copy())
     # process_ages(df.copy())

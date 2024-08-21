@@ -32,9 +32,9 @@ Data are collected from the [Triathlon.org API](https://developers.triathlon.org
 - :warning: **IMPORTANT**: How to **summarize** all split-times of one race?
   - For each leg (`swim`, `t1`, `bike`, `t2`, `run`), **an average of `5` times** is computed.
   - Specifically, **the `5`-th to `9`-th best times** in **each sport** are used to compute this average.
-  - This **choice is arbitrary** but, as explained below, **relevant for my goal**: "Analysing the **general competitive field** in **each sport**".
-  - Other settings, e.g. Top-1, Top-3, Top-10 and Top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
-  - Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** include **Top-3 analyses** as well. :medal_sports:
+  - This **choice is arbitrary** but, as explained below, **relevant for my goal**: _"Analysing the **general competitive field** in **each sport**"._
+  - Other settings, e.g. top-1, top-3, top-10 and top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
+  - Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** include **top-3 analyses** as well. :medal_sports:
 
 ---
 
@@ -50,7 +50,7 @@ Why consider **split-times** based on the **ranking in each sport**?
 Why consider the **`5`-th to `9`-th best times**?
 - To **mitigate outliers**:
   - **Outstanding swimmers, riders, or runners** might **miss a race** due to injury, scheduling conflicts, or other reasons, or they might have **unusually good or bad performances**.
-    - Example: Therese Feuersinger ( :austria: ) [exits the water](https://youtu.be/WVCUotrmyqY?si=EBgAs7FLYr8uSKxS&t=128) with [~50s](https://triathlon.org/results/result/2024_world_triathlon_cup_chengdu/630187) advance in 2024 Chengdu ( :cn: ). Considering her swim time, in an e.g. **Top-10 average**, is **not appropriate to get a reliable picture of the general level**.
+    - Example: In the [2024 World Triathlon Cup Chengdu ( :cn: )](https://triathlon.org/events/event/2024_world_triathlon_cup_chengdu), Therese Feuersinger ( :austria: ) [exited the water](https://youtu.be/WVCUotrmyqY?si=EBgAs7FLYr8uSKxS&t=128) with a **[~50s](https://triathlon.org/results/result/2024_world_triathlon_cup_chengdu/630187) advance**. Considering her swim time, in an e.g. **top-5 average**, is **not appropriate to get a reliable picture of the general level**.
   - Conversely, the `5`-th to `9`-th times are usually denser, providing a **more robust representation** of the **general competitive field**.
 - Against **strategic variability** among top performers:
   - The top-4 athletes might engage in **strategic tactics** on the **run**, such as testing each other or waiting for a final sprint, leading to **varying performances**.
@@ -346,7 +346,7 @@ Findings:
   - Swimming is highly **technique-oriented**.
   - Women often excel in technical sports because these **rely less on raw strength** and more on skill, coordination, and efficiency.
   - Women and men have **different buoyancy**, as explained by Maria Francesca Piacentini, in [this episode](https://scientifictriathlon.com/tts392/) (at 19:00) of the [triathlon show podcast](https://scientifictriathlon.com/podcast/).
-  - As reported by [this 2019 article](https://www.researchgate.net/publication/334664495_Sex_Difference_in_Triathlon_Performance) by Romuald Lepers: "Elite female athletes generally have **7–12% more body fat** than males (Fleck, 1983; Heydenreich et al., 2017). As fat is buoyant in water, **women are less penalized than men in swimming** than they are within **terrestrial events** such as cycling and running. Male triathletes also possess a **larger muscle mass**, greater **muscular strength** and **lower relative body fat** than female triathletes (Knechtle et al., 2010a)."
+  - As reported by [this 2019 article](https://www.researchgate.net/publication/334664495_Sex_Difference_in_Triathlon_Performance) by Romuald Lepers: _"Elite female athletes generally have **7–12% more body fat** than males (Fleck, 1983; Heydenreich et al., 2017). As fat is buoyant in water, **women are less penalized than men in swimming** than they are within **terrestrial events** such as cycling and running. Male triathletes also possess a **larger muscle mass**, greater **muscular strength** and **lower relative body fat** than female triathletes (Knechtle et al., 2010a)."_
 - :runner: The **run** is where the difference is the **largest**.
   - Men typically have **greater muscle mass** and **aerobic capacity**, which can provide an advantage in endurance activities like running.
 - :straight_ruler: The **standard deviation** is **higher for swim and lower for run**.
@@ -386,8 +386,8 @@ These **percentages can be compared** with those of **swim, bike or run competit
   - `times_m = [32:43.77, 32:45.91, 32:52.03, 32:55.19, 32:55.22]`
   - `times_w = [36:42.01, 36:49.02, 36:53.75, 37:02.27, 37:05.13]`
 - :eu: **2022 European TT: `diff_percent = 14.8%`** considering the 5th to 9th [men](https://en.wikipedia.org/wiki/2022_European_Road_Championships_%E2%80%93_Men%27s_time_trial) and [women](https://en.wikipedia.org/wiki/2022_European_Road_Championships_%E2%80%93_Women%27s_time_trial):
-  - `times_m = [27:42.81, 28:01.56, 28:17.61, 28:18.47", 28:27.19]`
-  - `times_w = [32:00.87, 32:01.10, 32:30.76, 32:32.76", 32:37.85]`
+  - `times_m = [27:42.81, 28:01.56, 28:17.61, 28:18.47, 28:27.19]`
+  - `times_w = [32:00.87, 32:01.10, 32:30.76, 32:32.76, 32:37.85]`
 
 :running: **RUN**
 - `diff_percent` is computed in the same way.
@@ -584,7 +584,7 @@ The idea of the **derivation** is as follows:
     - So far, the [**standard deviations**](https://en.wikipedia.org/wiki/Standard_deviation) were computed (`± 3.0%` and `± 0.5%`), telling **how spread out** the observed w/m-swim-diff percentages are:
       - `wm_percent = 8.8% ± 3.0%`.
       - `wm_percent_w_fast = 2.9% ± 0.5%`.
-      - Concretely, in the case of `wm_percent`, `± 3.0%` [can be interpreted](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) as: "~68% of the observed w/m-swim-diff percentages lie between 8.8%-3% and 8.8%+3%".
+      - Concretely, in the case of `wm_percent`, `± 3.0%` [can be interpreted](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule) as: _"~68% of the observed w/m-swim-diff percentages lie between 8.8%-3% and 8.8%+3%"._
     - I am not sure, but from what I understood, in order to produce a **confidence interval** for `improve_percent`, the **[standard errors](https://en.wikipedia.org/wiki/Standard_error) (`SE`)** should be used instead:
       - `SE(wm_percent) = 3.0% / sqrt(230) = 0.2%`.
       - `SE(wm_percent_w_fast) = 0.5% / sqrt(5) = 0.2%`.
@@ -595,7 +595,7 @@ The idea of the **derivation** is as follows:
     - Approach #2 (using [partial derivatives](https://en.wikipedia.org/wiki/Propagation_of_uncertainty#Simplification)):
       - Using [this tool](https://statpages.info/erpropgt.html), I obtain **`improve_percent = 5.4%` with `0.3%` standard error**.
 - **2) Events consistency**:
-  - `wm_percent_w_fast = 2.9%` was computed from **five** "women-with-wetsuit, men-without" examples that **all have the following properties**: **WTCS** and **olympic-format**.
+  - `wm_percent_w_fast = 2.9%` was computed from **five** _"women-with-wetsuit, men-without"_ examples that **all have the following properties**: **WTCS** and **olympic-format**.
     - The five **venues** are: Yokohama ( :jp: ) (twice), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
   - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **230 events**.
     - This is inconsistent.
@@ -606,10 +606,10 @@ The idea of the **derivation** is as follows:
       - The four venues mentioned have **hosted multiple** olympic-WTCS: 20 times, from which **15** had women and men sharing the same equipment for the swim.
       - This gives `wm_percent = 7.4% ± 1.6%` (`SE = 1.6/sqrt(15) = 0.4%`), leading to **`improve_percent = 4.2%` with `0.3%` standard error**.
 - **3) Additional examples**:
-  - Several **other events** feature the "women-with / men-without" scenario.
+  - Several **other events** feature the _"women-with / men-without"_ scenario.
     - Tongyeong ( :kr: ) ([2011](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup), [2014](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2016](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup)), [Arzachena ( :it: ) (2020)](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup), [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) are **world-cups** events, so they have not been included.
     - [Sydney ( :australia: ) (2012)](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney),  despite being a WTCS, was excluded due to an **unusual w/m swim difference**: women swam 10.1% slower than men, even with the wetsuit advantage.
-  - It would be valuable to include events with the **opposite scenario**: "women-without / men-with".
+  - It would be valuable to include events with the **opposite scenario**: _"women-without / men-with"_.
     - I have found only one: [New Plymouth ( :new_zealand: ) 2017](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup).
   - Future events may **provide additional examples** to further refine the estimate.
 
@@ -657,7 +657,7 @@ When they can choose, **pro athletes decide to use the wetsuit** for **~300m swi
 **_Is this decision sound?_**
 
 <details>
-  <summary>Click to expand - 🐧 <strong>Answering the question "wetsuit for 300m?"</strong></summary>
+  <summary>Click to expand - 🐧 <strong>Answering the question <i>"wetsuit for 300m?"</i></strong></summary>
 
 Over **300m** a **wetsuit should save ~12s** (derivation below).
 - Most of the time, athletes spend **just a bit less than 6s in transition to remove their wetsuit**, and put it correctly into their box.
@@ -737,7 +737,7 @@ Outliers:
 
 # :dart: RACE SCENARIO
 
-This section looks at the race dynamics, based on the information **"does a bunch manages to breakaway on the bike?"** :bird:
+This section looks at the race dynamics, based on the information **_"does a bunch manages to breakaway on the bike?"_** :bird:
 
 To obtain this information, the **size** of the **front pack** at the **end of the bike** is estimated as follows:
 - Compute for each athlete the cumulative times after the bike:
@@ -820,7 +820,7 @@ Below is a more complicated figure: it shows the evolution of the **first-pack s
 - Apart from 2013-2016 (Gwen Jorgensen era), **no comeback has happened on women's olympic races** and only a few on women's sprint format.
   - At the same time, the size of **front-pack had reduced until 2022** and was even very small for some recent years (2017, 2019, 2021, 2022).
   - Now, **top-swimmer** can **ride hard** and **run fast**.
-- Helen Jenkins ( :gb: ) explains in [this 2024 video](https://youtu.be/QwCUmvPCjw4?t=338): "Women's races have definitely changed over the past few years. (...) **2021 was that breakaway era**. It definitely **comes back** to that **larger front group** over the last couple of years."
+- Helen Jenkins ( :gb: ) explains in [this 2024 video](https://youtu.be/QwCUmvPCjw4?t=338): _"Women's races have definitely changed over the past few years. (...) **2021 was that breakaway era**. It definitely **comes back** to that **larger front group** over the last couple of years."_
   - That statement is perfectly **consistent** with the women's olympic bar plot.
 
 ---
@@ -1037,10 +1037,10 @@ The above plots seem **consistent** with this statement. :chart_with_upwards_tre
 ---
 
 In [this other 2024 video](https://youtu.be/5dyR4zNMsmA?t=840):
-- **Alex Yee** ( :gb: ) mentions that the **run of 2012 London ( :gb: ) Olympics** is a reference: "The run was held as the **best run that has ever been done in triathlon**".
-- He explains: "In the last season _(2023)_, we had a few races which came very close to that".
+- **Alex Yee** ( :gb: ) mentions that the **run of 2012 London ( :gb: ) Olympics** is a reference: _"The run was held as the **best run that has ever been done in triathlon**"_.
+- He explains: _"In the last season _(2023)_, we had a few races which came very close to that."_
 - This statement seems also to be correct: on the run subplot of the men's olympic format figure, **`London 2012` was the fastest until 2023**.
-- This [article from triathlon.org](https://www.triathlon.org/news/article/a_chance_for_history_breaking_down_the_stats_of_past_olympic_games), released **just before Paris ( :fr: ) 2024**, confirms: "Brownlee’s times (London ( :gb: ) 2012) will likely come under threat. Indeed, it seems highly likely that we could see the **first ever sub-29** and **sub-33** minute 10km times in an Olympic triathlon this summer."
+- This [article from triathlon.org](https://www.triathlon.org/news/article/a_chance_for_history_breaking_down_the_stats_of_past_olympic_games), released **just before Paris ( :fr: ) 2024**, confirms: _"Brownlee’s times (London ( :gb: ) 2012) will likely come under threat. Indeed, it seems highly likely that we could see the **first ever sub-29** and **sub-33** minute 10km times in an Olympic triathlon this summer."_
   - The 5-9th men **ran** at the 2024 Paris Olympics **much slower** that the year before for the **test event**.
   - Also, Alex Yee ( :gb: ) won in 2024 with a **29:49** run, compared to **29:00 in 2023**.
   - Because of the **heat** (the men's race started at **10:45 am** instead of 8:00 am)?
@@ -1884,9 +1884,9 @@ In addition to **paces**, it would be interesting to access **data** such as:
 **Activity trackers** would be needed for these recordings, but athletes **rarely wear them** while racing, making **swim** and **run data recording** difficult.
 - _This is also something I find puzzling: such data should be **invaluable for elite athletes**, shouldn't it?_ 
   - I first thought it was **forbidden** during the swim. [**World Triathlon rules**](https://www.triathlon.org/about/downloads/category/competition_rules) are **not very clear** to me:
-    - "Athletes may not use **communication devices** of any type, including but not limited to cell phones, **smart watches** ...".
-    - "Propulsion devices that create an advantage for the athlete, or a risk to others, are forbidden". _Could a sport-watch increase the propulsion surface or be harmful to others in case of contact?_
-    - On the other hand, the **swim section** states: "**Electronic devices may be used** in the **competition** unless they are distracting the athlete from paying full attention to their surroundings".
+    - _"Athletes may not use **communication devices** of any type, including but not limited to cell phones, **smart watches** ..."._
+    - _"Propulsion devices that create an advantage for the athlete, or a risk to others, are forbidden."_ _Could a sport-watch increase the propulsion surface or be harmful to others in case of contact?_
+    - On the other hand, the **swim section** states: _"**Electronic devices may be used** in the **competition** unless they are distracting the athlete from paying full attention to their surroundings"_.
 - A recent exception was [Cassandre Beaugrand ( :fr: ) holding a watch in Gagliari ( :it: )](https://youtu.be/vFV-kB8727I?t=189). Also at the [Olympics in Paris](https://www.francetvinfo.fr/les-jeux-olympiques/triathlon/triathlon-aux-jo-de-paris-2024-cassandre-beaugrand-de-princesse-a-reine-du-triathlon_6698148.html). _Maybe to pace her 10k?_
 - The **GPS features** of activity trackers could also provide **more precise estimations of the course distances**.
   - Especially for the **run**, and even for the **swim, to compare the trajectories**.
@@ -1924,7 +1924,7 @@ It would be interesting to investigate the **financial aspects** of the competit
   - These two event-categories have been combined in several sections of this document to **increase the dataset size** and hopefully improve statistical significance.
   - However, in some cases this approach may not be optimal, and it would be insightful to explore the differences between these categories.
 - The [arbitrary decision to focus on the **top 5-9**](#books-data) was made to capture a stable and consistent **representation of the general competitive field**.
-  - However, examining the **top performance** (e.g. Top-1 or Top-3) or using a **broader range** could also yield valuable insights.
+  - However, examining the **top performance** (e.g. top-1 or top-3) or using a **broader range** could also yield valuable insights.
 - Conduct advanced analyses of **cycling performances** would be interesting.
   - Additional data may be required: drawing conclusions based solely on **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
 - Investigate the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
