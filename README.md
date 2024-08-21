@@ -54,7 +54,7 @@ Why consider the **`5`-th to `9`-th best times**?
   - Conversely, the `5`-th to `9`-th times are usually denser, providing a **more robust representation** of the **general competitive field**.
 - Against **strategic variability** among top performers:
   - The top-4 athletes might engage in **strategic tactics** on the **run**, such as testing each other or waiting for a final sprint, leading to **varying performances**.
-    - Similarly, a top athlete may [**slow down to celebrate a secured win**](https://youtu.be/XMa5Soyx498?si=mR0m4P5DcYQFjg87&t=192) or [**push hard** for gold in a close race](https://youtu.be/zTFx6ha7Kos?si=hPv60RpJjL__v9CT&t=7), leading to **significantly different run times**.
+    - Similarly, a top athlete may [**slow down** to celebrate a secured win](https://youtu.be/XMa5Soyx498?si=mR0m4P5DcYQFjg87&t=192) or [**push hard** for gold in a close race](https://youtu.be/zTFx6ha7Kos?si=hPv60RpJjL__v9CT&t=7), leading to **significantly different run times**.
   - Conversely, I believe athletes ranked `5`-th to `9`-th are more likely to **give their all without strategic calculations**, resulting in **more robust and consistent comparative times across races**.
 
 ---
