@@ -34,7 +34,7 @@ Data are collected from the [Triathlon.org API](https://developers.triathlon.org
   - Specifically, **the `5`-th to `9`-th best times** in **each sport** are used to compute this average.
   - This **choice is arbitrary** but, as explained below, **relevant for my goal**: _"Analysing the **general competitive field** in **each sport**"._
   - Other settings, e.g. top-1, top-3, top-10 and top-50, could also yield valuable insights, by adjusting a few parameters in the [provided scripts](#computer-code).
-  - Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** include **top-3 analyses** as well. :medal_sports:
+  - Notably, the **[PACES](#stopwatch-paces) and [LEVEL OVER THE YEARS](#spiral_calendar-level-over-years) sections** include **top-3 and top-10 analyses** as well. :medal_sports:
 
 ---
 
@@ -222,6 +222,15 @@ Note: The distribution of swim times includes races both **with- and without wet
 |  ![sports_paces_top3.png](res/sports_paces_top3.png)  | 
 |:-----------------------------------------------------:| 
 | *Times and paces, considering the Top-3 in each leg.* |
+
+</details>
+
+<details>
+  <summary>Click to expand - 🏁 <strong>Same plots for the Top-10.</strong></summary>
+
+| ![sports_paces_top10.png](res/sports_paces_top10.png)  | 
+|:------------------------------------------------------:| 
+| *Times and paces, considering the Top-10 in each leg.* |
 
 </details>
 
@@ -1005,19 +1014,42 @@ The same **outlier removal** is applied as described in the [:stopwatch: PACES s
 
 | ![repeated_events_standard_w_top3.png](res/repeated_events_standard_w_top3.png) | 
 |:-------------------------------------------------------------------------------:| 
-|                   *Olympic format. Top-3 Women in each leg.*                    |
+|                   *Olympic format. Top-3 women in each leg.*                    |
 
 | ![repeated_events_standard_w_top3.png](res/repeated_events_standard_m_top3.png) | 
 |:-------------------------------------------------------------------------------:| 
-|                    *Olympic format. Top-3 Men in each leg.*                     |
+|                    *Olympic format. Top-3 men in each leg.*                     |
 
 | ![repeated_events_sprint_w_top3.png](res/repeated_events_sprint_w_top3.png) | 
 |:---------------------------------------------------------------------------:| 
-|                  *Sprint format. Top-3 Women in each leg.*                  |
+|                  *Sprint format. Top-3 women in each leg.*                  |
 
 | ![repeated_events_sprint_w_top3.png](res/repeated_events_sprint_m_top3.png) | 
 |:---------------------------------------------------------------------------:| 
-|                   *Sprint format. Top-3 Men in each leg.*                   |
+|                   *Sprint format. Top-3 men in each leg.*                   |
+
+</details>
+
+---
+
+<details>
+  <summary>Click to expand - 🏁 <strong>Same plots for the Top-10.</strong></summary>
+
+| ![repeated_events_standard_w_top10.png](res/repeated_events_standard_w_top10.png) | 
+|:---------------------------------------------------------------------------------:| 
+|                    *Olympic format. Top-10 women in each leg.*                    |
+
+| ![repeated_events_standard_w_top10.png](res/repeated_events_standard_m_top10.png) | 
+|:---------------------------------------------------------------------------------:| 
+|                     *Olympic format. Top-10 men in each leg.*                     |
+
+| ![repeated_events_sprint_w_top10.png](res/repeated_events_sprint_w_top10.png) | 
+|:-----------------------------------------------------------------------------:| 
+|                  *Sprint format. Top-10 women in each leg.*                   |
+
+| ![repeated_events_sprint_w_top10.png](res/repeated_events_sprint_m_top10.png) | 
+|:-----------------------------------------------------------------------------:| 
+|                   *Sprint format. Top-10 men in each leg.*                    |
 
 </details>
 
