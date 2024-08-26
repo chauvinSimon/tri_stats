@@ -491,6 +491,11 @@ def get_events_results() -> pd.DataFrame:
     # top3
     # i_first = 0
     # i_last = 3
+
+    # top10
+    # i_first = 0
+    # i_last = 10
+
     use_best_in_each_sport = True
     # use_best_in_each_sport = False
 
@@ -1304,6 +1309,7 @@ def process_sports(df):
     fig.suptitle(
         f"TIMES AND PACES\n({len(df)} events)\n 5th-9th IN EACH LEG",
         # f"TIMES AND PACES\n({len(df)} events)\nTOP-3 IN EACH LEG",
+        # f"TIMES AND PACES\n({len(df)} events)\nTOP-10 IN EACH LEG",
         fontsize=20
     )
 
@@ -1383,6 +1389,7 @@ def process_sports(df):
     add_watermark(fig)
     plt.savefig(str(res_dir / "sports_paces.png"), dpi=300)
     # plt.savefig(str(res_dir / "sports_paces_top3.png"), dpi=300)
+    # plt.savefig(str(res_dir / "sports_paces_top10.png"), dpi=300)
 
     plt.show()
 
@@ -1949,12 +1956,14 @@ def process_results_repeated_events(df):
             fig.suptitle(
                 f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'} - 5th-9th IN EACH LEG",
                 # f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'} - TOP-3 IN EACH LEG",
+                # f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'} - TOP-10 IN EACH LEG",
                 fontsize=20
             )
             plt.tight_layout()
             add_watermark(fig)
             plt.savefig(str(res_dir / f"repeated_events_{distance_category}_{suffix}.png"), dpi=300)
             # plt.savefig(str(res_dir / f"repeated_events_{distance_category}_{suffix}_top3.png"), dpi=300)
+            # plt.savefig(str(res_dir / f"repeated_events_{distance_category}_{suffix}_top10.png"), dpi=300)
             plt.show()
 
 
@@ -3049,8 +3058,8 @@ def main():
     # df = df[df["prog_distance_category"] != "sprint"]
     # df = df[df["event_venue"].isin(["Yokohama", "Edmonton", "Cagliari", "Stockholm"])]
 
-    # process_sports(df.copy())
-    process_results_wetsuit(df.copy())
+    process_sports(df.copy())
+    # process_results_wetsuit(df.copy())
     # process_results_w_vs_m(df.copy())
     # process_results_repeated_events(df.copy())
     # process_scenarios(df.copy())
