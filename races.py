@@ -3,7 +3,6 @@
 """
 
 from datetime import datetime
-from pathlib import Path
 
 import cv2
 from matplotlib import pyplot as plt
@@ -287,7 +286,7 @@ def save_race_results():
                     program_names=program_names
                 )
                 if not listings:
-                    print("\t\tno listing found")
+                    print(f"\n\t\tno listing found for {event_title} ({event_id})\n")
                     ignored_events[event_id] = event_title
                     json_dump(ignored_events, p=ignored_event_file)
                     continue
@@ -358,9 +357,10 @@ def save_race_results():
                         # "prog_distances"
                     ]
                     if not all(saving_dict[k] for k in required_keys):
-                        print(f"\t\tERROR: skipping {saving_dict}")
+                        print(f"\t\tERROR: skipping {event_title} ({event_id}):")
                         for k in required_keys:
-                            print(f"\t\t\t{k}: {saving_dict[k]}")
+                            if not saving_dict[k]:
+                                print(f"\t\t\tno value for {k}: {saving_dict[k]}")
                         ignored_events[event_id] = event_title
                         json_dump(ignored_events, p=ignored_event_file)
                         continue
@@ -1041,144 +1041,149 @@ def process_results_wetsuit(df):
     # remove Sydney outlier
     swim_diff_percent_women_fast = swim_diff_percent_women_fast[swim_diff_percent_women_fast["event_id"] != 54370]
 
-    # # remove largest values of 'swim_diff_percent'
-    # swim_diff_percent_women_fast = swim_diff_percent_women_fast[
-    #     swim_diff_percent_women_fast['swim_diff_percent'] < swim_diff_percent_women_fast['swim_diff_percent'].max()]
-    # swim_diff_percent_women_fast = swim_diff_percent_women_fast[
-    #     swim_diff_percent_women_fast['swim_diff_percent'] > swim_diff_percent_women_fast['swim_diff_percent'].min()]
+    if len(swim_diff_percent_women_fast) == 0:
+        print("no data where [women with wetsuit] and [men without wetsuit]")
 
-    print(f"###\nwomen fast: ({len(swim_diff_percent_women_fast)})")
-    wm_percent_w_fast = swim_diff_percent_women_fast['swim_diff_percent'].mean()
-    wm_percent_w_fast_std = swim_diff_percent_women_fast['swim_diff_percent'].std()
-    print(f"\t{wm_percent_w_fast :.1%} ±{wm_percent_w_fast_std :.1%}")
-    for per in sorted(list(swim_diff_percent_women_fast['swim_diff_percent'])):
-        print(f"\t\t{per:.1%}")
-    print("###")
+    else:
 
-    improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)
-    print(
-        f"improve_percent = {improve_percent:.1%} from substitution ({wm_percent = :.1%}) ({wm_percent_w_fast = :.1%})")
+        # # remove largest values of 'swim_diff_percent'
+        # swim_diff_percent_women_fast = swim_diff_percent_women_fast[
+        #     swim_diff_percent_women_fast['swim_diff_percent'] < swim_diff_percent_women_fast['swim_diff_percent'].max()]
+        # swim_diff_percent_women_fast = swim_diff_percent_women_fast[
+        #     swim_diff_percent_women_fast['swim_diff_percent'] > swim_diff_percent_women_fast['swim_diff_percent'].min()]
 
-    swim_diff_percent_women_fast = swim_diff_percent_women_fast.sort_values(by='swim_diff_percent')
+        print(f"###\nwomen fast: ({len(swim_diff_percent_women_fast)})")
+        wm_percent_w_fast = swim_diff_percent_women_fast['swim_diff_percent'].mean()
+        wm_percent_w_fast_std = swim_diff_percent_women_fast['swim_diff_percent'].std()
+        print(f"\t{wm_percent_w_fast :.1%} ±{wm_percent_w_fast_std :.1%}")
+        for per in sorted(list(swim_diff_percent_women_fast['swim_diff_percent'])):
+            print(f"\t\t{per:.1%}")
+        print("###")
 
-    swim_diff_percents = swim_diff_percent_women_fast["swim_diff_percent"]
-    swim_diff_percent_women_fast["name"] = swim_diff_percent_women_fast[
-        ["event_date_m", "event_venue", "prog_distance_category", "swim_diff_percent"]].apply(
-        lambda
-            x: f"{x.event_venue.split(',')[0]} {x.event_date_m[:4]}\n{x.prog_distance_category.replace('standard', 'olympic')}\ndiff = {x.swim_diff_percent:.1%}\n=> benefit = {1 - (1 + x.swim_diff_percent) / (1 + wm_percent):.1%}",
-        axis=1
-    )
-    names = swim_diff_percent_women_fast["name"]
+        improve_percent = 1 - (1 + wm_percent_w_fast) / (1 + wm_percent)
+        print(
+            f"improve_percent = {improve_percent:.1%} from substitution ({wm_percent = :.1%}) ({wm_percent_w_fast = :.1%})")
 
-    fig, ax = plt.subplots(figsize=(12, 9))
+        swim_diff_percent_women_fast = swim_diff_percent_women_fast.sort_values(by='swim_diff_percent')
 
-    y_max = wm_percent + 0.01
-    ax.set_ylim(0, y_max)
+        swim_diff_percents = swim_diff_percent_women_fast["swim_diff_percent"]
+        swim_diff_percent_women_fast["name"] = swim_diff_percent_women_fast[
+            ["event_date_m", "event_venue", "prog_distance_category", "swim_diff_percent"]].apply(
+            lambda
+                x: f"{x.event_venue.split(',')[0]} {x.event_date_m[:4]}\n{x.prog_distance_category.replace('standard', 'olympic')}\ndiff = {x.swim_diff_percent:.1%}\n=> benefit = {1 - (1 + x.swim_diff_percent) / (1 + wm_percent):.1%}",
+            axis=1
+        )
+        names = swim_diff_percent_women_fast["name"]
 
-    ax.axhline(
-        wm_percent,
-        color='dodgerblue',
-        linestyle='-.',
-        linewidth=2,
-    )
-    ax.text(
-        0.92,
-        wm_percent / y_max + 0.035,  # - 0.05,
-        f"W vs M - same equipment\n{wm_percent:.1%} ± {wm_percent_std:.1%}\n(from {len(df_same_wetsuit)} events)",
-        color='dodgerblue',
-        transform=ax.transAxes,
-        rotation=0,
-        ha='center',
-        va='center',
-        fontsize=10
-    )
+        fig, ax = plt.subplots(figsize=(12, 9))
 
-    ax.axhline(
-        wm_percent_w_fast,
-        color='darkturquoise',
-        linestyle='-.',
-        linewidth=2,
-    )
-    ax.text(
-        0.92,
-        wm_percent_w_fast / y_max + 0.035,
-        f"W(wetsuit) vs M(no)\n{wm_percent_w_fast:.1%} ± {wm_percent_w_fast_std:.1%}\n(from {len(swim_diff_percent_women_fast)} events)",
-        color='darkturquoise',
-        transform=ax.transAxes,
-        rotation=0,
-        ha='center',
-        va='center',
-        fontsize=10
-    )
+        y_max = wm_percent + 0.01
+        ax.set_ylim(0, y_max)
 
-    major_ticks = np.arange(0, y_max, 0.01)
-    ax.set_yticks(major_ticks)
+        ax.axhline(
+            wm_percent,
+            color='dodgerblue',
+            linestyle='-.',
+            linewidth=2,
+        )
+        ax.text(
+            0.92,
+            wm_percent / y_max + 0.035,  # - 0.05,
+            f"W vs M - same equipment\n{wm_percent:.1%} ± {wm_percent_std:.1%}\n(from {len(df_same_wetsuit)} events)",
+            color='dodgerblue',
+            transform=ax.transAxes,
+            rotation=0,
+            ha='center',
+            va='center',
+            fontsize=10
+        )
 
-    ax.bar(
-        names,
-        swim_diff_percents,
-        color='darkturquoise',
-        alpha=0.5,
-        width=0.2,
-        edgecolor='black',
-        linewidth=0.5,
-    )
-    # set ax font size
-    # for tick in ax.get_xticklabels():
-    #     tick.set_fontsize(8)
-    # for tick in ax.get_yticklabels():
-    #     tick.set_fontsize(8)
+        ax.axhline(
+            wm_percent_w_fast,
+            color='darkturquoise',
+            linestyle='-.',
+            linewidth=2,
+        )
+        ax.text(
+            0.92,
+            wm_percent_w_fast / y_max + 0.035,
+            f"W(wetsuit) vs M(no)\n{wm_percent_w_fast:.1%} ± {wm_percent_w_fast_std:.1%}\n(from {len(swim_diff_percent_women_fast)} events)",
+            color='darkturquoise',
+            transform=ax.transAxes,
+            rotation=0,
+            ha='center',
+            va='center',
+            fontsize=10
+        )
 
-    # Remove axes splines
-    for s in ['top', 'bottom', 'left', 'right']:
-        ax.spines[s].set_visible(False)
+        major_ticks = np.arange(0, y_max, 0.01)
+        ax.set_yticks(major_ticks)
 
-    # Remove x, y Ticks
-    ax.xaxis.set_ticks_position('none')
-    ax.yaxis.set_ticks_position('none')
+        ax.bar(
+            names,
+            swim_diff_percents,
+            color='darkturquoise',
+            alpha=0.5,
+            width=0.2,
+            edgecolor='black',
+            linewidth=0.5,
+        )
+        # set ax font size
+        # for tick in ax.get_xticklabels():
+        #     tick.set_fontsize(8)
+        # for tick in ax.get_yticklabels():
+        #     tick.set_fontsize(8)
 
-    # Add padding between axes and labels
-    ax.xaxis.set_tick_params(pad=5)
-    ax.yaxis.set_tick_params(pad=10)
+        # Remove axes splines
+        for s in ['top', 'bottom', 'left', 'right']:
+            ax.spines[s].set_visible(False)
 
-    ax.grid(
-        color='grey',
-        linestyle='-.',
-        linewidth=0.5,
-        alpha=0.7
-    )
+        # Remove x, y Ticks
+        ax.xaxis.set_ticks_position('none')
+        ax.yaxis.set_ticks_position('none')
 
-    # Add annotation to bars
-    # for i in ax.patches:
-    #     plt.text(
-    #         i.get_width() + 0.002,
-    #         i.get_y() + 0.4,
-    #         f"{i.get_width():.1%}",
-    #         fontsize=10,
-    #         fontweight='bold',
-    #         color='grey'
-    #     )
+        # Add padding between axes and labels
+        ax.xaxis.set_tick_params(pad=5)
+        ax.yaxis.set_tick_params(pad=10)
 
-    ax.invert_xaxis()
+        ax.grid(
+            color='grey',
+            linestyle='-.',
+            linewidth=0.5,
+            alpha=0.7
+        )
 
-    vals = ax.get_yticks()
-    ax.set_yticklabels(['{:,.1%}'.format(x) for x in vals])
-    ax.set_ylabel("How much slower did women swim\ncompared to men (%)?", fontsize=12)
+        # Add annotation to bars
+        # for i in ax.patches:
+        #     plt.text(
+        #         i.get_width() + 0.002,
+        #         i.get_y() + 0.4,
+        #         f"{i.get_width():.1%}",
+        #         fontsize=10,
+        #         fontweight='bold',
+        #         color='grey'
+        #     )
 
-    wm_percent_w_fast_str = f"{100 * wm_percent_w_fast:.1f}\\%"
-    wm_percent_str = f"{100 * wm_percent:.1f}\\%"
-    improve_percent_str = f"{100 * improve_percent:.1f}\\%"
-    ax.set_title(
-        f'MEN without wetsuit swim FASTER than WOMEN with wetsuit, by ${wm_percent_w_fast_str}$'
-        f'\nThe benefit from wetsuit can be derived: ${improve_percent_str}$'
-        f'\n[ ${improve_percent_str} = 1 - (1 + {wm_percent_w_fast_str}) / (1 + {wm_percent_str})$ ]',
-        # loc='left',
-        fontsize=15
-    )
-    add_watermark(fig, y=0.9, x=0.12)
-    plt.savefig(str(res_dir / "wetsuit.png"), dpi=300)
-    # plt.savefig(str(res_dir / "wetsuit_20-24.png"), dpi=300)
-    plt.show()
+        ax.invert_xaxis()
+
+        vals = ax.get_yticks()
+        ax.set_yticklabels(['{:,.1%}'.format(x) for x in vals])
+        ax.set_ylabel("How much slower did women swim\ncompared to men (%)?", fontsize=12)
+
+        wm_percent_w_fast_str = f"{100 * wm_percent_w_fast:.1f}\\%"
+        wm_percent_str = f"{100 * wm_percent:.1f}\\%"
+        improve_percent_str = f"{100 * improve_percent:.1f}\\%"
+        ax.set_title(
+            f'MEN without wetsuit swim FASTER than WOMEN with wetsuit, by ${wm_percent_w_fast_str}$'
+            f'\nThe benefit from wetsuit can be derived: ${improve_percent_str}$'
+            f'\n[ ${improve_percent_str} = 1 - (1 + {wm_percent_w_fast_str}) / (1 + {wm_percent_str})$ ]',
+            # loc='left',
+            fontsize=15
+        )
+        add_watermark(fig, y=0.9, x=0.12)
+        plt.savefig(str(res_dir / "wetsuit.png"), dpi=300)
+        # plt.savefig(str(res_dir / "wetsuit_20-24.png"), dpi=300)
+        plt.show()
 
     # alternative method: compare times with wetsuit vs without
 
@@ -3003,7 +3008,7 @@ def process_event_dates(df):
     ax.tick_params(axis='both', which='major', labelsize=14)
 
     for suffix in ["w", "m"]:
-        athlete_season_durations = json_load(Path(f"data/athlete_season_durations_{suffix}.json"))
+        athlete_season_durations = json_load(data_dir / f"athlete_season_durations_{suffix}.json")
         athlete_season_durations = {int(k): v for k, v in athlete_season_durations.items()}
         pre_covid_keys = [k for k in athlete_season_durations.keys() if k < 2020]
         pre_covid_vals = [athlete_season_durations[k] for k in pre_covid_keys]
