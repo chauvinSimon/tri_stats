@@ -1,6 +1,8 @@
 import json
 import requests  # pip install requests
 
+from utils import data_dir
+
 url_prefix = "https://api.triathlon.org/v1/"
 
 with open("api_key.txt", "r") as f:
@@ -15,6 +17,21 @@ def get_request(url_suffix, params=""):
     d = json.loads(response.text)
     d = d["data"]
     return d
+
+
+def get_athlete_info(athlete_id: int):
+    saving_path = data_dir / "athletes" / f"{athlete_id}.json"
+    saving_path.parent.mkdir(parents=True, exist_ok=True)
+    # check if athlete_id has already been retrieved and saved
+    if saving_path.exists():
+        with open(saving_path) as f:
+            res = json.load(f)
+        return res
+    url_suffix = f"athletes/{athlete_id}"
+    res = get_request(url_prefix + url_suffix)
+    with open(saving_path, "w") as f:
+        json.dump(res, f)
+    return res
 
 
 category_mapping = {

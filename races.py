@@ -16,7 +16,7 @@ from PIL import Image
 from io import BytesIO
 
 from utils import json_dump, data_dir, json_load, res_dir, country_emojis, add_watermark
-from utils_itu import get_request
+from utils_itu import get_request, get_athlete_info
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
@@ -405,6 +405,14 @@ def get_prog_results_df(prog_data: dict) -> pd.DataFrame:
         if r["position"] in ["DNF", "DNS", "DSQ", "LAP"]:
             continue
         di = dict(zip(column_names, r["splits"]))
+        if ("dob" not in r) or (r["dob"] is None):
+            athlete_id = r["athlete_id"]
+            athlete_info = get_athlete_info(athlete_id)
+            if (athlete_info is not None) and ("dob" in athlete_info):
+                r["dob"] = athlete_info["dob"]
+            else:
+                print(f"{athlete_id}: no info ({r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}])")
+
         if ("dob" not in r) or (r["dob"] is None):
             di["age"] = None
         else:

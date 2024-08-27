@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import requests  # pip install requests
 from utils import data_dir, res_dir, add_watermark
+from utils_itu import get_athlete_info
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
@@ -40,21 +41,6 @@ def get_rankings(ranking_id: int):
     df = pd.DataFrame(res["rankings"])
     df.to_csv(saving_path)
     return df
-
-
-def get_athlete_info(athlete_id: int):
-    saving_path = data_dir / "athletes" / f"{athlete_id}.json"
-    saving_path.parent.mkdir(parents=True, exist_ok=True)
-    # check if athlete_id has already been retrieved and saved
-    if saving_path.exists():
-        with open(saving_path) as f:
-            res = json.load(f)
-        return res
-    url_suffix = f"athletes/{athlete_id}"
-    res = get_request(url_prefix + url_suffix)
-    with open(saving_path, "w") as f:
-        json.dump(res, f)
-    return res
 
 
 def main():
