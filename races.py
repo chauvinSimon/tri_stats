@@ -412,7 +412,7 @@ def get_prog_results_df(prog_data: dict) -> pd.DataFrame:
         #     if (athlete_info is not None) and ("dob" in athlete_info):
         #         r["dob"] = athlete_info["dob"]
         #     else:
-        #         print(f"{athlete_id}: no info ({r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}])")
+        #         print(f"{athlete_id}: no 'dob' info ({r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}])")
 
         di["age"] = None
         if ("dob" not in r) or (r["dob"] is None):

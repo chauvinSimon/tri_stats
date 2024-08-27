@@ -5,7 +5,7 @@ from scipy.stats import chisquare
 
 from country_continent_alpha import convert_country_alpha2_to_continent, convert_country_alpha2_to_country_name
 from utils import json_load, reference_month_of_birth_path, data_dir, res_dir, add_watermark
-from utils_itu import get_request
+from utils_itu import get_request, get_athlete_info
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
@@ -96,6 +96,27 @@ def main():
     df = df.drop_duplicates(subset="athlete_id")
     print(f"len after drop_duplicates: {len(df):,}")
 
+    # drop NaN as athlete_id
+    df = df.dropna(subset="athlete_id")
+    print(f"len after dropna on athlete_id: {len(df):,}")
+
+    df.athlete_id = df.athlete_id.astype(int)
+
+    # patch: "dob" is not present in the rankings anymore!
+    def find_dob(row):
+        if "dob" in row:
+            return row.dob
+
+        if "athlete_id" not in row:
+            return None
+        athlete_info = get_athlete_info(athlete_id=int(row.athlete_id))
+        if athlete_info is None:
+            return None
+
+        return athlete_info["dob"] if "dob" in athlete_info else None
+
+    df["dob"] = df.apply(find_dob, axis=1)
+
     # add column for month of birth from dob (e.g. "2020-01-01" -> "01")
     df["month_of_birth"] = df["dob"].apply(lambda x: str(x)[5:7])
 
@@ -110,6 +131,9 @@ def main():
 
     # remove entries with age == 1
     df = df[df["athlete_age"] != 1]
+
+    # drop athlete_age NaN
+    df = df.dropna(subset="athlete_age")
 
     # convert athlete_age from float to int
     df["athlete_age"] = df["athlete_age"].astype(int)

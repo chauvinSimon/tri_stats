@@ -67,6 +67,9 @@ def main():
     for athlete_id in df.athlete_id:
         print(athlete_id)
         res = get_athlete_info(athlete_id=athlete_id)
+        if res is None:
+            print(f"ERROR: no data found for {athlete_id = }")
+            continue
         infos.append(res)
         print(res["athlete_first"])
         print(res["athlete_last"])
