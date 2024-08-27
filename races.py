@@ -286,7 +286,7 @@ def save_race_results():
                     program_names=program_names
                 )
                 if not listings:
-                    print(f"\n\t\tno listing found for {event_title} ({event_id})\n")
+                    print(f"\nERROR: no listing found for {event_title} ({event_id})\n")
                     ignored_events[event_id] = event_title
                     json_dump(ignored_events, p=ignored_event_file)
                     continue
@@ -405,19 +405,26 @@ def get_prog_results_df(prog_data: dict) -> pd.DataFrame:
         if r["position"] in ["DNF", "DNS", "DSQ", "LAP"]:
             continue
         di = dict(zip(column_names, r["splits"]))
-        if ("dob" not in r) or (r["dob"] is None):
-            athlete_id = r["athlete_id"]
-            athlete_info = get_athlete_info(athlete_id)
-            if (athlete_info is not None) and ("dob" in athlete_info):
-                r["dob"] = athlete_info["dob"]
-            else:
-                print(f"{athlete_id}: no info ({r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}])")
+        # todo: for accuracy in the age, prefer dob over yob - but it requires a lot of API calls for all athletes
+        # if ("dob" not in r) or (r["dob"] is None):
+        #     athlete_id = r["athlete_id"]
+        #     athlete_info = get_athlete_info(athlete_id)
+        #     if (athlete_info is not None) and ("dob" in athlete_info):
+        #         r["dob"] = athlete_info["dob"]
+        #     else:
+        #         print(f"{athlete_id}: no info ({r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}])")
 
+        di["age"] = None
         if ("dob" not in r) or (r["dob"] is None):
-            di["age"] = None
+            if "athlete_yob" in r:
+                if r["athlete_yob"] is not None:
+                    di["age"] = compute_age_with_decimals(date_of_birth=f'{r["athlete_yob"]}-07-01', specific_date=prog_data["event_date"])  # on average, a person was born on July, 1st
         else:
             di["age"] = compute_age_with_decimals(date_of_birth=r["dob"], specific_date=prog_data["event_date"])
             assert abs(prog_year - int(r["athlete_yob"]) - di["age"]) < 2
+
+        if di["age"] is None:
+            print(f"WARNING: no age for {r['athlete_id']}: {r['athlete_first']} {r['athlete_last']} [{r['athlete_noc']}]")
         df_list.append(di)
     df = pd.DataFrame(df_list)
     if len(df) < 1:
@@ -3072,15 +3079,15 @@ def main():
     # df = df[df["event_venue"].isin(["Yokohama", "Edmonton", "Cagliari", "Stockholm"])]
 
     process_sports(df.copy())
-    # process_results_wetsuit(df.copy())
-    # process_results_w_vs_m(df.copy())
-    # process_results_repeated_events(df.copy())
-    # process_scenarios(df.copy())
-    # process_sprint_finish(df.copy())
-    # process_ages(df.copy())
-    # process_sport_proportion(df.copy())
-    # process_swim_gaps(df.copy())
-    # process_event_country(df.copy())
+    process_results_wetsuit(df.copy())
+    process_results_w_vs_m(df.copy())
+    process_results_repeated_events(df.copy())
+    process_scenarios(df.copy())
+    process_sprint_finish(df.copy())
+    process_ages(df.copy())
+    process_sport_proportion(df.copy())
+    process_swim_gaps(df.copy())
+    process_event_country(df.copy())
     # process_event_dates(df.copy())  # make sure to reduce the min-participants: n_results_min
 
 
