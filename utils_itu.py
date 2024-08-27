@@ -1,13 +1,17 @@
 import json
-import requests  # pip install requests
+from pathlib import Path
 
-from utils import data_dir
+import requests  # pip install requests
 
 url_prefix = "https://api.triathlon.org/v1/"
 
 with open("api_key.txt", "r") as f:
     api_key = f.readline()
-headers = {'apikey': api_key}
+
+headers = {
+    "accept": "application/json",
+    "apikey": api_key
+}
 
 
 def get_request(url_suffix, params=""):
@@ -20,15 +24,20 @@ def get_request(url_suffix, params=""):
 
 
 def get_athlete_info(athlete_id: int):
-    saving_path = data_dir / "athletes" / f"{athlete_id}.json"
+    saving_path = Path(__file__).parent / "data" / "athletes" / f"{athlete_id}.json"
     saving_path.parent.mkdir(parents=True, exist_ok=True)
     # check if athlete_id has already been retrieved and saved
     if saving_path.exists():
         with open(saving_path) as f:
             res = json.load(f)
+        if res is None:
+            print(f"ERROR: no data found for {athlete_id = } in {saving_path = }")
         return res
     url_suffix = f"athletes/{athlete_id}"
-    res = get_request(url_prefix + url_suffix)
+    print(f"requesting {url_suffix = }")
+    res = get_request(url_suffix=url_suffix)
+    if res is None:
+        print(f"ERROR: no data found for {athlete_id = } request = {url_prefix + url_suffix}")
     with open(saving_path, "w") as f:
         json.dump(res, f)
     return res

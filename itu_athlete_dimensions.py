@@ -1,31 +1,15 @@
-import json
 import re
 
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-import requests  # pip install requests
 from utils import data_dir, res_dir, add_watermark
-from utils_itu import get_athlete_info
+from utils_itu import get_athlete_info, get_request
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
 plt.rcParams['mathtext.default'] = 'rm'
 plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
-
-url_prefix = "https://api.triathlon.org/v1/"
-
-with open("api_key.txt", "r") as f:
-    api_key = f.readline()
-headers = {'apikey': api_key}
-
-
-def get_request(url, params=""):
-    print(url)
-    response = requests.request("GET", url, headers=headers, params=params)
-    d = json.loads(response.text)
-    d = d["data"]
-    return d
 
 
 def get_rankings(ranking_id: int):
@@ -37,7 +21,7 @@ def get_rankings(ranking_id: int):
         return df
 
     url_suffix = f"rankings/{ranking_id}"
-    res = get_request(url_prefix + url_suffix)
+    res = get_request(url_suffix=url_suffix)
     df = pd.DataFrame(res["rankings"])
     df.to_csv(saving_path)
     return df
@@ -91,7 +75,7 @@ def main():
         print("---")
         # url = "https://api.triathlon.org/v1/athletes/athlete_id/stats"
         # url_suffix = f"athletes/{athlete_id}"
-        # res = get_request(url_prefix + url_suffix)
+        # res = get_request(url_suffix=url_suffix)
         # print(res)
 
     df_infos = pd.DataFrame(infos)

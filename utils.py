@@ -24,6 +24,7 @@ def add_watermark(fig, x=0.92, y=0.97):
         alpha=0.7
     )
 
+
 def json_dump(
         data,
         p: Path

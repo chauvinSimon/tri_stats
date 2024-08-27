@@ -116,6 +116,9 @@ def get_athlete_seasons(athlete_ids):
             athlete_results_file.parent.mkdir(parents=True, exist_ok=True)
             json_dump(athlete_results_res, athlete_results_file)
 
+        if athlete_results_res is None:
+            print(f"ERROR: no data found for {athlete_id = }")
+
         athlete_results_info = []
         for result in athlete_results_res:
             event_category = None
@@ -434,6 +437,9 @@ def plot_end_of_career():
             athlete_results_res = get_request(url_suffix)
             athlete_results_file.parent.mkdir(parents=True, exist_ok=True)
             json_dump(athlete_results_res, athlete_results_file)
+
+        if athlete_results_res is None:
+            print(f"ERROR: no data found for {athlete_id = }")
 
         if len(athlete_results_res) < min_num_races:
             continue

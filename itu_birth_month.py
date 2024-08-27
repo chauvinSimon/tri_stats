@@ -1,31 +1,16 @@
-import json
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-import requests  # pip install requests
 from scipy.stats import chisquare
 
 from country_continent_alpha import convert_country_alpha2_to_continent, convert_country_alpha2_to_country_name
 from utils import json_load, reference_month_of_birth_path, data_dir, res_dir, add_watermark
+from utils_itu import get_request
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
 plt.rcParams['mathtext.default'] = 'rm'
 plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
-
-url_prefix = "https://api.triathlon.org/v1/"
-
-with open("api_key.txt", "r") as f:
-    api_key = f.readline()
-headers = {'apikey': api_key}
-
-
-def get_request(url, params=""):
-    print(url)
-    response = requests.request("GET", url, headers=headers, params=params)
-    d = json.loads(response.text)
-    d = d["data"]
-    return d
 
 
 def get_rankings(ranking_id: int):
@@ -37,7 +22,7 @@ def get_rankings(ranking_id: int):
         return df
 
     url_suffix = f"rankings/{ranking_id}"
-    res = get_request(url_prefix + url_suffix)
+    res = get_request(url_suffix=url_suffix)
     df = pd.DataFrame(res["rankings"])
     df.to_csv(saving_path)
     return df
