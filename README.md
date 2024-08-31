@@ -10,6 +10,7 @@ This document **analyses data** of [**World Triathlon**](https://triathlon.org/)
 - :dart: How often does an athlete **win from a bike breakaway**?
 - :runner: How often does the **best runner win**?
 - :rocket: How often is the win decided with a **sprint finish**?
+- :thermometer: Do **water and air temperatures** affect swimming and running performance, respectively? 
 - :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**?
 - :muscle: What is the typical **age** of performing athletes and how has it evolved over years?
 - :next_track_button: **How old** are athletes when they **stop racing**?
@@ -82,6 +83,7 @@ What about the data quality?
 - **[Race scenario](#dart-RACE-SCENARIO)**
 - **[Sprint finish](#rocket-SPRINT-FINISH)**
 - **[Level over years](#spiral_calendar-LEVEL-OVER-YEARS)** :star:
+- **[Temperatures](#thermometer-TEMPERATURES)**
 - **[Host countries](#earth_africa-HOST-COUNTRIES)**
 - **[Season duration](#calendar-SEASON-DURATION)** :star:
 - **[Athlete nations](#earth_africa-ATHLETE-NATIONS)** :star:
@@ -1151,6 +1153,118 @@ The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/
 
 ---
 
+# :thermometer: TEMPERATURES
+
+This section examines the recorded **water and air temperatures** and, inspired by the recent work by [Gibson (2024)](https://eprints.qut.edu.au/250162/), investigates their influence on **swimming and running performance**, respectively.
+
+| ![temperatures.png](res/temperatures.png) | 
+|:-----------------------------------------:| 
+|  *Recorded water and air temperatures.*   |
+
+The **temperature ranges** are **broad**:
+- :ocean: 80% of the recorded **water** temperatures are between **16.4 and 26.9 °C**.
+  - (**Mean: 21.5 °C**, SD: 3.9 °C, Min: 13.8 °C, Max: 31.0 °C)
+- :parasol_on_ground: 80% of the recorded **air** temperatures are between **17.0 and 29.6 °C**.
+  - (**Mean: 23.3 °C**, SD: 4.9 °C, Min: 11.0 °C, Max: 34.0 °C)
+
+---
+
+**Several limitations** should be noted:
+- More than half of the events do not report any temperature.
+- The **recorded temperatures** are most likely **lower** than the **actual temperatures** on the course.
+  - Because measurements are made **before the race**.
+  - _"Water temperature must be taken **one hour** prior to the start of the event on competition day. It must be taken at the middle of the course and in two other areas on the swim course, at a **depth of 60 cm**."_
+  - Air temperatures are likely also **recorded before the race**. By the time athletes **begin the run**, it **can get significantly warmer**.
+- In addition to the air temperature, **humidity** could have a significant impact on running performance, but its value is not reported.
+- Last but not least, **swim and run courses vary in distance**, and water conditions (e.g., waves, salinity) also differ between events, making **comparisons challenging**.
+
+:warning: Given these **limitations**, particularly the variation in course distances, **caution is necessary when drawing conclusions**!
+
+---
+
+| ![temperatures_water.png](res/temperatures_water.png) | 
+|:-----------------------------------------------------:| 
+|          *Water temperature and swim times.*          |
+
+The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup_haeundae/454064) at [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) is ignored because of **inconsistency with the 20°C-rule** for the wetsuit:
+- The race report says: _"Water temperature 21.3ºC. Air temperature 15.4º C. Wetsuits allowed."_
+- The [2024 rule book](https://www.triathlon.org/uploads/docs/World-Triathlon_Competition-Rules_2024_20240416.pdf) states in section 4.4.b. that _"when the water temperature is at or below 22ºC and the **air temperature** is at or below **15ºC**, then **the value of the water temperature will be adjusted**."_
+  - For instance: Air at 15°C and water at 22°C -> The **water temperature is adjusted** at 18.5°C -> Wetsuit allowed.
+  - Probably this 15°C threshold was higher in 2021.
+
+Swim appears **slightly faster in water temperatures below 20°C**
+- Likely because **wetsuits are permitted** at these lower temperatures.
+- Further studies could try to estimate the optimal range of **water temperature** for races with and without wetsuits.
+
+:swimmer: Some cold and hot **swims**:
+
+|  YEAR  |                                                               EVENT                                                               |  WATER TEMPERATURE  |  DISTANCE  |  EVENT CATEGORY  |
+|:------:|:---------------------------------------------------------------------------------------------------------------------------------:|:-------------------:|:----------:|:----------------:|
+|  2017  |           [Cape Town](https://www.triathlon.org/events/event/2017_cape_town_itu_triathlon_world_cup) ( :south_africa: )           |  13.8 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2022  |             [Vina del Mar](https://www.triathlon.org/events/event/2022_world_triathlon_cup_vina_del_mar) ( :chile: )              |  14.3 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2018  |           [Cape Town](https://www.triathlon.org/events/event/2018_cape_town_itu_triathlon_world_cup) ( :south_africa: )           |  15.0 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2022  |                   [Bergen](https://www.triathlon.org/events/event/2022_world_triathlon_cup_bergen) ( :norway: )                   |  15.0 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2014  |                [Stockholm](https://www.triathlon.org/events/event/2014_itu_world_triathlon_stockholm) ( :sweden: )                |  15.0 :cold_face:   |   sprint   |       WTCS       |
+|  2015  |                     [London](https://www.triathlon.org/events/event/2015_itu_world_triathlon_london) ( :gb: )                     |  15.2 :cold_face:   |   sprint   |       WTCS       |
+|  2019  |                 [Cagliari](https://www.triathlon.org/events/event/2019_cagliari_itu_triathlon_world_cup) ( :it: )                 |  15.5 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2016  |             [Cape Town](https://www.triathlon.org/events/event/2016_itu_world_triathlon_cape_town) ( :south_africa: )             |  15.6 :cold_face:   |   sprint   |       WTCS       |
+|  2019  |           [Cape Town](https://www.triathlon.org/events/event/2019_cape_town_itu_triathlon_world_cup) ( :south_africa: )           |  16.0 :cold_face:   |   sprint   |    WORLD-CUP     |
+|  2017  |       [Rotterdam](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam) ( :netherlands: )        |  16.1 :cold_face:   |  olympic   |       WTCS       |
+|  ...   |                                                                ...                                                                |         ...         |    ...     |       ...        |
+|  2022  |                   [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                   |   27.8 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2021  |                         [Tokyo](https://www.triathlon.org/events/event/2020_tokyo_olympic_games) ( :jp: )                         |   28.9 :hot_face:   |  olympic   |      GAMES       |
+|  2016  |            [Cozumel](https://www.triathlon.org/events/event/2016_itu_world_triathlon_grand_final_cozumel) ( :mexico: )            |   29.0 :hot_face:   |  olympic   |       WTCS       |
+|  2017  |    [Mérida, Yucatán, Puerto Progreso](https://www.triathlon.org/events/event/2017_merida_itu_triathlon_world_cup) ( :mexico: )    |   29.0 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2018  |           [Mooloolaba](https://www.triathlon.org/events/event/2018_mooloolaba_itu_triathlon_world_cup) ( :australia: )            |   29.1 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2019  |               [Huatulco](https://www.triathlon.org/events/event/2019_huatulco_itu_triathlon_world_cup) ( :mexico: )               |   29.5 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2018  |               [Huatulco](https://www.triathlon.org/events/event/2018_huatulco_itu_triathlon_world_cup) ( :mexico: )               |   30.0 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2021  |                 [Huatulco](https://www.triathlon.org/events/event/2021_huatulco_triathlon_world_cup) ( :mexico: )                 |   30.0 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2022  |                 [Huatulco](https://www.triathlon.org/events/event/2022_world_triathlon_cup_huatulco) ( :mexico: )                 |   31.0 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2021  | [Abu Dhabi](https://www.triathlon.org/events/event/2021_world_triathlon_championship_series_abu_dhabi) ( :united_arab_emirates: ) |   31.0 :hot_face:   |   sprint   |       WTCS       |
+
+---
+
+| ![temperatures_air.png](res/temperatures_air.png) | 
+|:-------------------------------------------------:| 
+|         *Air temperature and run times.*          |
+
+A **2nd degree fit** is applied on the scatter plot using [`seaborn.regplot`](https://seaborn.pydata.org/generated/seaborn.regplot.html).
+- Again, care is required to draw conclusions.
+  - In particular, I think no optimal temperature can be determined.
+- Nevertheless, the fitted line tends to indicate that **heat slows down run paces**.
+  - This would be **consistent with personal experience** :hot_face:, as well as with [research findings](https://www.outsideonline.com/health/running/racing/race-strategy/how-much-does-heat-slow-your-race-pace/).
+  - This also explains all the **hydrating and cooling strategies**, such as the **[cooling headbands](https://conecta.tec.mx/en/news/national/entrepreneurs/goodbye-heat-mexican-creates-band-cool-down-olympic-athletes)**.
+
+:runner: Some cold and hot **runs**:
+
+|  YEAR  |                                                               EVENT                                                               |  AIR TEMPERATURE  |  DISTANCE  |  EVENT CATEGORY  |
+|:------:|:---------------------------------------------------------------------------------------------------------------------------------:|:-----------------:|:----------:|:----------------:|
+|  2022  |             [Vina del Mar](https://www.triathlon.org/events/event/2022_world_triathlon_cup_vina_del_mar) ( :chile: )              | 11.0 :cold_face:  |   sprint   |    WORLD-CUP     |
+|  2016  |                 [Edmonton](https://www.triathlon.org/events/event/2016_itu_world_triathlon_edmonton) ( :canada: )                 | 12.7 :cold_face:  |   sprint   |       WTCS       |
+|  2021  |                 [Tongyeong ](https://www.triathlon.org/events/event/2021_world_triathlon_cup_tongyeong) ( :kr: )                  | 13.2 :cold_face:  |   sprint   |    WORLD-CUP     |
+|  2018  |        [New Plymouth](https://www.triathlon.org/events/event/2018_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         | 13.7 :cold_face:  |   sprint   |    WORLD-CUP     |
+|  2017  |       [Rotterdam](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam) ( :netherlands: )        | 14.4 :cold_face:  |  olympic   |       WTCS       |
+|  2020  |                    [Hamburg](https://www.triathlon.org/events/event/2020_itu_world_triathlon_hamburg) ( :de: )                    | 14.9 :cold_face:  |   sprint   |       WTCS       |
+|  2021  |                  [Lisbon](https://www.triathlon.org/events/event/2021_world_triathlon_cup_lisbon) ( :portugal: )                  | 15.0 :cold_face:  |  olympic   |    WORLD-CUP     |
+|  2018  |                 [Miyazaki](https://www.triathlon.org/events/event/2018_miyazaki_itu_triathlon_world_cup) ( :jp: )                 | 15.0 :cold_face:  |  olympic   |    WORLD-CUP     |
+|  2015  |                     [London](https://www.triathlon.org/events/event/2015_itu_world_triathlon_london) ( :gb: )                     | 15.2 :cold_face:  |   sprint   |       WTCS       |
+|  2021  |                   [Haeundae](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) ( :kr: )                   | 15.4 :cold_face:  |   sprint   |    WORLD-CUP     |
+|  ...   |                                                                ...                                                                |        ...        |    ...     |       ...        |
+|  2019  |                 [Montreal](https://www.triathlon.org/events/event/2019_itu_world_triathlon_montreal) ( :canada: )                 |  30.9 :hot_face:  |   sprint   |       WTCS       |
+|  2019  |             [Antwerp MAS](https://www.triathlon.org/events/event/2019_antwerp_itu_triathlon_world_cup) ( :belgium: )              |  31.5 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2016  |           [Mooloolaba](https://www.triathlon.org/events/event/2016_mooloolaba_itu_triathlon_world_cup) ( :australia: )            |  31.8 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2017  |                 [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                 |  32.0 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2022  |            [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )            |  32.0 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2018  |               [Huatulco](https://www.triathlon.org/events/event/2018_huatulco_itu_triathlon_world_cup) ( :mexico: )               |  32.1 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2015  |  [Rio de Janeiro](https://www.triathlon.org/events/event/2015_rio_de_janeiro_itu_world_olympic_qualification_event) ( :brazil: )  |  32.1 :hot_face:  |  olympic   |      GAMES       |
+|  2014  |          [Tiszaujvaros](https://www.triathlon.org/events/event/2014_tiszaujvaros_itu_triathlon_world_cup) ( :hungary: )           |  32.4 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2021  | [Abu Dhabi](https://www.triathlon.org/events/event/2021_world_triathlon_championship_series_abu_dhabi) ( :united_arab_emirates: ) |  34.0 :hot_face:  |   sprint   |       WTCS       |
+|  2016  |            [Cozumel](https://www.triathlon.org/events/event/2016_itu_world_triathlon_grand_final_cozumel) ( :mexico: )            |  34.0 :hot_face:  |  olympic   |       WTCS       |
+
+---
+
+---
+
 # :earth_africa: HOST COUNTRIES
 
 Countries having **hosted more than one** `world-series`, `world-cup` or `games-related` event since 2009:
@@ -2002,6 +2116,8 @@ Here are some simplified **key takeaways**:
 - :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**.
 - :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
+- :thermometer: Athletes must be able to **race in cold and warm conditions**: 80% of the recorded **air** temperatures lay between **17.0 and 29.6 °C** (lower estimates).
+- :hot_face: **Heat** tends to **slow down** the running pace.
 - :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**.
 - :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
 - :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:.

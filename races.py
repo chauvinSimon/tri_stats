@@ -6,10 +6,12 @@ from datetime import datetime
 
 import cv2
 from matplotlib import pyplot as plt
+import matplotlib.patches as patches
 from matplotlib.ticker import PercentFormatter
 import numpy as np
 import pandas as pd
 import re
+import seaborn as sns
 
 import requests
 from PIL import Image
@@ -471,27 +473,37 @@ def find_substring_with_context(long_string, target_word, context_size=3):
             print(f"\t\t{context_substring}")
 
 
-def extract_water_temperature(long_string):
-    # Define a regular expression pattern to match the water temperature
-    pattern = r"water temperature[:\s]*([\d.]+)"
+def extract_air_and_water_temperatures(long_string):
+    if long_string is None:
+        return None, None
+    if not long_string:
+        return None, None
 
-    # Search for the pattern in the string
-    match = re.search(pattern, long_string.lower())
+    res = []
 
-    if match:
-        # Extract the temperature value from the match
-        temperature_str = match.group(1)
-        if temperature_str[-1] == ".":
-            temperature_str = temperature_str[:-1]
-        # Convert the extracted value to float
-        temperature = float(temperature_str)
+    for measure in ["air", "water"]:
+        # Define a regular expression pattern to match the water temperature
+        pattern = f"{measure} temperature[:\s]*([\d.]+)"
 
-        return temperature
-    else:
-        if ("temp" in long_string.lower()) or ("water" in long_string.lower()):
-            raise ValueError(
-                f"maybe regex {pattern} is not good enough to extract water temperature from {long_string}")
-        return None
+        # Search for the pattern in the string
+        match = re.search(pattern, long_string.lower())
+
+        if match:
+            # Extract the temperature value from the match
+            temperature_str = match.group(1)
+            if temperature_str[-1] == ".":
+                temperature_str = temperature_str[:-1]
+            # Convert the extracted value to float
+            temperature = float(temperature_str)
+
+            res.append(temperature)
+        else:
+            # if ("temp" in long_string.lower()) or ("water" in long_string.lower()):
+            #     raise ValueError(f"maybe regex {pattern} is not good enough: {long_string}")
+            # print(f"{long_string}")
+            res.append(None)
+
+    return res
 
 
 def get_events_results() -> pd.DataFrame:
@@ -620,7 +632,7 @@ def get_events_results() -> pd.DataFrame:
                         # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="wetsuit")
                         # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="temperature")
                         # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="water")
-                        water_temperature = extract_water_temperature(prog_data["prog_notes"])
+                        _, water_temperature = extract_air_and_water_temperatures(prog_data["prog_notes"])
                         if water_temperature is not None:
                             # print(f"\t\twater_temperature found: {water_temperature}")
                             if water_temperature >= 20:
@@ -702,6 +714,11 @@ def get_events_results() -> pd.DataFrame:
             id_best_runner = df_results.run_s.idxmin()
             id_winner = df_results.total_s.idxmin()
             events_result[f"best_runner_wins{suffix}"] = id_best_runner == id_winner
+
+            # extract temperatures
+            air_temperature, water_temperature = extract_air_and_water_temperatures(prog_data["prog_notes"])
+            events_result[f"air_temperature{suffix}"] = air_temperature
+            events_result[f"water_temperature{suffix}"] = water_temperature
 
             if prog_data["results"][0]["total_time"] is not None:
                 def str_to_seconds(x):
@@ -1469,7 +1486,6 @@ def process_results_w_vs_m(df):
                 m, b = np.polyfit(data_x, data_y, 1)
 
                 reg_colour = "deepskyblue" if m > 0 else "violet"
-                import seaborn as sns
                 sns.regplot(
                     x=data_x,
                     y=data_y,
@@ -2616,6 +2632,361 @@ def process_scenarios(df):
     plt.show()
 
 
+def process_temperatures(df):
+
+    # assert that consistency wetsuit / temperature
+    # assert len(df[(df["wetsuit_w"]) & (df["water_temperature_w"] >= 20.0)]) == 0
+    # assert len(df[(df["wetsuit_m"]) & (df["water_temperature_m"] >= 20.0)]) == 0
+    # assert len(df[(~df["wetsuit_w"]) & (df["water_temperature_w"] < 20.0)]) == 0
+    # assert len(df[(~df["wetsuit_m"]) & (df["water_temperature_m"] < 20.0)]) == 0
+
+    # plot df[temperature] distribution
+    measure_min = min(
+        min(df[f"water_temperature_m"].min(), df[f"water_temperature_w"].min()),
+        min(df[f"air_temperature_m"].min(), df[f"air_temperature_w"].min()),
+    )
+    measure_max = max(
+        max(df[f"water_temperature_m"].max(), df[f"water_temperature_w"].max()),
+        max(df[f"air_temperature_m"].max(), df[f"air_temperature_w"].max()),
+    )
+
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(20, 20))
+    for i_measure, (measure, sport) in enumerate([("air", "run"), ("water", "swim")]):
+        data = np.concatenate([
+            df[f"{measure}_temperature_m"].values,
+            df[f"{measure}_temperature_w"].values
+        ])
+        # drop nan
+        data = data[~np.isnan(data)]
+        bins = np.arange(int(min(data))-1, int(max(data))+1, 1)
+        kwargs = {
+            "density": True,
+            "bins": bins,
+        }
+        mean = data.mean()
+        sd = data.std()
+
+        axes[i_measure].hist(
+            data,
+            color="deepskyblue" if sport == "swim" else "gold",
+            # alpha=0.5,
+            edgecolor='black',
+            # label=f"{measure.upper()}",
+            **kwargs
+        )
+
+        if sport == "swim":
+            axes[i_measure].axvline(
+                20,
+                color='red',
+                linestyle="-",
+                linewidth=3,
+                label=f"20°C wetsuit limit"
+            )
+
+        axes[i_measure].axvline(
+            mean,
+            color='black',
+            linestyle="--",
+            linewidth=2,
+            label=r"Average = ${:.1f}\,\mathrm{{^\circ C}}$".format(mean)
+        )
+        # write text close to this line
+        # axes[i_measure].text(
+        #     mean+0.15,
+        #     0.03,
+        #     r"$\mu$ = ${:.1f}\,\mathrm{{^\circ C}}$".format(mean),
+        #     fontsize=15,
+        #     color="black",
+        #     rotation=90
+        # )
+
+        q_10, q_90 = np.percentile(data, [10, 90])
+        print(f"80% of {measure} temperatures are between {q_10:.1f} and {q_90:.1f} °C (Mean: {mean:.1f} °C, SD: {sd:.1f} °C, Min: {data.min():.1f} °C, Max: {data.max():.1f} °C)")
+        axes[i_measure].axvline(
+            q_10,
+            color='black',
+            linestyle="-.",
+            linewidth=1,
+            label=r"$10\%$ percentile = ${:.1f}\,\mathrm{{^\circ C}}$".format(q_10)
+        )
+        axes[i_measure].axvline(
+            q_90,
+            color='black',
+            linestyle="-.",
+            linewidth=1,
+            label=r"$90\%$ percentile = ${:.1f}\,\mathrm{{^\circ C}}$".format(q_90)
+        )
+
+        from scipy.stats import norm
+        mu, std = norm.fit(data)
+        x = np.linspace(measure_min-5, measure_max+5, 100)
+        p = norm.pdf(x, mu, std)
+        axes[i_measure].plot(
+            x,
+            p,
+            'gray',
+            linewidth=1,
+            linestyle="-",
+            alpha=0.5,
+            label=f"Normal distribution ($\mu={mu:.1f}\,\mathrm{{^\circ C}}$, $\sigma={std:.1f}\,\mathrm{{^\circ C}}$)"
+        )
+
+        axes[i_measure].grid()
+        axes[i_measure].set_xlim(measure_min - 1, measure_max + 2)
+        axes[i_measure].set_xticks(range(int(measure_min) - 1, int(measure_max) + 2, 1))
+        axes[i_measure].tick_params(axis='x', which='major', labelsize=14)
+        axes[i_measure].legend(fontsize=12)
+        axes[i_measure].set_title(f"{measure.upper()}\n{len(data)} events", fontsize=15)
+        axes[i_measure].set_xlabel("TEMPERATURE °C", fontsize=12)
+        axes[i_measure].set_ylabel("Percentage".upper(), fontsize=12)
+        # format y as percentage
+        axes[i_measure].yaxis.set_major_formatter(PercentFormatter(1))
+
+    fig.suptitle(
+        f"WATER AND AIR TEMPERATURES\n",
+        fontsize=20
+    )
+    plt.tight_layout()
+    add_watermark(fig)
+    plt.savefig(res_dir / "temperatures.png")
+    # plt.show()
+
+    for measure, sport in [("air", "run"), ("water", "swim")]:
+        measure_min = min(df[f"{measure}_temperature_m"].min(), df[f"{measure}_temperature_w"].min())
+        measure_max = max(df[f"{measure}_temperature_m"].max(), df[f"{measure}_temperature_w"].max())
+
+        fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 20))
+
+        # df = df[df["event_category"] != "world-cup"]
+        # df = df[df["event_category"] == "world-cup"]
+
+        for i_distance_category, distance_category in enumerate(distance_categories):
+            for i_suffix, suffix in enumerate(["w", "m"]):
+                df2 = df[df["prog_distance_category"] == distance_category]
+                df2 = df2.dropna(subset=[f"{measure}_temperature_{suffix}"])
+                df2.sort_values([f"{measure}_temperature_{suffix}"], inplace=True)
+
+                if sport == "swim":
+                    if suffix == "w":
+                        # drop event_id 154591 for women because wetsuit at 21.3 deg
+                        df2 = df2[df2["event_id"] != 154591]
+
+                    assert len(df2[(df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] >= 20.0)]) == 0
+                    assert len(df2[(~df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] < 20.0)]) == 0
+
+                    colours = ["navy" if t >= 20 else "dodgerblue" for t in df2[f"{measure}_temperature_{suffix}"]]
+                    kwargs = dict(
+                        color=colours,
+                        edgecolor='black',
+                        s=100,
+                        marker="x"
+                    )
+
+                    reg_colour = "deepskyblue"
+                    df_no_wetsuit = df2[df2[f"{measure}_temperature_{suffix}"] >= 20.0]
+                    df_wetsuit = df2[df2[f"{measure}_temperature_{suffix}"] < 20.0]
+                    # sns.regplot(
+                    #     x=df_no_wetsuit[f"{measure}_temperature_{suffix}"],
+                    #     y=df_no_wetsuit[f"{sport}_mean_{suffix}"],
+                    #     scatter=False,
+                    #     line_kws={"color": reg_colour, "linewidth": 1, "alpha": 0.1, "linestyle": "-"},
+                    #     ax=axes[i_distance_category, i_suffix],
+                    #     order=2
+                    # )
+                    # sns.regplot(
+                    #     x=df_wetsuit[f"{measure}_temperature_{suffix}"],
+                    #     y=df_wetsuit[f"{sport}_mean_{suffix}"],
+                    #     scatter=False,
+                    #     line_kws={"color": reg_colour, "linewidth": 1, "alpha": 0.1, "linestyle": "-"},
+                    #     ax=axes[i_distance_category, i_suffix],
+                    #     order=2
+                    # )
+
+                elif sport == "run":
+                    # drop event_id 109660 because too long run! (top women at 3:57/km!)
+                    df2 = df2[df2["event_id"] != 109660]
+
+                    kwargs = dict(
+                        cmap='autumn_r',
+                        c=df2[f"{measure}_temperature_{suffix}"],
+                        edgecolor='black',
+                        s=100,
+                        marker="P"
+                    )
+
+                    reg_colour = "deepskyblue"
+                    sns.regplot(
+                        x=df2[f"{measure}_temperature_{suffix}"],
+                        y=df2[f"{sport}_mean_{suffix}"],
+                        scatter=False,
+                        line_kws={"color": reg_colour, "linewidth": 1, "alpha": 0.2, "linestyle": "-"},
+                        ax=axes[i_distance_category, i_suffix],
+                        order=2
+                    )
+
+                    coefficients = np.polyfit(
+                        df2[f"{measure}_temperature_{suffix}"],
+                        df2[f"{sport}_mean_{suffix}"],
+                        2
+                    )
+                    axes[i_distance_category, i_suffix].plot(
+                        df2[f"{measure}_temperature_{suffix}"],
+                        # np.poly1d(p)(df2[f"{measure}_temperature_{suffix}"]),
+                        np.polyval(coefficients, df2[f"{measure}_temperature_{suffix}"]),
+                        color='dodgerblue',
+                        linewidth=2,
+                        linestyle='-',
+                        alpha=0.6,
+                        label='Best fit (2nd degree)'
+                    )
+
+                    a, b, c = coefficients
+                    optimal_t = -b / (2 * a)
+                    axes[i_distance_category, i_suffix].axvline(
+                        optimal_t,
+                        linestyle="-.",
+                        linewidth=2,
+                        alpha=0.6,
+                        color="dodgerblue",
+                        label=f"Optimal: {optimal_t:.1f}°C"
+                    )
+
+                axes[i_distance_category, i_suffix].scatter(
+                    df2[f"{measure}_temperature_{suffix}"],
+                    df2[f"{sport}_mean_{suffix}"],
+                    **kwargs
+                )
+
+                # set title
+                axes[i_distance_category, i_suffix].set_title(
+                    f"\n{distance_category.replace('standard', 'olympic').upper()} - {'WOMEN' if suffix == 'w' else 'MEN'}\n({len(df2)} events)",
+                    fontsize=20
+                )
+
+                axes[i_distance_category, i_suffix].grid()
+
+                locs = axes[i_distance_category, i_suffix].get_yticks()
+
+                def format_label(_x):
+                    splits = seconds_to_h_min_sec(_x, use_hours=True, sport=sport, use_units=True).split(" (")
+                    return f"{splits[0]}\n({splits[1]}"
+
+                labels = map(format_label, locs)
+                axes[i_distance_category, i_suffix].set_yticks(locs)
+                axes[i_distance_category, i_suffix].set_yticklabels(labels)
+
+                # set tick font size
+                axes[i_distance_category, i_suffix].yaxis.set_tick_params(labelsize=13)
+                axes[i_distance_category, i_suffix].set_ylabel(f"{sport} time".upper(), fontsize=15)
+
+                axes[i_distance_category, i_suffix].set_xlabel(f"{measure} temperature (°C)".upper(), fontsize=15)
+                axes[i_distance_category, i_suffix].xaxis.set_tick_params(labelsize=13)
+
+                # set x min max
+                axes[i_distance_category, i_suffix].set_xlim(measure_min - 1, measure_max + 1)
+
+                if sport == "swim":
+                    axes[i_distance_category, i_suffix].axvline(
+                        20,
+                        linestyle="-.",
+                        linewidth=1,
+                        alpha=1,
+                        color="black",
+                        label="20°C"
+                    )
+
+                    # get current x and y min/max of the ax
+                    x_min = axes[i_distance_category, i_suffix].get_xlim()[0]
+                    x_max = axes[i_distance_category, i_suffix].get_xlim()[1]
+                    y_min = axes[i_distance_category, i_suffix].get_ylim()[0]
+                    y_max = axes[i_distance_category, i_suffix].get_ylim()[1]
+
+                    # Create the rectangle
+                    rect = patches.Rectangle(
+                        (x_min, y_min),
+                        20 - x_min,
+                        y_max - y_min,
+                        facecolor='silver',
+                        alpha=0.2,
+                        label="wetsuit"
+                    )
+
+                    # Add the rectangle to the plot
+                    axes[i_distance_category, i_suffix].add_patch(rect)
+
+                    rect = patches.Rectangle(
+                        (20, y_min),
+                        x_max - 20,
+                        y_max - y_min,
+                        facecolor='lightskyblue',
+                        alpha=0.2,
+                        label="no wetsuit"
+                    )
+
+                    # Add the rectangle to the plot
+                    axes[i_distance_category, i_suffix].add_patch(rect)
+
+                axes[i_distance_category, i_suffix].legend()
+
+        # create markdown table
+        df = df.dropna(subset=[f"{measure}_temperature_w", f"{measure}_temperature_m"])
+        df[f"{measure}_temperature_min"] = df[[f"{measure}_temperature_w", f"{measure}_temperature_m"]].min(axis=1)
+        df[f"{measure}_temperature_max"] = df[[f"{measure}_temperature_w", f"{measure}_temperature_m"]].max(axis=1)
+
+        all_rows = []
+        for suf in ["min", "max"]:
+            # create markdown table
+            df_table = df[
+                ["event_year", "event_country_noc", "event_listing", "event_venue", "prog_distance_category",
+                 f"{measure}_temperature_{suf}", "event_category"]]
+            # in prog_distance_category, change "standard" to "olympic"
+            df_table["prog_distance_category"] = df_table["prog_distance_category"].apply(
+                lambda x: x.replace("standard", "olympic")
+            )
+            # merge "event_country_noc" and "event_venue"
+            df_table["event"] = df_table[["event_country_noc", "event_listing", "event_venue"]].apply(
+                lambda
+                    x: f"[{x.event_venue}]({x.event_listing}) ( {country_emojis[x.event_country_noc] if x.event_country_noc in country_emojis else x.event_country_noc} )",
+                axis=1
+            )
+            if suf == "min":
+                df_table.sort_values([f"{measure}_temperature_min"], inplace=True)
+            else:
+                df_table.sort_values([f"{measure}_temperature_max"], inplace=True, ascending=False)
+
+            df_table = df_table.head(10)
+            if suf == "max":
+                df_table.sort_values([f"{measure}_temperature_max"], inplace=True)
+
+            df_table = df_table[
+                ["event_year", "event", f"{measure}_temperature_{suf}", "prog_distance_category", "event_category"]]
+            df_table["event_category"] = df_table["event_category"].apply(lambda x: x.replace("wcs", "WTCS").upper())
+            df_table[f"{measure}_temperature_{suf}"] = df_table[f"{measure}_temperature_{suf}"].apply(lambda x: f"{x:.1f} :{'hot_face' if suf == 'max' else 'cold_face'}:")
+            df_table.columns = ["YEAR", "EVENT", f"{measure.upper()} TEMPERATURE", "DISTANCE", "EVENT CATEGORY"]
+            all_rows.extend(df_table.to_dict('records'))
+
+            all_rows.append({k: "..." for k in df_table.columns})
+
+        df_table = pd.DataFrame(all_rows)
+        print(df_table.to_markdown(
+            index=False,
+            colalign=["center"] * len(df_table.columns)
+        ))
+
+        fig.suptitle(
+            f"{measure.upper()} TEMPERATURES AND {sport.upper()} TIMES"
+            f"\n(from {measure_min:.1f} to {measure_max:.1f}°C)",
+            fontsize=20
+        )
+
+        fig.tight_layout()
+
+        add_watermark(fig)
+        plt.savefig(str(res_dir / f"temperatures_{measure}.png"), dpi=300)
+        plt.show()
+
+
 def process_sport_proportion(df):
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 16))
 
@@ -3088,6 +3459,7 @@ def main():
     process_sport_proportion(df.copy())
     process_swim_gaps(df.copy())
     process_event_country(df.copy())
+    process_temperatures(df.copy())
     # process_event_dates(df.copy())  # make sure to reduce the min-participants: n_results_min
 
 
