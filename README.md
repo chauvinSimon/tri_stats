@@ -1171,9 +1171,11 @@ The **temperature ranges** are **broad**:
 
 **Several limitations** should be considered:
 - **Incomplete data:** Over half of the events lack temperature data, limiting the analysis's comprehensiveness.
-- **Pre-race measurements:** The recorded temperatures are likely **lower than the actual conditions** experienced during the race since measurements are typically **taken before the event**. Specifically:
+- **Pre-race measurements:** Measurements are typically **taken before the event**.
+  - Depending on the **race timetable**, the **actual temperature** experienced during the race can be lower or higher than the **reported temperature**.
   - _"Water temperature must be taken **one hour** prior to the start of the event on competition day. It must be taken at the middle of the course and in two other areas on the swim course, at a **depth of 60 cm**."_
   - Air temperatures are likely **recorded before the race** as well, potentially leading to **significant temperature increases** by the time athletes begin the run.
+  - For instance, the air temperature for the [men's race (10:45 am)](https://triathlon.org/results/result/paris_2024_olympic_games/655047) at Paris 2024 ( :fr: ) is reported at **23.9 °C**, while it was [closer to **28 °C** during the run](https://www.infoclimat.fr/observations-meteo/archives/31/juillet/2024/paris-montsouris/07156.html). 
 - **Humidity Impact:** While humidity could significantly affect running performance, its values are **not reported**.
 - Last but not least, **swim and run courses vary in distance**, and water conditions (e.g., waves, salinity) also differ between events, making **comparisons challenging**.
 
@@ -1217,7 +1219,7 @@ Swim appears **slightly faster in water temperatures below 20°C**
 |  2022  |                   [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                   |   27.8 :hot_face:   |   sprint   |    WORLD-CUP     |
 |  2021  |                         [Tokyo](https://www.triathlon.org/events/event/2020_tokyo_olympic_games) ( :jp: )                         |   28.9 :hot_face:   |  olympic   |      GAMES       |
 |  2016  |            [Cozumel](https://www.triathlon.org/events/event/2016_itu_world_triathlon_grand_final_cozumel) ( :mexico: )            |   29.0 :hot_face:   |  olympic   |       WTCS       |
-|  2017  |    [Mérida, Yucatán, Puerto Progreso](https://www.triathlon.org/events/event/2017_merida_itu_triathlon_world_cup) ( :mexico: )    |   29.0 :hot_face:   |   sprint   |    WORLD-CUP     |
+|  2017  |                 [Mérida](https://www.triathlon.org/events/event/2017_merida_itu_triathlon_world_cup) ( :mexico: )                 |   29.0 :hot_face:   |   sprint   |    WORLD-CUP     |
 |  2018  |           [Mooloolaba](https://www.triathlon.org/events/event/2018_mooloolaba_itu_triathlon_world_cup) ( :australia: )            |   29.1 :hot_face:   |   sprint   |    WORLD-CUP     |
 |  2019  |               [Huatulco](https://www.triathlon.org/events/event/2019_huatulco_itu_triathlon_world_cup) ( :mexico: )               |   29.5 :hot_face:   |   sprint   |    WORLD-CUP     |
 |  2018  |               [Huatulco](https://www.triathlon.org/events/event/2018_huatulco_itu_triathlon_world_cup) ( :mexico: )               |   30.0 :hot_face:   |   sprint   |    WORLD-CUP     |
@@ -1258,7 +1260,7 @@ A **2nd degree fit** is applied on the scatter plot using [`seaborn.regplot`](ht
 |  2019  |             [Antwerp MAS](https://www.triathlon.org/events/event/2019_antwerp_itu_triathlon_world_cup) ( :belgium: )              |  31.5 :hot_face:  |   sprint   |    WORLD-CUP     |
 |  2016  |           [Mooloolaba](https://www.triathlon.org/events/event/2016_mooloolaba_itu_triathlon_world_cup) ( :australia: )            |  31.8 :hot_face:  |   sprint   |    WORLD-CUP     |
 |  2017  |                 [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                 |  32.0 :hot_face:  |   sprint   |    WORLD-CUP     |
-|  2022  |            [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )            |  32.0 :hot_face:  |   sprint   |    WORLD-CUP     |
+|  2022  |                  [Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )                  |  32.0 :hot_face:  |   sprint   |    WORLD-CUP     |
 |  2018  |               [Huatulco](https://www.triathlon.org/events/event/2018_huatulco_itu_triathlon_world_cup) ( :mexico: )               |  32.1 :hot_face:  |   sprint   |    WORLD-CUP     |
 |  2015  |  [Rio de Janeiro](https://www.triathlon.org/events/event/2015_rio_de_janeiro_itu_world_olympic_qualification_event) ( :brazil: )  |  32.1 :hot_face:  |  olympic   |      GAMES       |
 |  2014  |          [Tiszaujvaros](https://www.triathlon.org/events/event/2014_tiszaujvaros_itu_triathlon_world_cup) ( :hungary: )           |  32.4 :hot_face:  |   sprint   |    WORLD-CUP     |
