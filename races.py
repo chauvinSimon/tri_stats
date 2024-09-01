@@ -2736,7 +2736,7 @@ def process_temperatures(df):
         axes[i_measure].set_xlim(measure_min - 1, measure_max + 2)
         axes[i_measure].set_xticks(range(int(measure_min) - 1, int(measure_max) + 2, 1))
         axes[i_measure].tick_params(axis='x', which='major', labelsize=14)
-        axes[i_measure].legend(fontsize=12)
+        axes[i_measure].legend(fontsize=15)
         axes[i_measure].set_title(f"{measure.upper()}\n{len(data)} events", fontsize=15)
         axes[i_measure].set_xlabel("TEMPERATURE °C", fontsize=12)
         axes[i_measure].set_ylabel("Percentage".upper(), fontsize=12)
@@ -2890,8 +2890,7 @@ def process_temperatures(df):
                     axes[i_distance_category, i_suffix].axvline(
                         20,
                         linestyle="-.",
-                        linewidth=1,
-                        alpha=1,
+                        linewidth=2,
                         color="black",
                         label="20°C"
                     )
@@ -2927,7 +2926,7 @@ def process_temperatures(df):
                     # Add the rectangle to the plot
                     axes[i_distance_category, i_suffix].add_patch(rect)
 
-                axes[i_distance_category, i_suffix].legend()
+                axes[i_distance_category, i_suffix].legend(fontsize=15)
 
         # create markdown table
         df = df.dropna(subset=[f"{measure}_temperature_w", f"{measure}_temperature_m"])

@@ -10,7 +10,7 @@ This document **analyses data** of [**World Triathlon**](https://triathlon.org/)
 - :dart: How often does an athlete **win from a bike breakaway**?
 - :runner: How often does the **best runner win**?
 - :rocket: How often is the win decided with a **sprint finish**?
-- :thermometer: Do **water and air temperatures** affect swimming and running performance, respectively? 
+- :thermometer: Do **water and air temperatures** affect swimming and running performance? 
 - :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**?
 - :muscle: What is the typical **age** of performing athletes and how has it evolved over years?
 - :next_track_button: **How old** are athletes when they **stop racing**?
@@ -1155,7 +1155,7 @@ The swim of [2024 Paris ( :fr: ) Olympics](https://triathlon.org/results/result/
 
 # :thermometer: TEMPERATURES
 
-This section examines the recorded **water and air temperatures** and, inspired by the recent work by [Gibson (2024)](https://eprints.qut.edu.au/250162/), investigates their influence on **swimming and running performance**, respectively.
+This section examines the recorded **water and air temperatures** and, inspired by the recent work by [Gibson (2024)](https://eprints.qut.edu.au/250162/), investigates their impact on **swimming and running performance**, respectively.
 
 | ![temperatures.png](res/temperatures.png) | 
 |:-----------------------------------------:| 
@@ -1169,32 +1169,35 @@ The **temperature ranges** are **broad**:
 
 ---
 
-**Several limitations** should be noted:
-- More than half of the events do not report any temperature.
-- The **recorded temperatures** are most likely **lower** than the **actual temperatures** on the course.
-  - Because measurements are made **before the race**.
+**Several limitations** should be considered:
+- **Incomplete data:** Over half of the events lack temperature data, limiting the analysis's comprehensiveness.
+- **Pre-race measurements:** The recorded temperatures are likely **lower than the actual conditions** experienced during the race since measurements are typically **taken before the event**. Specifically:
   - _"Water temperature must be taken **one hour** prior to the start of the event on competition day. It must be taken at the middle of the course and in two other areas on the swim course, at a **depth of 60 cm**."_
-  - Air temperatures are likely also **recorded before the race**. By the time athletes **begin the run**, it **can get significantly warmer**.
-- In addition to the air temperature, **humidity** could have a significant impact on running performance, but its value is not reported.
+  - Air temperatures are likely **recorded before the race** as well, potentially leading to **significant temperature increases** by the time athletes begin the run.
+- **Humidity Impact:** While humidity could significantly affect running performance, its values are **not reported**.
 - Last but not least, **swim and run courses vary in distance**, and water conditions (e.g., waves, salinity) also differ between events, making **comparisons challenging**.
 
-:warning: Given these **limitations**, particularly the variation in course distances, **caution is necessary when drawing conclusions**!
+:warning: Given these **limitations**, especially the variation in course distances, **conclusions should be drawn with caution**.
 
 ---
+
+### :ocean: Water temperatures and swim times
 
 | ![temperatures_water.png](res/temperatures_water.png) | 
 |:-----------------------------------------------------:| 
 |          *Water temperature and swim times.*          |
 
-The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup_haeundae/454064) at [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) is ignored because of **inconsistency with the 20°C-rule** for the wetsuit:
-- The race report says: _"Water temperature 21.3ºC. Air temperature 15.4º C. Wetsuits allowed."_
+The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup_haeundae/454064) at [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) is excluded due to an **inconsistency with the 20°C wetsuit rule**:
+- The race report notes: _"Water temperature 21.3ºC. Air temperature 15.4º C. Wetsuits allowed."_
 - The [2024 rule book](https://www.triathlon.org/uploads/docs/World-Triathlon_Competition-Rules_2024_20240416.pdf) states in section 4.4.b. that _"when the water temperature is at or below 22ºC and the **air temperature** is at or below **15ºC**, then **the value of the water temperature will be adjusted**."_
   - For instance: Air at 15°C and water at 22°C -> The **water temperature is adjusted** at 18.5°C -> Wetsuit allowed.
-  - Probably this 15°C threshold was higher in 2021.
+  - It is possible that the 15°C threshold was higher in 2021, leading to the discrepancy.
 
 Swim appears **slightly faster in water temperatures below 20°C**
 - Likely because **wetsuits are permitted** at these lower temperatures.
-- Further studies could try to estimate the optimal range of **water temperature** for races with and without wetsuits.
+- Further research could explore the **optimal water temperature range** for races, with and without wetsuits.
+
+---
 
 :swimmer: Some cold and hot **swims**:
 
@@ -1224,16 +1227,17 @@ Swim appears **slightly faster in water temperatures below 20°C**
 
 ---
 
+### :parasol_on_ground: Air temperatures and run times
+
+
 | ![temperatures_air.png](res/temperatures_air.png) | 
 |:-------------------------------------------------:| 
 |         *Air temperature and run times.*          |
 
 A **2nd degree fit** is applied on the scatter plot using [`seaborn.regplot`](https://seaborn.pydata.org/generated/seaborn.regplot.html).
-- Again, care is required to draw conclusions.
-  - In particular, I think no optimal temperature can be determined.
-- Nevertheless, the fitted line tends to indicate that **heat slows down run paces**.
-  - This would be **consistent with personal experience** :hot_face:, as well as with [research findings](https://www.outsideonline.com/health/running/racing/race-strategy/how-much-does-heat-slow-your-race-pace/).
-  - This also explains all the **hydrating and cooling strategies**, such as the **[cooling headbands](https://conecta.tec.mx/en/news/national/entrepreneurs/goodbye-heat-mexican-creates-band-cool-down-olympic-athletes)**.
+- It suggests a trend where **higher temperatures** correlate with **slower running paces**.
+- While no definitive "optimal" temperature can be reliably determined, this trend **aligns** with both [research findings](https://www.outsideonline.com/health/running/racing/race-strategy/how-much-does-heat-slow-your-race-pace/) and **personal experiences** ( :hot_face: ).
+- It also underscores the **importance of hydration and cooling strategies**, such as the use of **[cooling headbands](https://conecta.tec.mx/en/news/national/entrepreneurs/goodbye-heat-mexican-creates-band-cool-down-olympic-athletes)**.
 
 :runner: Some cold and hot **runs**:
 
@@ -2116,8 +2120,8 @@ Here are some simplified **key takeaways**:
 - :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**.
 - :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
-- :thermometer: Athletes must be able to **race in cold and warm conditions**: 80% of the recorded **air** temperatures lay between **17.0 and 29.6 °C** (lower estimates).
-- :hot_face: **Heat** tends to **slow down** the running pace.
+- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** fall between **17.0** and **29.6°C** (lower estimates).
+- :hot_face: **Heat** tends to **slow down** running pace.
 - :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**.
 - :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
 - :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:.
