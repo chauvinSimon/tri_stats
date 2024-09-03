@@ -1195,9 +1195,9 @@ The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup
   - For instance: Air at 15°C and water at 22°C -> The **water temperature is adjusted** at 18.5°C -> Wetsuit allowed.
   - It is possible that the 15°C threshold was higher in 2021, leading to the discrepancy.
 
-Swim appears **slightly faster in water temperatures below 20°C**
+Swim appears **slightly faster in water temperatures below 20°C**, which is particularly visible in the two "olympic" sub-plots.
 - Likely because **wetsuits are permitted** at these lower temperatures.
-- Further research could explore the **optimal water temperature range** for races, with and without wetsuits.
+- Further research could analyse the **impact of temperature on swim performance** (see already [Gay et al, 2021](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/a-1481-8473)), and try to determine the **optimal water temperature range** for races, with and without wetsuits.
 
 ---
 
