@@ -101,7 +101,7 @@ What about the data quality?
 
 This section:
 - Investigates the statement: _"swim, bike and run account each for **one third of the total duration**"_.
-- Analyses some transition data: t1 and t2.
+- Analyses some transition data: T1 and T2.
 
 |                                          ![sport_proportion.png](res/sport_proportion.png)                                           | 
 |:------------------------------------------------------------------------------------------------------------------------------------:| 
@@ -777,7 +777,7 @@ On the **olympic** format, **men are more likely to break away**.
 - At the same time, the **probability to win** for athletes in the front group is **much lower than for women**.
 
 Small front packs, i.e. **small breakaways**, are more likely on the **olympic format**.
-- Possibly because a **longer swim** leads to **larger gaps** at **t1**?
+- Possibly because a **longer swim** leads to **larger gaps** at **T1**?
 - On the other hand the bike is longer than for the sprint format, which **should give more time** for the other packs to catch up. 
 
 <details>
@@ -846,8 +846,8 @@ More than **2/3 races** are **won by the best runner**.
 - This percentage is higher on the **sprint** than on the **olympic** format.
   - Probably because the swim is shorter: "good-runner-but-bad-swimmer"s are **less likely to miss the front group** on the bike.
 - This percentage could be:
-  - Higher, if the winner does not slow down and **"enjoy" the last 100m run**, and instead sprints until the end, as most athletes behind have to.
-  - Lower, if good runners who, at t2, are already too far for the win, **get as motivated** as the athletes at the front, and give their best possible run.
+  - Higher, if the winner does not slow down and **"enjoy" the last 100m run**, and instead sprints until the end, as most athletes behind have to. Example: [Leonie Periault ( :fr: )](https://youtu.be/XMa5Soyx498?t=209) in [2024 Yokohama ( :jp: )](https://triathlon.org/results/result/2023_world_triathlon_championship_series_yokohama1/627955).
+  - Lower, if good runners who, at T2, are already too far for the win, **get as motivated** as the athletes at the front, and give their best possible run.
 - The percentage **drops to 50%** when considering **world-cup** events only. Why?
   - Because athletes are **not as complete as on WTCS**?
   - There are **more "good-runner-but-bad-swimmer"s** who miss the front group on the bike, while good swimmers are not top runners?
@@ -2012,7 +2012,7 @@ As mentioned by Alex Yee in [this video](https://youtu.be/zoYeVlM28J4?t=689):
 
 > "You are doing a **full gas effort** at the start of a race which is **2 hours long**. If you told somebody to do that on a marathon, they would laugh in your face."
 
-World Triathlon data provides **a single time** for **each leg**: swim, t1, bike, t2, run. There is no detail about the pace evolution **during each segment**. For instance:
+World Triathlon data provides **a single time** for **each leg**: `swim`, `t1`, `bike`, `t2`, `run`. There is no detail about the pace evolution **during each segment**. For instance:
 - Fast swim start to reach the first buoy.
 - Fast bike start to break away or catch a pack.
 - Fast run start - _I have never really understood the benefit compared to a steady effort._
@@ -2122,7 +2122,7 @@ Here are some simplified **key takeaways**:
 - :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**.
 - :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
-- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** fall between **17.0** and **29.6°C** (lower estimates).
+- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** (lower estimates) fall between **17°C** and **30°C** and almost uniformly so.
 - :hot_face: **Heat** tends to **slow down** running pace.
 - :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**.
 - :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
