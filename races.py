@@ -697,6 +697,8 @@ def get_events_results() -> pd.DataFrame:
                         events_result[f"{k.replace('_s', '')}_{_k}{suffix}"] = _v
             df_results["start_to_t2_s"] = df_results["swim_s"] + df_results["t1_s"] + df_results["bike_s"]
 
+            events_result[f"n_finishers{suffix}"] = len(df_results)
+
             pack_duration_s = 10
             time_max_s = min(df_results["start_to_t2_s"]) + pack_duration_s
             events_result[f"pack_size{suffix}"] = (df_results["start_to_t2_s"] <= time_max_s).sum()
@@ -2322,6 +2324,8 @@ def process_scenarios(df):
     df = df[df["event_category"] != "world-cup"]
     # df = df[df["event_category"] == "world-cup"]
 
+    pack_size_max = max(df["pack_size_w"].max(), df["pack_size_m"].max())
+
     for i_distance_category, distance_category in enumerate(distance_categories):
         for i_suffix, suffix in enumerate(["w", "m"]):
             df2 = df[
@@ -2336,11 +2340,14 @@ def process_scenarios(df):
                 "linewidth": 2
             }
             binwidth = 5
-            axes[i_distance_category, i_suffix].hist(
+            values, bins, bars = axes[i_distance_category, i_suffix].hist(
                 df2[f"pack_size_{suffix}"],
                 bins=range(0, max(df2[f"pack_size_{suffix}"]) + binwidth, binwidth),
                 **kwargs
             )
+            # axes[i_distance_category, i_suffix].bar_label(bars, fontsize=20, color='navy',  # todo: not for density
+            #                                               # fmt='%.2f%%'
+            #                                               )
 
             # set the font size of x ticks
             axes[i_distance_category, i_suffix].tick_params(axis="x", labelsize=18)
@@ -2365,6 +2372,21 @@ def process_scenarios(df):
             )
             axes[i_distance_category, i_suffix].xaxis.set_major_locator(plt.MultipleLocator(binwidth))
 
+            # add avg. num_finishers
+            n_finishers_mean = df2[f'n_finishers_{suffix}'].mean()
+            n_finishers_std = df2[f'n_finishers_{suffix}'].std()
+            axes[i_distance_category, i_suffix].axvline(
+                x=n_finishers_mean,
+                linestyle="--",
+                color="k",
+                # color="mediumvioletred" if suffix == "w" else "mediumturquoise",
+                label=f"{n_finishers_mean:.0f} ±{n_finishers_std:.0f} finishers\n(mean ±std)"
+            )
+            axes[i_distance_category, i_suffix].set_xlim(0, max(pack_size_max, n_finishers_mean) + 10)
+            # axes[i_distance_category, i_suffix].set_ylim(0, 0.4 / binwidth)
+            axes[i_distance_category, i_suffix].legend(loc='upper right', fontsize=15)
+            axes[i_distance_category, i_suffix].set_xlabel("size of front pack".upper(), fontsize=14)
+
     fig.suptitle(
         f"FRONT-PACK SIZES ($pack\\_duration\\_s = 10$) AFTER BIKE"
         f"\n{len(df):,} WTCS AND GAMES-RELATED EVENTS",
@@ -2377,6 +2399,41 @@ def process_scenarios(df):
     plt.savefig(str(res_dir / f"scenarios.png"), dpi=300)
     # plt.savefig(str(res_dir / f"scenarios_wc.png"), dpi=300)
     plt.show()
+
+    table_info = []
+    for suffix in ["w", "m"]:
+        df_tmp = df.copy()
+        df_tmp.sort_values(
+            by=[
+                f"pack_size_{suffix}",
+                f"event_year"
+            ],
+            ascending=False,
+            inplace=True
+        )
+        for i_row, row in df_tmp.head(10).iterrows():
+            winner_name = row[f'winner_{suffix}']
+            table_info.append({
+                "**pack_size**": "**" + str(row[f"pack_size_{suffix}"]) + "**",
+                "year": row["event_year"],
+                "winner": f"{winner_name} ( {country_emojis[row[f'winner_country_{suffix}']] if row[f'winner_country_{suffix}'] in country_emojis else row['winner_country_noc']} )",
+                "distance": row["prog_distance_category"].replace("standard", "olympic").upper(),
+                "cat": row["event_category"].upper().replace("WCS", "WTCS"),
+                "event": f"[{row['event_title']} ( {country_emojis[row['event_country_noc']] if row['event_country_noc'] in country_emojis else row['event_country_noc']} )]({row['event_listing']})",
+            })
+        table_info.append({
+            "**pack_size**": "*...*",
+            "year": "...",
+            "winner": "...",
+            "distance": "...",
+            "cat": "...",
+            "event": "...",
+        })
+    df_table = pd.DataFrame(table_info)
+    print(df_table.to_markdown(
+        index=False,
+        colalign=["center"] * len(df_table.columns)
+    ))
 
     table_info = []
     for suffix in ["w", "m"]:
@@ -2468,7 +2525,7 @@ def process_scenarios(df):
                     " ".join(map(str, sorted(pack_sizes))),
                     ha="center",
                     rotation=90,
-                    fontsize=8
+                    fontsize=12
                 )
             ax2 = axes[i_distance_category, i_suffix].twinx()
             ax2.plot(
@@ -2509,15 +2566,18 @@ def process_scenarios(df):
 
             # set x ticks
             axes[i_distance_category, i_suffix].set_xticks(df3.index)
-            axes[i_distance_category, i_suffix].set_xticklabels(df3.index, rotation=90)
+            axes[i_distance_category, i_suffix].set_xticklabels(df3.index, rotation=90, fontsize=16)
+
+            # set size of y labels
+            axes[i_distance_category, i_suffix].tick_params(axis='y', labelsize=16)
 
             # set y name
             if i_suffix == 0:
-                axes[i_distance_category, i_suffix].set_ylabel("pack size".upper())
+                axes[i_distance_category, i_suffix].set_ylabel("front pack size".upper(), fontsize=16)
 
             # ax3.yaxis.set_ticklabels([])
             if i_suffix == 1:
-                ax2.set_ylabel("winner in front pack (%)".upper())
+                ax2.set_ylabel("winner in front pack (%)".upper(), fontsize=16)
                 # ax3.set_ylabel("best runner in front pack (%)".upper())
 
                 ax2.yaxis.label.set_color("red")
@@ -2587,16 +2647,18 @@ def process_scenarios(df):
             # add line
             axes[i_distance_category, i_suffix].axhline(
                 mean,
-                linestyle="-.",
+                linestyle="--",
                 linewidth=1,
                 alpha=1,
                 color="black",
                 label=f"Average: {mean:.1%}"
             )
-            axes[i_distance_category, i_suffix].legend()
+            axes[i_distance_category, i_suffix].legend(fontsize=15)
 
             # set subtitle
-            axes[i_distance_category, i_suffix].set_ylabel("best runner wins (%)".upper())
+            axes[i_distance_category, i_suffix].set_ylabel("best runner wins (%)".upper(), fontsize=16)
+
+            axes[i_distance_category, i_suffix].tick_params(axis='y', labelsize=16)
 
             # set title
             axes[i_distance_category, i_suffix].set_title(
@@ -2615,7 +2677,7 @@ def process_scenarios(df):
             axes[i_distance_category, i_suffix].set_xticklabels([
                 f"{year} ({count_dict[year]})"
                 for year in df3.index
-            ], rotation=90)
+            ], rotation=90, fontsize=16)
 
     fig.suptitle(
         f"BEST RUNNER WINS"

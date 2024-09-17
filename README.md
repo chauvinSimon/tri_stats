@@ -748,37 +748,64 @@ Outliers:
 
 # :dart: RACE SCENARIO
 
-This section looks at the race dynamics, based on the information **_"does a bunch manages to breakaway on the bike?"_** :bird:
+This section looks at the race dynamics of **WCTS and games-related events** (no world-cup).
+- Based on the information **_"does a bunch manage to breakaway on the bike?"_** :bird:
 
 To obtain this information, the **size** of the **front pack** at the **end of the bike** is estimated as follows:
-- Compute for each athlete the cumulative times after the bike:
+- Compute, for each athlete, the cumulative times after the bike:
   - `start_to_t2 = swim + t1 + bike`.
 - Identify which athlete enters T2 first: `min(start_to_t2)`.
 - Count how many athletes enter T2 **`pack_duration_s`, e.g. 10s, or less** after this first athlete.
 - This gives the **size of the front pack** at the **end of the bike**.
 
 Note: A **breakaway** on the bike can happen:
-- Either by **attack and escape from the main bike pack** (very rare).
+- Either by **attack and escape from the main bike pack** (rare).
 - Or **directly from the swim** (most common).
 - It should be possible to automatically retrieve the **breakaway type** among the two, using the swim rank of athletes composing the breakaway. _(I have not done it)_.
 
 Two additional pieces of information are retrieved:
 - **`winner_in_front_pack`**: was the **winner already in the leading group** at the end of the bike, or did she/he **come back on the run**? :trophy:
-- **`is_best_runner_in_front_pack`**.
+- **`is_best_runner_in_front_pack`**. :athletic_shoe:
 
 |       ![scenarios.png](res/scenarios.png)        | 
 |:------------------------------------------------:| 
 | *Size of the front pack at the end of the bike.* |
 
+About the **number of finishers**:
+- **Higher for men**'s races: ~4.5.
+  - The standard deviation is higher for women's race.
+- **Higher for sprint** format: ~3.5.
+  - Because olympic formats are longer, weakest athletes are more likely to be caught, leading to a `LAP` elimination?
+
 On the **olympic** format, **men are more likely to break away**.
 - Because they are stronger on the bike?
   - Georgia Taylor-Brown ( :gb: ), **one of the strongest rider** in the field, admits in [this video](https://youtu.be/8dvcwuT2T_8?t=1251): **_"I would love to be able to attack and stay away, but I do not have that power."_**
   - Probably bike is the sport among three where **top athletes will progress the most** in the future.
-- At the same time, the **probability to win** for athletes in the front group is **much lower than for women**.
+- At the same time, the **probability to win** for athletes from the front group is **much lower for men than for women**.
 
 Small front packs, i.e. **small breakaways**, are more likely on the **olympic format**.
 - Possibly because a **longer swim** leads to **larger gaps** at **T1**?
 - On the other hand the bike is longer than for the sprint format, which **should give more time** for the other packs to catch up. 
+
+---
+
+Some **very large front groups** at T2:
+
+|  **pack_size**  |  year  |             winner              |  distance  |  cat  |                                                                                                          event                                                                                                           |
+|:---------------:|:------:|:-------------------------------:|:----------:|:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|     **53**      |  2011  |     Helen Jenkins ( :gb: )      |  OLYMPIC   | WTCS  |                [2011 Dextro Energy Triathlon - ITU World Championship Series London ( :gb: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london)                |
+|     **46**      |  2012  |  Erin Densham ( :australia: )   |  OLYMPIC   | WTCS  |                                           [2012 Dextro Energy World Triathlon Sydney ( :australia: )](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney)                                            |
+|     **39**      |  2011  |   Paula Findlay ( :canada: )    |  OLYMPIC   | WTCS  |            [2011 Dextro Energy Triathlon - ITU World Championship Series Sydney ( :australia: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_sydney)             |
+|     **39**      |  2011  | Andrea Hansen ( :new_zealand: ) |  OLYMPIC   | WTCS  |              [2011 Dextro Energy Triathlon - ITU World Championship Series Yokohama ( :jp: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_yokohama)              |
+|     **37**      |  2012  | Nicola Spirig ( :switzerland: ) |  OLYMPIC   | WTCS  |                                                    [2012 ITU World Triathlon Madrid ( :es: )](https://www.triathlon.org/events/event/2012_itu_world_triathlon_madrid)                                                    |
+|      *...*      |  ...   |               ...               |    ...     |  ...  |                                                                                                           ...                                                                                                            |
+|     **52**      |  2014  |       Mario Mola ( :es: )       |   SPRINT   | WTCS  |                                                    [2014 ITU World Triathlon London ( :gb: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_london)                                                    |
+|     **51**      |  2023  |        Alex Yee ( :gb: )        |  OLYMPIC   | GAMES |                                       [2023 World Triathlon Olympic Games Test Event Paris ( :fr: )](https://www.triathlon.org/events/event/2023_world_triathlon_test_event_paris)                                       |
+|     **49**      |  2023  |        Alex Yee ( :gb: )        |   SPRINT   | WTCS  |                        [2023 World Triathlon Championship Series Abu Dhabi ( :united_arab_emirates: )](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_abu_dhabi)                        |
+|     **46**      |  2016  |       Mario Mola ( :es: )       |  OLYMPIC   | WTCS  |                                                  [2016 ITU World Triathlon Yokohama ( :jp: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama)                                                  |
+|     **45**      |  2011  | Brad Kahlefeldt ( :australia: ) |  OLYMPIC   | WTCS  |               [2011 Dextro Energy Triathlon - ITU World Championship Series Hamburg ( :de: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_hamburg)               |
+
+---
 
 <details>
   <summary>Click to expand - :muscle: <strong>Some wins via breakaway (with front-pack-size <= 3).</strong></summary>
@@ -821,18 +848,19 @@ Strong bikers and **very versatile** triathletes! :clap:
 
 ---
 
-Below is a more complicated figure: it shows the evolution of the **first-pack size** over the years.
+Below is a more complicated figure: the bars show the evolution of the average **first-pack size** over the years.
 
 | ![scenarios_over_years.png](res/scenarios_over_years.png) | 
 |:---------------------------------------------------------:| 
 |        *Size of front bike pack, over the years.*         |
 
 **Run-comebacks**, i.e. winning after not being in the front group after bike, are **rare**.
-- Apart from 2013-2016 (Gwen Jorgensen era), **no comeback has happened on women's olympic races** and only a few on women's sprint format.
+- Apart from 2013-2016 (the era of Gwen Jorgensen ( :us: )), **no comeback has happened on women's olympic races** and only a few on women's sprint format.
   - At the same time, the size of **front-pack had reduced until 2022** and was even very small for some recent years (2017, 2019, 2021, 2022).
-  - Now, **top-swimmer** can **ride hard** and **run fast**.
+  - Now, **top-women-swimmer** can **ride hard** and **run fast**.
 - Helen Jenkins ( :gb: ) explains in [this 2024 video](https://youtu.be/QwCUmvPCjw4?t=338): _"Women's races have definitely changed over the past few years. (...) **2021 was that breakaway era**. It definitely **comes back** to that **larger front group** over the last couple of years."_
   - That statement is perfectly **consistent** with the women's olympic bar plot.
+- The **men's olympic races** follow a similar same trend: the **front group at T2 has, on average, never been as large**, as in 2023 and 2024.
 
 ---
 
@@ -875,11 +903,12 @@ Why are there not **more breakaways** on the bike?
 - The **mini areo TT bars** [have been banned](https://www.slowtwitch.com/Lifestyle/An_Athlete_s_Perspective_on_2022_World_Triathlon_Rules_8217.html) in 2023.
 - Bike courses are **mostly flat**.
   - Events often take place on flat coasts, near to a sea, or in **flat big cities**.
+  - [Joel Filliol](https://joelfilliol.com/) ( :canada: :scotland: ) shares insights in [this TTS podcast (around 43:00)](https://scientifictriathlon.com/tts409/) about bike courses that allow for a break to stay away.
 - Because of **U-turns**.
   - As Michel Hidalgo ( :brazil: ) [explains in this video](https://youtu.be/8dvcwuT2T_8?t=780), **U-turns can be detrimental for breakaways**.
 - Athletes may prefer to conserve energy for the **run segment**.
   - Valid of strong runners.
-  - But for others? Maybe it is **worth more** to **conserve energy by drafting** and try to make top-20 with a good run, rather than risk a breakaway that might be caught, be burnt and **come back home without any prize money**?
+  - But for others? Maybe it is **worth more** to **conserve energy by drafting** and try to make top-20 with a good run, rather than risk a breakaway that might be caught, be burnt and **come back home without any prize money or qualification points**?
 - Not enough bike power?
   - Possibly, given these athletes need to be strong in swim and run as well, they cannot **afford having massive legs**.
 
