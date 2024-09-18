@@ -764,18 +764,19 @@ Note: A **breakaway** on the bike can happen:
 - It should be possible to automatically retrieve the **breakaway type** among the two, using the swim rank of athletes composing the breakaway. _(I have not done it)_.
 
 Two additional pieces of information are retrieved:
-- **`winner_in_front_pack`**: was the **winner already in the leading group** at the end of the bike, or did she/he **come back on the run**? :trophy:
-- **`is_best_runner_in_front_pack`**. :athletic_shoe:
+- :trophy: **`winner_in_front_pack`**: was the **winner already in the leading group** at the end of the bike, or did she/he **come back on the run**?
+- :athletic_shoe: **`is_best_runner_in_front_pack`**.
 
 |       ![scenarios.png](res/scenarios.png)        | 
 |:------------------------------------------------:| 
 | *Size of the front pack at the end of the bike.* |
 
 About the **number of finishers**:
-- **Higher for men**'s races: ~4.5.
+- **~4.5 more** finishers in **men's** races.
   - The standard deviation is higher for women's race.
-- **Higher for sprint** format: ~3.5.
-  - Because olympic formats are longer, weakest athletes are more likely to be caught, leading to a `LAP` elimination?
+- **~3.5** more** finishers in **sprint format** races.
+  - Because the olympic format is longer, weaker athletes are more likely to be caught and eliminated by being lapped?
+- It would be interesting to know the **number of starters** as well.
 
 On the **olympic** format, **men are more likely to break away**.
 - Because they are stronger on the bike?
@@ -789,9 +790,9 @@ Small front packs, i.e. **small breakaways**, are more likely on the **olympic f
 
 ---
 
-Some **very large front groups** at T2:
+Some **very large front groups** at T2 (London ( :gb: ) at the top :guard: ):
 
-|  **pack_size**  |  year  |             winner              |  distance  |  cat  |                                                                                                          event                                                                                                           |
+|  **PACK_SIZE**  |  YEAR  |             WINNER              |  DISTANCE  |  CAT  |                                                                                                          EVENT                                                                                                           |
 |:---------------:|:------:|:-------------------------------:|:----------:|:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |     **53**      |  2011  |     Helen Jenkins ( :gb: )      |  OLYMPIC   | WTCS  |                [2011 Dextro Energy Triathlon - ITU World Championship Series London ( :gb: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london)                |
 |     **46**      |  2012  |  Erin Densham ( :australia: )   |  OLYMPIC   | WTCS  |                                           [2012 Dextro Energy World Triathlon Sydney ( :australia: )](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney)                                            |
@@ -810,36 +811,36 @@ Some **very large front groups** at T2:
 <details>
   <summary>Click to expand - :muscle: <strong>Some wins via breakaway (with front-pack-size <= 3).</strong></summary>
 
-|  pack_size  |  year  |               winner                |  distance  |    cat    |                                                                                                 event                                                                                                  |
-|:-----------:|:------:|:-----------------------------------:|:----------:|:---------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|      1      |  2011  |       Sarah Haskins ( :us: )        |  OLYMPIC   | WORLD-CUP |                                  [2011 Monterrey ITU Triathlon World Cup ( :mexico: )](https://www.triathlon.org/events/event/2011_monterrey_itu_triathlon_world_cup)                                  |
-|      1      |  2016  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                      [2016 ITU World Triathlon Stockholm ( :sweden: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_stockholm)                                      |
-|      1      |  2018  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                       [2018 ITU World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2018_itu_world_triathlon_bermuda)                                        |
-|      1      |  2021  |        Taylor Knibb ( :us: )        |  OLYMPIC   |   WTCS    |                           [2021 World Triathlon Championship Finals Edmonton ( :canada: )](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton)                           |
-|      2      |  2011  |   Nicky Samuels ( :new_zealand: )   |  OLYMPIC   | WORLD-CUP |                               [2011 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2011_mooloolaba_itu_triathlon_world_cup)                                |
-|      2      |  2017  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                         [2017 ITU World Triathlon Yokohama ( :jp: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama)                                         |
-|      2      |  2021  |        Taylor Knibb ( :us: )        |  OLYMPIC   |   WTCS    |                                   [2021 World Triathlon Championship Series Yokohama ( :jp: )](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama)                                   |
-|      2      |  2022  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                       [2022 World Triathlon Championship Series Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_bermuda)                        |
-|      3      |  2009  |    Emma Moffatt ( :australia: )     |  OLYMPIC   |   WTCS    |      [2009 Dextro Energy Triathlon - ITU World Championship Series Hamburg ( :de: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_hamburg)      |
-|      3      |  2014  |       Jodie Stimpson ( :gb: )       |  OLYMPIC   |   WTCS    |                                    [2014 ITU World Triathlon Auckland ( :new_zealand: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland)                                     |
-|      3      |  2016  |       Helen Jenkins ( :gb: )        |  OLYMPIC   |   WTCS    |                                   [2016 ITU World Triathlon Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_gold_coast)                                    |
-|      3      |  2016  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                            [2016 ITU World Triathlon Grand Final Cozumel ( :mexico: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_grand_final_cozumel)                            |
-|      3      |  2017  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                       [2017 ITU World Triathlon Grand Final Rotterdam ( :netherlands: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)                        |
-|      3      |  2019  |       Katie Zaferes ( :us: )        |  OLYMPIC   |   WTCS    |                                  [2019 MS Amlin World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2019_ms_amlin_world_triathlon_bermuda)                                   |
-|      3      |  2019  |   Julie Derron ( :switzerland: )    |  OLYMPIC   | WORLD-CUP |                                       [2019 Weihai ITU Triathlon World Cup ( :cn: )](https://www.triathlon.org/events/event/2019_weihai_itu_triathlon_world_cup)                                       |
-|      3      |  2021  |    Maya Kingma ( :netherlands: )    |  OLYMPIC   |   WTCS    |                                  [AJ Bell 2021 World Triathlon Championship Series Leeds ( :gb: )](https://www.triathlon.org/events/event/2021_world_triathlon_leeds)                                  |
-|      3      |  2024  |        Lena Meißner ( :de: )        |  OLYMPIC   | WORLD-CUP |                                    [2024 World Triathlon Cup Samarkand ( :uzbekistan: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_samarkand)                                    |
-|     ...     |  ...   |                 ...                 |    ...     |    ...    |                                                                                                  ...                                                                                                   |
-|      1      |  2013  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                                      [2013 ITU World Triathlon Stockholm ( :sweden: )](https://www.triathlon.org/events/event/2013_itu_world_triathlon_stockholm)                                      |
-|      1      |  2018  |     Casper Stornes ( :norway: )     |  OLYMPIC   |   WTCS    |                                       [2018 ITU World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2018_itu_world_triathlon_bermuda)                                        |
-|      1      |  2023  |       Morgan Pearson ( :us: )       |  OLYMPIC   | WORLD-CUP |                               [2023 World Triathlon Cup Karlovy Vary ( :czech_republic: )](https://www.triathlon.org/events/event/2023_world_triathlon_cup_karlovy_vary)                               |
-|      2      |  2011  |   Kris Gemmell ( :new_zealand: )    |  OLYMPIC   | WORLD-CUP |                                [2011 Auckland ITU Triathlon World Cup ( :new_zealand: )](https://www.triathlon.org/events/event/2011_auckland_itu_triathlon_world_cup)                                 |
-|      2      |  2016  | Rodrigo Gonzalez Lopez ( :mexico: ) |  OLYMPIC   | WORLD-CUP |                                      [2016 Chengdu ITU Triathlon World Cup ( :cn: )](https://www.triathlon.org/events/event/2016_chengdu_itu_triathlon_world_cup)                                      |
-|      3      |  2009  |        Jan Frodeno ( :de: )         |  OLYMPIC   |   WTCS    |     [2009 Dextro Energy Triathlon - ITU World Championship Series Yokohama ( :jp: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama)     |
-|      3      |  2011  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    | [2011 Dextro Energy Triathlon - ITU World Championship Series Kitzbuehel ( :austria: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_kitzbuhel) |
-|      3      |  2014  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                           [2014 ITU World Triathlon Grand Final Edmonton ( :canada: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_grand_final_edmonton)                           |
-|      3      |  2015  |     Jonathan Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                                   [2015 ITU World Triathlon Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2015_itu_world_triathlon_gold_coast)                                    |
-|      3      |  2020  |        Vincent Luis ( :fr: )        |  OLYMPIC   | WORLD-CUP |                           [2020 Karlovy Vary ITU Triathlon World Cup ( :czech_republic: )](https://www.triathlon.org/events/event/2020_karlovy_vary_itu_triathlon_world_cup)                           |
+|  **PACK_SIZE**  |  YEAR  |               WINNER                |  DISTANCE  |    CAT    |                                                                                                 EVENT                                                                                                  |
+|:---------------:|:------:|:-----------------------------------:|:----------:|:---------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|      **1**      |  2011  |       Sarah Haskins ( :us: )        |  OLYMPIC   | WORLD-CUP |                                  [2011 Monterrey ITU Triathlon World Cup ( :mexico: )](https://www.triathlon.org/events/event/2011_monterrey_itu_triathlon_world_cup)                                  |
+|      **1**      |  2016  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                      [2016 ITU World Triathlon Stockholm ( :sweden: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_stockholm)                                      |
+|      **1**      |  2018  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                       [2018 ITU World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2018_itu_world_triathlon_bermuda)                                        |
+|      **1**      |  2021  |        Taylor Knibb ( :us: )        |  OLYMPIC   |   WTCS    |                           [2021 World Triathlon Championship Finals Edmonton ( :canada: )](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton)                           |
+|      **2**      |  2011  |   Nicky Samuels ( :new_zealand: )   |  OLYMPIC   | WORLD-CUP |                               [2011 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2011_mooloolaba_itu_triathlon_world_cup)                                |
+|      **2**      |  2017  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                                         [2017 ITU World Triathlon Yokohama ( :jp: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama)                                         |
+|      **2**      |  2021  |        Taylor Knibb ( :us: )        |  OLYMPIC   |   WTCS    |                                   [2021 World Triathlon Championship Series Yokohama ( :jp: )](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama)                                   |
+|      **2**      |  2022  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                       [2022 World Triathlon Championship Series Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_bermuda)                        |
+|      **3**      |  2009  |    Emma Moffatt ( :australia: )     |  OLYMPIC   |   WTCS    |      [2009 Dextro Energy Triathlon - ITU World Championship Series Hamburg ( :de: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_hamburg)      |
+|      **3**      |  2014  |       Jodie Stimpson ( :gb: )       |  OLYMPIC   |   WTCS    |                                    [2014 ITU World Triathlon Auckland ( :new_zealand: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland)                                     |
+|      **3**      |  2016  |       Helen Jenkins ( :gb: )        |  OLYMPIC   |   WTCS    |                                   [2016 ITU World Triathlon Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_gold_coast)                                    |
+|      **3**      |  2016  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                            [2016 ITU World Triathlon Grand Final Cozumel ( :mexico: )](https://www.triathlon.org/events/event/2016_itu_world_triathlon_grand_final_cozumel)                            |
+|      **3**      |  2017  |      Flora Duffy ( :bermuda: )      |  OLYMPIC   |   WTCS    |                       [2017 ITU World Triathlon Grand Final Rotterdam ( :netherlands: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)                        |
+|      **3**      |  2019  |       Katie Zaferes ( :us: )        |  OLYMPIC   |   WTCS    |                                  [2019 MS Amlin World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2019_ms_amlin_world_triathlon_bermuda)                                   |
+|      **3**      |  2019  |   Julie Derron ( :switzerland: )    |  OLYMPIC   | WORLD-CUP |                                       [2019 Weihai ITU Triathlon World Cup ( :cn: )](https://www.triathlon.org/events/event/2019_weihai_itu_triathlon_world_cup)                                       |
+|      **3**      |  2021  |    Maya Kingma ( :netherlands: )    |  OLYMPIC   |   WTCS    |                                  [AJ Bell 2021 World Triathlon Championship Series Leeds ( :gb: )](https://www.triathlon.org/events/event/2021_world_triathlon_leeds)                                  |
+|      **3**      |  2024  |        Lena Meißner ( :de: )        |  OLYMPIC   | WORLD-CUP |                                    [2024 World Triathlon Cup Samarkand ( :uzbekistan: )](https://www.triathlon.org/events/event/2024_world_triathlon_cup_samarkand)                                    |
+|       ...       |  ...   |                 ...                 |    ...     |    ...    |                                                                                                  ...                                                                                                   |
+|      **1**      |  2013  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                                      [2013 ITU World Triathlon Stockholm ( :sweden: )](https://www.triathlon.org/events/event/2013_itu_world_triathlon_stockholm)                                      |
+|      **1**      |  2018  |     Casper Stornes ( :norway: )     |  OLYMPIC   |   WTCS    |                                       [2018 ITU World Triathlon Bermuda ( :bermuda: )](https://www.triathlon.org/events/event/2018_itu_world_triathlon_bermuda)                                        |
+|      **1**      |  2023  |       Morgan Pearson ( :us: )       |  OLYMPIC   | WORLD-CUP |                               [2023 World Triathlon Cup Karlovy Vary ( :czech_republic: )](https://www.triathlon.org/events/event/2023_world_triathlon_cup_karlovy_vary)                               |
+|      **2**      |  2011  |   Kris Gemmell ( :new_zealand: )    |  OLYMPIC   | WORLD-CUP |                                [2011 Auckland ITU Triathlon World Cup ( :new_zealand: )](https://www.triathlon.org/events/event/2011_auckland_itu_triathlon_world_cup)                                 |
+|      **2**      |  2016  | Rodrigo Gonzalez Lopez ( :mexico: ) |  OLYMPIC   | WORLD-CUP |                                      [2016 Chengdu ITU Triathlon World Cup ( :cn: )](https://www.triathlon.org/events/event/2016_chengdu_itu_triathlon_world_cup)                                      |
+|      **3**      |  2009  |        Jan Frodeno ( :de: )         |  OLYMPIC   |   WTCS    |     [2009 Dextro Energy Triathlon - ITU World Championship Series Yokohama ( :jp: )](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama)     |
+|      **3**      |  2011  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    | [2011 Dextro Energy Triathlon - ITU World Championship Series Kitzbuehel ( :austria: )](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_kitzbuhel) |
+|      **3**      |  2014  |     Alistair Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                           [2014 ITU World Triathlon Grand Final Edmonton ( :canada: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_grand_final_edmonton)                           |
+|      **3**      |  2015  |     Jonathan Brownlee ( :gb: )      |  OLYMPIC   |   WTCS    |                                   [2015 ITU World Triathlon Gold Coast ( :australia: )](https://www.triathlon.org/events/event/2015_itu_world_triathlon_gold_coast)                                    |
+|      **3**      |  2020  |        Vincent Luis ( :fr: )        |  OLYMPIC   | WORLD-CUP |                           [2020 Karlovy Vary ITU Triathlon World Cup ( :czech_republic: )](https://www.triathlon.org/events/event/2020_karlovy_vary_itu_triathlon_world_cup)                           |
 
 Strong bikers and **very versatile** triathletes! :clap:
 - Especially **Flora Duffy** ( :bermuda: ) and **Alistair Brownlee** ( :gb: ).
@@ -934,6 +935,10 @@ This section studies the **time gap between the winner and the second**.
 Gaps **between the winner and the second** are on average:
 - **~Twice as large** in **olympic** formats compared to **sprint** formats.
 - **~Twice as large** for **women** compared to **men**.
+
+It has been a long time since a **women's olympic race** was won by a **sprint**.
+
+---
 
 <details>
   <summary>Click to expand - 📸 <strong>Some of the most contested finishes on the blue carpet.</strong></summary>
@@ -1362,7 +1367,7 @@ It can be that some events are missing: these entries come from the data used fo
 |   AUS ( :australia: )    |  10   |                                Mooloolaba (9), Wollongong (1)                                 |
 |       CHN ( :cn: )       |   9   |             Jintang (3), Weihai (2), Chengdu (2), Gansu (1), Weihai, Shandong (1)             |
 |    HUN ( :hungary: )     |   9   |                              Tiszaujvaros (7), Tiszaujvaros  (2)                              |
-|       ITA ( :it: )       |   8   |                       Cagliari (4), Cannigione, Arzachena (3), Rome (1)                       |
+|       ITA ( :it: )       |   8   |                             Cagliari (4), Arzachena (3), Rome (1)                             |
 |  NZL ( :new_zealand: )   |   8   |                          New Plymouth (6), Auckland (1), Napier (1)                           |
 |       JPN ( :jp: )       |   7   |                                  Miyazaki (6), Ishigaki (1)                                   |
 | CZE ( :czech_republic: ) |   6   |                                       Karlovy Vary (6)                                        |

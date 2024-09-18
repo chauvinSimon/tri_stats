@@ -2031,17 +2031,22 @@ def process_sprint_finish(df):
 
             # set the y-axis ticks:  normalize such that the total area of the histogram equals 1!!!
             axes[i_distance_category, i_suffix].set_yticklabels(map(
-                lambda x: f"{binwidth * x:.1%}",
+                lambda x: f"{binwidth * x:.0%}",
                 axes[i_distance_category, i_suffix].get_yticks()
-            ))
+            ), fontsize=16)
 
             # set x ticks from 0 to current max
             axes[i_distance_category, i_suffix].set_xticks(
                 range(0, max(df2[f"second_delay_{suffix}"]) + binwidth, binwidth))
 
+            gap_max = df2[f"second_delay_{suffix}"].max()
+
             # rotate x ticks by 90
-            axes[i_distance_category, i_suffix].set_xticklabels(axes[i_distance_category, i_suffix].get_xticks(),
-                                                                rotation=90)
+            axes[i_distance_category, i_suffix].set_xticklabels(
+                axes[i_distance_category, i_suffix].get_xticks(),
+                rotation=90,
+                fontsize=15 if gap_max < 80 else 11
+            )
 
             axes[i_distance_category, i_suffix].grid()
 
@@ -2058,14 +2063,17 @@ def process_sprint_finish(df):
                 for index, row in large_gap_df.iterrows():
                     delay_s = row[f"second_delay_{suffix}"]
                     if delay_min <= delay_s < delay_min + binwidth:
-                        txt += f"[{row[f'winner_{suffix}']} ({row['event_year']} {row['event_venue']})]  "
+                        splits = row[f'winner_{suffix}'].split(" ")
+                        winner_str = splits[0] + " " + " ".join(splits[1:]).upper()
+                        event_venue = row['event_venue'].replace("Cannigione, Arzachena", "Arzachena")
+                        txt += f"[{winner_str} ({row['event_year']} {event_venue})]  "
                 if txt:
                     txt = txt[:-2]
                     axes[i_distance_category, i_suffix].text(
                         delay_min + 1 if delay_min != largest_delay else delay_min - 1,  # some handle for last bin
                         0.0,
                         txt,
-                        fontsize=10 if len(txt) < 70 else 9,
+                        fontsize=10 if len(txt) < 90 else 9,
                         rotation=90,
                         va="bottom",
                         ha="center"
@@ -2081,10 +2089,10 @@ def process_sprint_finish(df):
                 alpha=0.7,
             )
             axes[i_distance_category, i_suffix].text(
-                median_delay_s - 1,
+                median_delay_s - 2 if gap_max > 80 else median_delay_s - 1.5,
                 max(n),
-                f"median={median_delay_s:.0f}s",
-                fontsize=10,
+                f"median = {median_delay_s:.0f}s",
+                fontsize=16,
                 rotation=90,
                 va="top",
                 ha="center",
@@ -2101,10 +2109,10 @@ def process_sprint_finish(df):
             )
             # add text
             axes[i_distance_category, i_suffix].text(
-                mean_delay_s + 1,
+                mean_delay_s + 2 if gap_max > 80 else mean_delay_s + 1.5,
                 max(n),
-                f"mean={mean_delay_s:.0f}s",
-                fontsize=10,
+                f"mean = {mean_delay_s:.0f}s",
+                fontsize=16,
                 rotation=90,
                 va="top",
                 ha="center",
@@ -2220,6 +2228,13 @@ def process_sprint_finish(df):
                 ecolor="gray",  # The line color of the errorbars.
                 error_kw={"alpha": 0.3},
             )
+            axes[i_distance_category, i_suffix].tick_params(axis="y", labelsize=15)
+
+            gap_max = df3[f"second_delay_mean"].max()
+            if gap_max > 50:
+                print(gap_max)
+                # todo: use "broken axis"
+                axes[i_distance_category, i_suffix].set_ylim(0, 53)
 
             # add text on the bars
             for _x, second_delays in zip(df3.index, df3[f"second_delays"]):
@@ -2229,7 +2244,7 @@ def process_sprint_finish(df):
                     " ".join(map(str, sorted(second_delays))),
                     ha="center",
                     rotation=90,
-                    fontsize=8
+                    fontsize=14,
                 )
             ax2 = axes[i_distance_category, i_suffix].twinx()
 
@@ -2254,19 +2269,23 @@ def process_sprint_finish(df):
 
             # set x ticks
             axes[i_distance_category, i_suffix].set_xticks(df3.index)
-            axes[i_distance_category, i_suffix].set_xticklabels(df3.index, rotation=90)
+            axes[i_distance_category, i_suffix].set_xticklabels(df3.index, rotation=90, fontsize=15)
 
             # set y name
-            axes[i_distance_category, i_suffix].set_ylabel("FIRST <-> SECOND (s)")
+            axes[i_distance_category, i_suffix].set_ylabel("FIRST <-> SECOND (s)", fontsize=16)
+            # get rid of decimals in y labels
+            axes[i_distance_category, i_suffix].set_yticklabels([int(x) if x.is_integer() else x for x in axes[i_distance_category, i_suffix].get_yticks()])
 
             if i_suffix == 1:
                 ax2.set_ylabel(
-                    f"SPRINT FINISH\n(DIFFERENCE < {sprint_gap_max_s}s)\n(at least {min_n_data} events per year)")
+                    f"SPRINT FINISH\n(DIFFERENCE < {sprint_gap_max_s}s)\n(at least {min_n_data} events per year)",
+                    fontsize=14
+                )
 
             ax2.yaxis.label.set_color("red")
             ax2.yaxis.set_major_formatter(PercentFormatter(1))
             # color the yaxis tick labels
-            ax2.tick_params(axis="y", colors="red")
+            ax2.tick_params(axis="y", colors="red", labelsize=15)
 
             # grid horizontal
             ax2.grid(axis="y", alpha=0.5)
@@ -2430,6 +2449,8 @@ def process_scenarios(df):
             "event": "...",
         })
     df_table = pd.DataFrame(table_info)
+    # upper the columns
+    df_table.columns = df_table.columns.str.upper()
     print(df_table.to_markdown(
         index=False,
         colalign=["center"] * len(df_table.columns)
@@ -2450,7 +2471,7 @@ def process_scenarios(df):
         for i_row, row in df_table.iterrows():
             winner_name = row[f'winner_{suffix}']
             table_info.append({
-                "pack_size": row[f"pack_size_{suffix}"],
+                "**pack_size**": "**" + str(row[f"pack_size_{suffix}"]) + "**",
                 "year": row["event_year"],
                 "winner": f"{winner_name} ( {country_emojis[row[f'winner_country_{suffix}']] if row[f'winner_country_{suffix}'] in country_emojis else row['winner_country_noc']} )",
                 "distance": row["prog_distance_category"].replace("standard", "olympic").upper(),
@@ -2459,7 +2480,7 @@ def process_scenarios(df):
             })
 
         table_info.append({
-            "pack_size": "...",
+            "**pack_size**": "...",
             "year": "...",
             "winner": "...",
             "distance": "...",
@@ -2469,6 +2490,7 @@ def process_scenarios(df):
 
     # print markdown
     df_table = pd.DataFrame(table_info)
+    df_table.columns = df_table.columns.str.upper()
     print(df_table.to_markdown(
         index=False,
         colalign=["center"] * len(df_table.columns)
@@ -2525,7 +2547,7 @@ def process_scenarios(df):
                     " ".join(map(str, sorted(pack_sizes))),
                     ha="center",
                     rotation=90,
-                    fontsize=12
+                    fontsize=14
                 )
             ax2 = axes[i_distance_category, i_suffix].twinx()
             ax2.plot(
@@ -3317,7 +3339,9 @@ def process_event_country(df):
             # sort by values descending
             venue_dict = dict(sorted(venue_dict.items(), key=lambda item: item[1], reverse=True))
             # create "k1(v1) k2(v2) k3(v3)"
-            return ', '.join([f"{k} ({v})" for k, v in venue_dict.items()])
+            res_str = ', '.join([f"{k} ({v})" for k, v in venue_dict.items()])
+            res_str.replace("Cannigione, Arzachena", "Arzachena")
+            return res_str
 
         df_table["VENUES"] = df_table.apply(f_venue, axis=1)
         print(f"\n\n{event_cat.upper()}")
