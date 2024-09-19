@@ -2701,6 +2701,8 @@ def process_scenarios(df):
                 for year in df3.index
             ], rotation=90, fontsize=16)
 
+            axes[i_distance_category, i_suffix].grid(axis="y", alpha=0.5)
+
     fig.suptitle(
         f"BEST RUNNER WINS"
         f"\n{len(df):,} WTCS AND GAMES-RELATED EVENTS",
