@@ -427,6 +427,7 @@ These **percentages can be compared** with those of **swim, bike or run competit
 
 :bulb: **FINDING**:
 - The **women/men time difference** can be considered **constant**, **regardless of the distance** (sprint / olympic) and **the equipment** (wetsuit or not): **women swim ~8.8% slower**.
+- This finding is consistent with [Vleck et al., 2011](https://www.triathlon.org/uploads/docs/Proceedings_I_World_Conference_of_Science_in_Triathlon.pdf).
 - This result will be used in a [subsequent section](#penguin-wetsuit-benefit) to determine the **benefit provided by the wetsuit**.
 
 ---
@@ -925,7 +926,7 @@ This section studies the **time gap between the winner and the second**.
 |:---------------------------------------------:| 
 | *Time gap between the winner and the second.* |
 
-- Wins for **men races** are more often decided by a **sprint finish** (+50%).
+- In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races.
 - Women's races offer **examples of wins by very large margins**.
 
 |                                                   ![sprint_finish_over_years.png](res/sprint_finish_over_years.png)                                                    | 
@@ -2075,10 +2076,11 @@ In addition to **paces**, it would be interesting to access **data** such as:
     - On the other hand, the **swim section** states: _"**Electronic devices may be used** in the **competition** unless they are distracting the athlete from paying full attention to their surroundings"_.
 - There are a few exceptions, such as:
   - Cassandre Beaugrand ( :fr: ) [seen **holding some device** during the Paris Olympics](https://www.francetvinfo.fr/pictures/S730frivHusOjCabDZvitrL_1z8/0x106:1024x682/1328x747/filters:format(avif):quality(50)/2024/07/31/000-36776ev-66aa06e0cbb4b034364713.jpg) and [wearing one on her wrist at Gagliari 2024 ( :it: ), where Beth Potter ( :gb: ) also appeared to be using one](https://youtu.be/vFV-kB8727I?t=189). _Possibly to pace her 10k run?_
-  - Hayden Wilde ( :new_zealand: ), [spotted using **a device** during the Paris Olympics](https://www.triathlon.org/uploads/hrgalleries/191104/awag1132_paris2024__medium.jpg) _(discussion [here](https://the5krunner.com/2024/08/01/alex-yee-paris-gold-with-coros-dura-plus-what-was-haydn-wilde-looking-at-during-the-run/))_, and at [Gagliari 2023 ( :it: )](https://triathlon.org/results/result/2023_world_triathlon_championship_series_cagliari/586471) where [he did not wear a watch during the swim](https://triathlon-uploads.imgix.net/webgalleries/174957/tzaf5501.jpg?w=1140&auto=format), but [**had one for the run**](https://triathlon-uploads.imgix.net/webgalleries/174957/tomz0840.jpg?w=1140&auto=format) _(possibly attached with [an elastic band](https://www.youtube.com/watch?v=eyliQoQskww)?)_, which [he **stopped at the finish line**](https://triathlon-uploads.imgix.net/webgalleries/174957/tomz0987.jpg?w=1140&auto=format).
+  - Hayden Wilde ( :new_zealand: ), [spotted using **a device** during the Paris Olympics](https://www.triathlon.org/uploads/hrgalleries/191104/awag1132_paris2024__medium.jpg) _(discussion [here](https://the5krunner.com/2024/08/01/alex-yee-paris-gold-with-coros-dura-plus-what-was-haydn-wilde-looking-at-during-the-run/))_, and at [Gagliari 2023 ( :it: )](https://triathlon.org/results/result/2023_world_triathlon_championship_series_cagliari/586471) where [he did not wear a watch during the swim](https://triathlon-uploads.imgix.net/webgalleries/174957/tzaf5501.jpg?w=1140&auto=format), but [**had one for the run**](https://triathlon-uploads.imgix.net/webgalleries/174957/tomz0840.jpg?w=1140&auto=format) _(possibly attached with [an elastic band](https://www.youtube.com/watch?v=eyliQoQskww&t=3)?)_, which [he **stopped at the finish line**](https://triathlon-uploads.imgix.net/webgalleries/174957/tomz0987.jpg?w=1140&auto=format).
+  - The Australian team ( :australia: ) at [Hamburg 2017 ( :de: )](https://triathlon.org/events/event/2017_hamburg_itu_triathlon_mixed_relay_world_championships) with **sensors taped to their backs**: [image 1](https://content.api.news/v3/images/bin/59304654a9f11b7e563cdab4e0e892d6?width=1024), [image 2](https://triathlon-uploads.imgix.net/webgalleries/112903/170716-itu-hamburg-team-web-msj-022.jpg?w=1140&auto=format), [image 3](https://triathlon-uploads.imgix.net/webgalleries/112903/170716-itu-hamburg-team-web-msj-047.jpg?w=800&). _What did they measure?_
 - The **GPS features** of activity trackers could also provide **more precise estimations of the course distances**.
   - Especially for the **run**, and even for the **swim, to compare the trajectories**.
-- Some athletes seem to use **heart rate monitor (HRM) belts**, such as [Kristian Blummenfeld ( :norway: ) at Tokyo 2021](https://triathlon.org/news/article/kristian_blummenfelt_crowned_tokyo_2020_olympic_champion).
+- Some athletes seem to use **heart rate monitor (HRM) belts**, such as [Kristian Blummenfeld ( :norway: ) at Tokyo 2021 ( :jp: )](https://triathlon.org/news/article/kristian_blummenfelt_crowned_tokyo_2020_olympic_champion).
   - But as far as I know, no **stroke rate**, **cadence** or **GPS** data can be recorded with these devices.
 
 **Strava** could be used to retrieve activities:
@@ -2121,6 +2123,8 @@ It would be interesting to investigate the **financial aspects** of the competit
 - Understand the system of **penalties** and their impact on race dynamics.
   - The 2024 Paris Olympics ( :fr: ) saw a surprising number of penalties: **[6 women out of 51](https://triathlon.org/results/result/paris_2024_olympic_games/655048) and [10 men out of 50](https://triathlon.org/results/result/paris_2024_olympic_games/655047)** received a **15s penalty**.
   - Before focusing on gaining seconds, some athletes may need to **prioritize avoiding penalties**, such as by **correctly timing their dive** and making sure to **place their helmet inside** the transition box.
+- Try to estimate the **level of a race**.
+  - For example, using the results table and the ranking of the participating athletes.
 - ...
 
 ---
@@ -2149,12 +2153,12 @@ Here are some simplified **key takeaways**:
 - :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
 - :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
 - :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.
-- :one_piece_swimsuit: Swim is **~5% faster with wetsuit** (to be refined).
+- :one_piece_swimsuit: Swim is **~5% faster with wetsuit** _(to be refined)_.
 - :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**.
 - :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer.
 - :bicyclist: The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races.
 - :athletic_shoe: Over **2/3 of races** are won by the **best runner**.
-- :camera_flash: Winning via **sprint finish** is more common in men's races, occurring **50% more frequently**.
+- :camera_flash: In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races.
 - :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**.
 - :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
 - :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.

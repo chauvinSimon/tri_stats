@@ -3531,6 +3531,8 @@ def main():
     df = clean_results(df)
     df = compute_diff(df)
     df = add_year_and_event_cat(df)
+    # sort df by date and reset index
+    df = df.sort_values("event_date_m").reset_index(drop=True)
 
     # df = df[df["event_category"] != "world-cup"]
     # df = df[df["prog_distance_category"] != "sprint"]
