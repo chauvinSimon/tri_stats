@@ -3,6 +3,7 @@
 """
 
 from datetime import datetime
+from typing import Optional
 
 import cv2
 from matplotlib import pyplot as plt
@@ -396,6 +397,82 @@ def update_athlete_ids(r):
         athlete_nocs[athlete_id] = r["athlete_noc"]
         json_dump(athlete_nocs, athlete_nocs_file)
 
+def get_level_for_year(
+        years_id_rankings: dict,
+        prog_year: str,
+        athletes_infos: list,
+        n_top: int = 10,
+        default_ranking: int = 50    # use 50 as default if not found because len(ranking) should be 50
+) -> Optional[float]:
+    if prog_year not in years_id_rankings:
+        return None
+
+    year_id_rankings = years_id_rankings[prog_year]
+    year_athlete_ids = [int(r[0]) for r in year_id_rankings]
+
+    rankings = []
+    for i_start_num, athlete_info in enumerate(athletes_infos):
+        if i_start_num > n_top:
+            break
+        if athlete_info["athlete_id"] in year_athlete_ids:
+            athlete_ranking = year_athlete_ids.index(athlete_info["athlete_id"]) + 1
+            rankings.append(athlete_ranking)
+        else:
+            # print(f"{athlete_info} not found")
+            rankings.append(default_ranking)
+
+    # print(rankings)
+    if len(rankings) == 0:
+        return None
+
+    return sum(rankings) / len(rankings)
+
+
+def get_level(prog_data: dict) -> Optional[float]:  # optional
+    prog_year = str(prog_data["event_date"][:4])
+
+    athletes_infos = []
+    for r in prog_data["results"]:
+        if r["position"] in ["DNF", "DNS", "DSQ", "LAP"]:
+            continue
+        if r["start_num"] is None:
+            continue
+        athletes_infos.append({
+            "athlete_id": r["athlete_id"],
+            "athlete_name": f'{r["athlete_first"]} {r["athlete_last"]}',
+            "start_num": r["start_num"],
+        })
+
+    athletes_infos_by_start_nums = sorted(athletes_infos, key=lambda x: x["start_num"])
+
+    gender_dict = {"male": "m", "female": "w"}
+    prog_gender = prog_data["prog_gender"]
+    if prog_gender not in gender_dict:
+        print(f"ERROR: {prog_gender} not in {gender_dict.keys()}")
+        return None
+    gender = gender_dict[prog_gender]
+    json_path = data_dir / f"years_id_rankings_{gender}.json"
+    if not json_path.exists():
+        print(f"ERROR: {json_path} not found")
+        return None
+    years_id_rankings = json_load(data_dir / f"years_id_rankings_{gender}.json")
+
+    levels = [
+        # using the order of start numbers
+        get_level_for_year(years_id_rankings, prog_year, athletes_infos_by_start_nums),
+        get_level_for_year(years_id_rankings, str(int(prog_year) - 1), athletes_infos_by_start_nums),
+        get_level_for_year(years_id_rankings, str(int(prog_year) + 1), athletes_infos_by_start_nums),
+
+        # using the order of race results
+        get_level_for_year(years_id_rankings, prog_year, athletes_infos),
+        get_level_for_year(years_id_rankings, str(int(prog_year) - 1), athletes_infos),
+        get_level_for_year(years_id_rankings, str(int(prog_year) + 1), athletes_infos),
+    ]
+    levels = [l for l in levels if l is not None]
+    if len(levels) == 0:
+        return None
+    return sum(levels) / len(levels)
+
 
 def get_prog_results_df(prog_data: dict) -> pd.DataFrame:
     column_names = [header["name"] for header in prog_data["headers"]]
@@ -639,6 +716,9 @@ def get_events_results() -> pd.DataFrame:
                                 events_result[f"wetsuit{suffix}"] = False
                             else:
                                 events_result[f"wetsuit{suffix}"] = True
+
+            level = get_level(prog_data=prog_data)
+            events_result[f"level{suffix}"] = level
 
             df_results = get_prog_results_df(prog_data=prog_data)
             n_results = len(df_results)
@@ -3522,6 +3602,28 @@ def process_event_dates(df):
     plt.show()
 
 
+def process_level(df):
+    for suffix in ["w", "m"]:
+        print(f"\n### LEVEL {suffix.upper()}\n")
+        df.sort_values(by=f"level_{suffix}", inplace=True)
+        df.reset_index(drop=True)
+        table_info = []
+        for index, row in df.iterrows():
+            table_info.append({
+                "EVENT": f"[{row.event_year} {row.event_venue} ( {country_emojis[row.event_country_noc] if row.event_country_noc in country_emojis else row.event_country_noc} )]({row.event_listing})".replace("Cannigione, Arzachena", "Arzachena"),
+                "CAT": row.event_category,
+                "LEVEL_M": round(row.level_m, 2),
+                "LEVEL_W": round(row.level_w, 2)
+            })
+        df_table = pd.DataFrame(table_info)
+        df_table.columns = df_table.columns.str.upper()
+        print(df_table.to_markdown(
+            index=False,
+            colalign=["center"] * len(df_table.columns)
+        ))
+
+
+
 def main():
     save_race_results()
 
@@ -3550,6 +3652,7 @@ def main():
     process_event_country(df.copy())
     process_temperatures(df.copy())
     # process_event_dates(df.copy())  # make sure to reduce the min-participants: n_results_min
+    process_level(df.copy())
 
 
 if __name__ == '__main__':
