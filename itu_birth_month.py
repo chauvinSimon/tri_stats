@@ -286,8 +286,13 @@ def main():
     # plt.show()
 
     # ### plot - quarters
+    group_by_gender = False
 
     fig = plt.figure(figsize=(12, 12))
+
+    # only keep one country
+    # df = df[df["athlete_noc"] == "ESP"]
+    n_athletes = len(df)
 
     # group the 12 values in 4 groups of 3: (1,2,3) (4,5,6) (7,8,9) (10,11,12)
     df['quarter'] = ((df.month_of_birth - 1) // 3) + 1
@@ -299,27 +304,84 @@ def main():
     expected_quarter_freq = tmp_reshaped_arr.sum(axis=1)
 
     plt.bar(range(4), expected_quarter_freq, color="gray", alpha=0.3, label="expected (data: UN)", edgecolor="black")
-    observed_quarter_freq.plot.bar(label="observed (data: ITU)", color="deepskyblue", edgecolor="black")
+    observed_quarter_freq.plot.bar(label="observed (data: ITU)", color="deepskyblue", edgecolor="black", linewidth=3 if group_by_gender else 1)
     for index, value in observed_quarter_freq.items():
         plt.text(
             index - 1,
-            value + 0.3,
+            value + 0.5,
             f"{value:.1f}%",
             color="darkblue",
             ha="center",
+            fontsize=10,
+            fontweight="bold",
+            zorder=10,
+            bbox = dict(facecolor='deepskyblue', alpha=1, edgecolor='black')
         )
+    plt.axhline(100 / 4, linestyle="-.", color="dimgray", label=f"uniform: {100 / 4:.1f}%", linewidth=2)
+
+    # group by gender
+    if group_by_gender:
+        grouped = df.groupby(
+            ['quarter', 'athlete_gender']
+        ).size().unstack(fill_value=0)
+
+        print(grouped)
+
+        n_female = grouped['female'].sum()
+        n_male = grouped['male'].sum()
+
+        # Normalize the columns by dividing by their respective sums
+        normalized_grouped = 100 * grouped.div(grouped.sum(axis=0), axis=1)
+
+        # Print the normalized DataFrame
+        print(normalized_grouped)
+
+        kwargs = {
+            "edgecolor": 'black',
+            "align": 'edge',
+            "linestyle": '-.',
+        }
+        width = 0.15
+        normalized_grouped['female'].plot.bar(legend=True, label=f'ITU women ({n_female:,})', color="violet", width=-width, **kwargs)
+        normalized_grouped['male'].plot.bar(legend=True, label=f'ITU men ({n_male:,})', color="lightskyblue", width=width, **kwargs)
+
+        ax = plt.gca()
+
+        # Add numbers on top of female bars
+        for i, value in enumerate(normalized_grouped['female']):
+            ax.text(
+                i - width / 2,
+                15,
+                f'{value:.1f}%',
+                rotation=90,
+                ha='center',
+                color='black',
+            )  # Shift to left slightly due to width
+
+        # Add numbers on top of male bars
+        for i, value in enumerate(normalized_grouped['male']):
+            ax.text(
+                i + width / 2,
+                15,
+                f'{value:.1f}%',
+                rotation=90,
+                ha='center',
+                color='black',
+            )
+
     plt.xticks([0, 1, 2, 3], ['Q1\n(90/91 days)', 'Q2\n(91 days)', 'Q3\n(92 days)', 'Q4\n(92 days)'], rotation=0)
     plt.title(f"YEAR-QUARTER OF BIRTH\n({n_athletes:,} athletes)", fontsize=18)
-    plt.axhline(100 / 4, linestyle="-.", color="dodgerblue", label=f"uniform: {100 / 4:.1f}%", linewidth=2)
-    plt.yticks(range(0, int(max(observed_quarter_freq.max(), 10)) + 2))
-    plt.ylabel("percent".upper())
-    plt.xlabel("")
+    plt.yticks(range(0, int(max(observed_quarter_freq.max(), 10)) + 4))
     plt.grid(axis="y")
+
+    plt.xlim(-0.5, 3.5)
+    plt.xlabel("QUARTER", fontsize=16)
+    plt.ylabel("PERCENT", fontsize=16)
     plt.legend()
     plt.tight_layout()
     add_watermark(fig)
     plt.savefig(str(res_dir / "birth_quarters.png"), dpi=300)
-    # plt.show()
+    plt.show()
 
     # assert sum(observed_month_freq) == 100
     # assert sum(observed_quarter_freq) == 100
