@@ -1763,10 +1763,11 @@ Some **extreme values**:
 # :date: MONTH OF BIRTH
 
 For this section and the next one about [Body mass index](#weight_lifting-BODY-MASS-INDEX), a **larger dataset** is used:
-- **All athletes registered with World Triathlon**, aged between 15 and 45 years, are considered.
-- The vast majority are strong triathletes, but **not all are professional**.
+- **All athletes** part of a **non-para ranking**, and aged between 15 and 45 years, are considered.
+  - The **ranking categories** defined by World Triathlon can be found [here](https://developers.triathlon.org/reference/rankings-api-overview).
+- Leading to a total of **3,439 unique athletes**, including 1,382 women and 2,057 men.
 
-The **month-of-birth** is retrieved, when available, and its distribution is analysed and compared to **two reference distributions**:
+The **month-of-birth** distribution of the athletes is compared to **two reference distributions**:
 - Reference #1: **Uniform** month-of-birth distribution.
   - It could be **expected** that each month accounts for **`1/12 = 8.3%`** of the births.
 - Reference #2: Birth data collected by the **United Nation**: [data.un.org](https://data.un.org/Data.aspx?d=POP&f=tableCode%3A55).
@@ -1782,6 +1783,30 @@ The results are even more striking when considering the **year quarters**.
 |                       ![](res/birth_quarters.png)                       |
 |:-----------------------------------------------------------------------:|
 | *Year-quarter-of-birth of World Triathlon (formerly **ITU**) athletes.* |
+
+---
+
+<details>
+  <summary>Click to expand - 👫 <strong>Same plot with gender comparison.</strong></summary>
+
+|                   ![](res/birth_quarters_gender.png)                    |
+|:-----------------------------------------------------------------------:|
+| *Year-quarter-of-birth of World Triathlon (formerly **ITU**) athletes.* |
+
+</details>
+
+---
+
+<details>
+  <summary>Click to expand - 👶 <strong>Same plot for the Junior categories.</strong></summary>
+
+The average age is 19.5 years.
+
+|                              ![](res/birth_quarters_gender_junior.png)                               |
+|:----------------------------------------------------------------------------------------------------:|
+| *Year-quarter-of-birth of World Triathlon (formerly **ITU**) athletes in the **Junior** categories.* |
+
+</details>
 
 ---
 

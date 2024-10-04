@@ -74,7 +74,10 @@ def main():
     ranking_ids = list(range(11, 28))
     ranking_ids.extend(list(range(35, 44)))
 
-    # ranking_ids = [23, 24]  # European juniors
+    # junior_only = True
+    junior_only = False
+    if junior_only:
+        ranking_ids = [21, 22, 23, 24]  # Americas and European juniors. Why no Oceania available?
 
     for ranking_id in ranking_ids:
         df_tmp = get_rankings(ranking_id=ranking_id)
@@ -101,6 +104,11 @@ def main():
     print(f"len after dropna on athlete_id: {len(df):,}")
 
     df.athlete_id = df.athlete_id.astype(int)
+
+    # only keep rows where "athlete_categories" contains 42 (= athletes)
+    # df = df[df["athlete_categories"].str.contains("42")]
+    # it should be already the case, since we consider rankings. But some real athletes are missing "42":
+    # print(list(df[~df["athlete_categories"].str.contains("42")]["athlete_listing"]))
 
     # patch: "dob" is not present in the rankings anymore!
     def find_dob(row):
@@ -268,15 +276,15 @@ def main():
             ha="center",
         )
 
-    plt.xticks(rotation=0)
-    plt.yticks(range(0, int(max(observed_month_freq.max(), 10)) + 1))
-    plt.ylabel("percent".upper())
-    plt.xlabel("")
+    plt.xticks(rotation=0, fontsize=12)
+    plt.yticks(range(0, int(max(observed_month_freq.max(), 10)) + 1), fontsize=12)
+    plt.ylabel("PERCENT", fontsize=16)
+    plt.xlabel("MONTH", fontsize=16)
 
     plt.grid(axis="y")
 
     plt.title(f"MONTH OF BIRTH\n({n_athletes:,} athletes)", fontsize=18)
-    plt.axhline(100 / 12, linestyle="-.", linewidth=2, color="dodgerblue", label=f"uniform: {100 / 12:.1f}%")
+    plt.axhline(100 / 12, linestyle="-.", linewidth=2, color="dimgray", label=f"uniform: {100 / 12:.1f}%")
     plt.legend()
 
     plt.tight_layout()
@@ -286,12 +294,17 @@ def main():
     # plt.show()
 
     # ### plot - quarters
-    group_by_gender = False
+
+    # group_by_gender = False
+    group_by_gender = True
 
     fig = plt.figure(figsize=(12, 12))
 
     # only keep one country
-    # df = df[df["athlete_noc"] == "ESP"]
+    # single_country = "FRA"
+    single_country = None
+    if single_country is not None:
+        df = df[df["athlete_noc"] == single_country]
     n_athletes = len(df)
 
     # group the 12 values in 4 groups of 3: (1,2,3) (4,5,6) (7,8,9) (10,11,12)
@@ -369,9 +382,14 @@ def main():
                 color='black',
             )
 
-    plt.xticks([0, 1, 2, 3], ['Q1\n(90/91 days)', 'Q2\n(91 days)', 'Q3\n(92 days)', 'Q4\n(92 days)'], rotation=0)
-    plt.title(f"YEAR-QUARTER OF BIRTH\n({n_athletes:,} athletes)", fontsize=18)
-    plt.yticks(range(0, int(max(observed_quarter_freq.max(), 10)) + 4))
+    plt.xticks([0, 1, 2, 3], ['Q1\n(90/91 days)', 'Q2\n(91 days)', 'Q3\n(92 days)', 'Q4\n(92 days)'], rotation=0, fontsize=12)
+    title = f"YEAR-QUARTER OF BIRTH\n({n_athletes:,} athletes)"
+    if single_country is not None:
+        title += f" - {single_country} only"
+    if junior_only:
+        title += " - Junior categories only"
+    plt.title(title, fontsize=18)
+    plt.yticks(range(0, int(max(observed_quarter_freq.max(), 10)) + 4), fontsize=12)
     plt.grid(axis="y")
 
     plt.xlim(-0.5, 3.5)
@@ -380,7 +398,14 @@ def main():
     plt.legend()
     plt.tight_layout()
     add_watermark(fig)
-    plt.savefig(str(res_dir / "birth_quarters.png"), dpi=300)
+    saving_name = "birth_quarters"
+    if group_by_gender:
+        saving_name += "_gender"
+    if single_country is not None:
+        saving_name += f"_{single_country}"
+    if junior_only:
+        saving_name += f"_junior"
+    plt.savefig(str(res_dir / f"{saving_name}.png"), dpi=300)
     plt.show()
 
     # assert sum(observed_month_freq) == 100
@@ -400,8 +425,8 @@ def main():
         observed_freq=observed_quarter_freq * n_athletes / 100,
         expected_freq=expected_quarter_freq / 100 * n_athletes,
         title="NON-uniform prior - QUARTERS",
-        h0="The distribution of birth MONTHS among athletes comes from UN data.",
-        h1="The distribution of birth MONTHS among athletes does not come from UN data."
+        h0="The distribution of birth QUARTERS among athletes comes from UN data.",
+        h1="The distribution of birth QUARTERS among athletes does not come from UN data."
     )
     #
     # run_chi_square_test(
