@@ -2149,6 +2149,8 @@ It would be interesting to investigate the **financial aspects** of the competit
 - Understand the system of **penalties** and their impact on race dynamics.
   - The 2024 Paris Olympics ( :fr: ) saw a surprising number of penalties: **[6 women out of 51](https://triathlon.org/results/result/paris_2024_olympic_games/655048) and [10 men out of 50](https://triathlon.org/results/result/paris_2024_olympic_games/655047)** received a **15s penalty**.
   - Before focusing on gaining seconds, some athletes may need to **prioritize avoiding penalties**, such as by **correctly timing their dive** and making sure to **place their helmet inside** the transition box.
+- Analyze the trajectory of successful elite athletes.
+  - How did they perform as juniors, and how did they progress from junior to U23 to elite?
 - Try to estimate the **level of a race**.
   - For example, using the results table and the ranking of the participating athletes.
 - ...
