@@ -674,6 +674,7 @@ def get_events_results() -> pd.DataFrame:
                         assert times[0] > 1, times
                     events_result[f"{column.replace('_s', '')}_mean{suffix}"] = times.mean()
                     events_result[f"{column.replace('_s', '')}_std{suffix}"] = times.std()
+                    events_result[f"{column.replace('_s', '')}_all{suffix}"] = column_results.to_list()
 
                     times_last = np.array(sorted(list(column_results))[-i_last: -i_first if i_first > 0 else None])
                     # times_last = np.array(sorted(list(column_results))[19: 24])
@@ -920,4 +921,5 @@ def get_events_df():
     return df
 
 if __name__ == '__main__':
-    get_events_df()
+    _df = get_events_df()
+    print(_df)
