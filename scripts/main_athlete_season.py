@@ -13,15 +13,16 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
-from utils import json_load, json_dump, res_dir, interpolate_colors, data_dir, country_emojis, add_watermark
+from utils import json_load, json_dump, res_dir, interpolate_colors, cache_dir, data_dir, country_emojis, add_watermark, \
+    load_config
 from utils_itu import get_request, category_mapping
 
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
 plt.rcParams['mathtext.default'] = 'rm'
 plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
 
-suffix = "m"
-# suffix = "w"
+config = load_config()
+suffix = config["seasons"]["suffix"]
 
 # https://triathlon.org/rankings/archive
 
@@ -107,7 +108,7 @@ def get_athlete_seasons(athlete_ids):
         if i_athlete > 100:
             break
         print(f"{athlete_id}: {athlete_ids_mapping[athlete_id]}")
-        athlete_results_file = data_dir / f"athletes_results/{athlete_id}.json"
+        athlete_results_file = cache_dir / f"athletes_results/{athlete_id}.json"
         if athlete_results_file.exists():
             athlete_results_res = json_load(athlete_results_file)
         else:
@@ -429,7 +430,7 @@ def plot_end_of_career():
     athletes_infos = []
     for athlete_id in all_ids:
         print(f"{athlete_id}: {athlete_ids_mapping[athlete_id]}")
-        athlete_results_file = data_dir / f"athletes_results/{athlete_id}.json"
+        athlete_results_file = cache_dir / f"athletes_results/{athlete_id}.json"
         if athlete_results_file.exists():
             athlete_results_res = json_load(athlete_results_file)
         else:
@@ -464,7 +465,7 @@ def plot_end_of_career():
         if y_last_race > year_limit:
             continue
 
-        athlete_file = data_dir / f"athletes/{athlete_id}.json"
+        athlete_file = cache_dir / f"athletes/{athlete_id}.json"
         if athlete_file.exists():
             athlete_info = json_load(athlete_file)
         else:

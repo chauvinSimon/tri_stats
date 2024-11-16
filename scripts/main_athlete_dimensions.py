@@ -3,7 +3,7 @@ import re
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-from utils import data_dir, res_dir, add_watermark
+from utils import cache_dir, res_dir, add_watermark
 from utils_itu import get_athlete_info, get_request
 
 # todo: is it the correct way to set the math fonts?
@@ -13,7 +13,7 @@ plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
 
 
 def get_rankings(ranking_id: int):
-    saving_path = data_dir / "rankings" / f"rankings_{ranking_id}.csv"
+    saving_path = cache_dir / "rankings" / f"rankings_{ranking_id}.csv"
     saving_path.parent.mkdir(parents=True, exist_ok=True)
     # check if ranking_id has already been retrieved and saved
     if saving_path.exists():

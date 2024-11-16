@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from country_continent_alpha import convert_country_alpha2_to_country_name, convert_country_name_to_country_alpha2, \
+from utils_countries import convert_country_alpha2_to_country_name, convert_country_name_to_country_alpha2, \
     convert_country_alpha2_to_continent
 from utils import json_dump, reference_month_of_birth_path, reference_month_of_birth_data_path, res_dir, add_watermark
 

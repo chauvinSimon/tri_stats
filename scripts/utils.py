@@ -1,11 +1,19 @@
 import json
 from pathlib import Path
+import yaml
 
-res_dir = Path(__file__).parent / "res"
+
+res_dir = Path(__file__).parent.parent / "res"
 res_dir.mkdir(exist_ok=True)
 
-data_dir = Path(__file__).parent / "data"
+cache_dir = Path(__file__).parent.parent / "cache"
+cache_dir.mkdir(exist_ok=True)
+
+data_dir = Path(__file__).parent.parent / "data"
 data_dir.mkdir(exist_ok=True)
+
+ignored_dir = Path(__file__).parent.parent / "ignored"
+ignored_dir.mkdir(exist_ok=True)
 
 reference_month_of_birth_path = data_dir / "reference_month_of_birth.json"
 reference_month_of_birth_data_path = data_dir / "UNdata_2004_1994.csv"
@@ -40,18 +48,14 @@ def json_load(
         return json.load(f)
 
 
-def add_water_mark(fig):
-    # Add Text watermark
-    fig.text(
-        0.9,
-        0.15,
-        'chauvinSimon',
-        fontsize=12,
-        color='grey',
-        ha='right',
-        va='bottom',
-        alpha=0.7
-    )
+def yaml_load(file_path: Path):
+    """Load data from a YAML file."""
+    with file_path.open('r') as f:
+        return yaml.safe_load(f)
+
+
+def load_config():
+    return yaml_load(Path(__file__).parent.parent / "config.yaml")
 
 
 country_emojis = {

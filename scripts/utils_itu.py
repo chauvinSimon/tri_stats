@@ -5,7 +5,10 @@ import requests  # pip install requests
 
 url_prefix = "https://api.triathlon.org/v1/"
 
-with open("api_key.txt", "r") as f:
+
+api_file = Path(__file__).parent.parent / "api_key.txt"
+assert api_file.exists(), f"{api_file = } does not exist"
+with open(api_file, "r") as f:
     api_key = f.readline()
 
 headers = {

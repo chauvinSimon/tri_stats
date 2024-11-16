@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import chisquare
 
-from country_continent_alpha import convert_country_alpha2_to_continent, convert_country_alpha2_to_country_name
-from utils import json_load, reference_month_of_birth_path, data_dir, res_dir, add_watermark
+from utils_countries import convert_country_alpha2_to_continent, convert_country_alpha2_to_country_name
+from utils import json_load, reference_month_of_birth_path, cache_dir, res_dir, add_watermark
 from utils_itu import get_request, get_athlete_info
 
 # todo: is it the correct way to set the math fonts?
@@ -14,7 +14,7 @@ plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
 
 
 def get_rankings(ranking_id: int):
-    saving_path = data_dir / "rankings" / f"rankings_{ranking_id}.csv"
+    saving_path = cache_dir / "rankings" / f"rankings_{ranking_id}.csv"
     saving_path.parent.mkdir(parents=True, exist_ok=True)
     # check if ranking_id has already been retrieved and saved
     if saving_path.exists():

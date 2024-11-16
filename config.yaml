@@ -1,0 +1,119 @@
+events:
+  query:
+    start_date: "2009-01-01"
+    end_date: "2024-07-31"
+    per_page: 1000
+
+  distance_categories:
+    - sprint
+    - standard
+
+  sports:
+    - swim
+    # - t1
+    - bike
+    # - t2
+    - run
+
+  program_names:
+    - Elite Men
+    - Elite Women
+
+  category_ids:
+    # 483: Age-Group Event
+    # 612: Arena Games Finals
+    # 610: Arena Games Series
+    # 340: Continental Championships
+    # 341: Continental Cup
+    # 342: Continental Junior Cup
+    # 623: Continental Para Cup
+    # 477: Development Regional Cup
+    343: Major Games
+    # 344: Multisport Series
+    # 352: Qualification Event
+    345: Recognised Event
+    346: Recognised Games
+    # 347: Regional Championships
+    # 640: T100 Triathlon World Tour
+    624: World Championship Finals
+    351: World Championship Series
+    # 348: World Championships
+    349: World Cup
+    # 631: World Indoor Cup
+    # 449: World Para Cup
+    # 448: World Para Series
+    # 350: World Paratriathlon Event
+
+  # get_events_specifications()
+  specification_ids:
+    #  - [ 453, "Aquabike" ]
+    #  - [ 353, "Aquathlon" ]
+    #  - [ 408, "Cross Duathlon" ]
+    #  - [ 354, "Cross Triathlon" ]
+    #  - [ 355, "Duathlon" ]
+    #  - [ 356, "Long Distance Triathlon" ]
+    - [ 357, "Triathlon" ]
+    #  - [ 595, "Winter Duathlon" ]
+    #  - [ 358, "Winter Triathlon" ]
+
+  all_distance_categories:
+    - standard
+    - sprint
+    - super_sprint
+
+  expected_distances:
+    sprint:
+      - [ 700, 800 ]
+      - [ 18, 23 ]
+      - [ 4.5, 5.5 ]
+    standard:
+      - [ 1400, 1600 ]
+      - [ 36, 44 ]
+      - [ 9, 11 ]
+
+  pack_duration_s: 10
+  # fallback when no info about wetsuit: possibility to download pictures of the event, and manually validate wetsuit: yes/no
+  label_manually: false
+
+  mean_computation:
+    use_best_in_each_sport: true
+
+    # todo: be careful with indexes: python indexing starts at 0
+    # 5th-9th
+    i_first: 4
+    i_last: 9
+
+    # top3
+    # i_first: 0
+    # i_last: 3
+
+    # top10
+    # i_first: 0
+    # i_last: 10
+
+  cleaning:
+    n_results_min: 25
+    min_duration_s: 180
+    swim_diff_percent_max: 0.22
+
+    sport_outliers: # todo: decide how many outliers to remove
+      - [ 0, 54303 ]  # 2012 Mooloolaba ITU Triathlon World Cup
+
+      - [ 1, 165396 ]  # 2022 World Triathlon Cup Pontevedra
+      - [ 1, 184828 ]  # 2024 World Triathlon Cup Hong Kong
+
+      - [ 2, 80081 ]  # 2014 Tongyeong ITU Triathlon World Cup
+      - [ 2, 78733 ]  # 2014 New Plymouth ITU Triathlon World Cup
+      - [ 2, 153774 ]  # 2021 World Triathlon Cup Huatulco
+      - [ 2, 109660 ]  # 2017 Madrid ITU Triathlon World Cup
+      - [ 2, 45133 ]  # 2011 Huatulco ITU Triathlon World Cup
+
+    #      - [2, 175736]  # 2023 World Triathlon Cup Brasilia
+
+    remove_extreme_diffs: false
+    quantile_min: 0.1
+    quantile_max: 0.9
+
+seasons:
+  suffix: "w"
+#  suffix: "m"
