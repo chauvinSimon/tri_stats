@@ -2177,9 +2177,9 @@ The **python code** to fetch the data, set the parameters and generate plots is 
   - Run the different scripts of `tri_stats/scripts`.
 - Or in the **cloud**, using **free** tools: **Google Colab** and **Google Drive**.
   - _[Only once]_ _[Recommended]_ Create a Google account, to be used only for this project.
-  - _[Only once]_ Open https://colab.research.google.com/github/chauvinSimon/tri_stats/, and click on `notebooks/main.ipynb`.
-  - _[Only once]_ Click "Copy to Drive", and then "Open in a new tab".
-  - _[Every time]_ In the copied version (saved at https://drive.google.com/drive/my-drive, under `My Drive / Colab Notebooks`), follow the instructions.
+  - _[Only once]_ Open **https://colab.research.google.com/github/chauvinSimon/tri_stats/**, and click on `notebooks/main.ipynb`.
+  - _[Only once]_ Click **`Copy to Drive`**, and then `Open in a new tab`.
+  - _[Every time]_ In the copied version (saved as `main copy.ipynb`, at https://drive.google.com/drive/my-drive, under `My Drive / Colab Notebooks`), follow the instructions.
 
 ---
 
