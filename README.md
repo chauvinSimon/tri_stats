@@ -2159,11 +2159,17 @@ It would be interesting to investigate the **financial aspects** of the competit
 
 ## :computer: CODE
 
-The **python code** to fetch the data, set the parameters and generate plots is available in [this GitHub repository](https://github.com/chauvinSimon/tri_stats). To use it,
+The **python code** to fetch the data, set the parameters and generate plots is available in [this GitHub repository](https://github.com/chauvinSimon/tri_stats). There are **two ways to use it**:
 
-- Create a key for the World Triathlon API: https://apps.api.triathlon.org/ and add it to a `api_key.txt` file directly placed in `tri_stats/`.
-- Install the required python packages.
-- Run the different scripts of this repository.
+- Either **locally**, if you are familiar with **python**.
+  - Clone the repo and install the required python packages. 
+  - [Create a key for the World Triathlon API](https://apps.api.triathlon.org/register) and add it to a `api_key.txt` file directly placed in `tri_stats/`.
+  - Run the different main scripts of `/scripts`.
+- Or in the **cloud**, using **Google Colab** and **Google Drive**.
+  - [Only once] [Recommended] Create a dedicated Google account.
+  - [Only once] Open https://colab.research.google.com/github/chauvinSimon/tri_stats/, and click on `notebooks/main.ipynb`.
+  - [Only once] Click "Copy to Drive", and then "Open in a new tab".
+  - [Every time] In the copied version (saved under "My Drive / Colab Notebooks"), follow the instructions.
 
 ---
 
