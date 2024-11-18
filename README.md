@@ -2139,20 +2139,30 @@ It would be interesting to investigate the **financial aspects** of the competit
   - These two event-categories have been combined in several sections of this document to **increase the dataset size** and hopefully improve statistical significance.
   - However, in some cases this approach may not be optimal, and it would be insightful to explore the differences between these categories.
   - The level is **generally higher on world series**, but there are some exceptions: **World cups** like [2020 Arzachena ( :it: )](https://www.triathlon.org/results/result/2020_arzachena_itu_triathlon_world_cup/352548), [2014 New Plymouth ( :new_zealand: )](https://www.triathlon.org/results/result/2014_new_plymouth_itu_triathlon_world_cup/264274), [2014 Mooloolaba ( :australia: )](https://www.triathlon.org/results/result/2014_mooloolaba_itu_triathlon_world_cup/264271) and **[2009](https://www.triathlon.org/results/result/2009_hy-vee_itu_triathlon_elite_cup/5187)** and [2010 **Des Moines ( :us: )**](https://www.triathlon.org/results/result/2010_hy-vee_itu_triathlon_elite_cup/5613) **likely matched** the **competition level** of the average World Triathlon Series events. In fact, they were probably more competitive than some WTCS races held during Olympic years, such as [2012 Sydney ( :australia: )](https://www.triathlon.org/results/result/2012_itu_world_triathlon_sydney/7599), [2016 Cape Town ( :south_africa: )](https://www.triathlon.org/results/result/2016_itu_world_triathlon_cape_town/280877), [2021 Hamburg ( :de: )](https://www.triathlon.org/events/event/2021_world_triathlon_hamburg), [2024 Hamburg ( :de: )](https://www.triathlon.org/results/result/2024_world_triathlon_championship_series_hamburg/627964).
+  - Compared to the early 2010s, world-cups _(possibly due to their location, date, and low prize money?)_ appear to have been largely abandoned by top athletes in favor of newer race formats, such as the [supertri](https://supertri.com/), the [French Grand Prix](https://en.wikipedia.org/wiki/Grand_Prix_de_Triathlon) and even Ironman races.
 - The [arbitrary decision to focus on the **top 5-9**](#books-data) was made to capture a stable and consistent **representation of the general competitive field**.
   - However, examining the **top performance** (e.g. top-1 or top-3) or using a **broader range** could also yield valuable insights.
 - Conduct advanced analyses of **cycling performances** would be interesting.
   - Additional data may be required: drawing conclusions based solely on **bike split times** is challenging, due to the influence of **drafting** and pack dynamics.
-- Investigate the impact of **swim conditions** - including **water temperature**, presence of **waves**, and **salinity** - on swim performance and race dynamics.
+- Investigate the impact of **swim conditions** on swim performance and race dynamics.
+  - Including **water temperature**, presence of **waves**, and **salinity**.
 - Take a closer look at the **critical start of the bike segment**.
-  - For example, given a lag at T1, how likely is it to catch the first group?
+  - For example: _Given a lag at T1, how likely is it to catch the first group?_
 - Understand the system of **penalties** and their impact on race dynamics.
   - The 2024 Paris Olympics ( :fr: ) saw a surprising number of penalties: **[6 women out of 51](https://triathlon.org/results/result/paris_2024_olympic_games/655048) and [10 men out of 50](https://triathlon.org/results/result/paris_2024_olympic_games/655047)** received a **15s penalty**.
   - Before focusing on gaining seconds, some athletes may need to **prioritize avoiding penalties**, such as by **correctly timing their dive** and making sure to **place their helmet inside** the transition box.
-- Analyze the trajectory of successful elite athletes.
-  - How did they perform as juniors, and how did they progress from junior to U23 to elite?
+- Analyze the **trajectory** of successful elite athletes.
+  - _How did they perform as juniors, and how did they **progress** from **junior** to **U23** to **elite**?_
+  - One could also ask: _One junior athlete excels in swimming, another one in running. Which is more likely to become an Elite and perform in this category?_
 - Try to estimate the **level of a race**.
-  - For example, using the results table and the ranking of the participating athletes.
+  - Propose a **formula** based on metrics such as the ranking of participating athletes and, if available, their results in this race.
+    - Extensions include evaluation of individual race segments (swim, bike, run), and **athlete scoring**.
+  - Potential **pre-race and post-race applications**:
+    - _What performance objectives should the **coach** set, considering the expected race difficulty?_
+    - _Should a **federation** select an athlete for this event based on the competitiveness of the start list?_
+    - _How strong are the best swimmers for this race? Who would be the optimal neighbours on the **start pontoon**?_
+    - _How strong was this top-10 finish, given the competition level? Did an athlete **overperform or underperform** in a specific leg?_
+    - _What are the most hotly contested races?_ With a formula like this, I could **classify the races by level** and keep only the e.g. 100 most disputed for my analyses.
 - ...
 
 ---
@@ -2163,13 +2173,13 @@ The **python code** to fetch the data, set the parameters and generate plots is 
 
 - Either **locally**, if you are familiar with **python**.
   - Clone the repo and install the required python packages. 
-  - [Create a key for the World Triathlon API](https://apps.api.triathlon.org/register) and add it to a `api_key.txt` file directly placed in `tri_stats/`.
-  - Run the different main scripts of `/scripts`.
-- Or in the **cloud**, using **Google Colab** and **Google Drive**.
-  - [Only once] [Recommended] Create a dedicated Google account.
-  - [Only once] Open https://colab.research.google.com/github/chauvinSimon/tri_stats/, and click on `notebooks/main.ipynb`.
-  - [Only once] Click "Copy to Drive", and then "Open in a new tab".
-  - [Every time] In the copied version (saved under "My Drive / Colab Notebooks"), follow the instructions.
+  - [Create a key for the World Triathlon API](https://apps.api.triathlon.org/register) and add it to a `api_key.txt` file to save in `tri_stats/`.
+  - Run the different scripts of `tri_stats/scripts`.
+- Or in the **cloud**, using **free** tools: **Google Colab** and **Google Drive**.
+  - _[Only once]_ _[Recommended]_ Create a Google account, to be used only for this project.
+  - _[Only once]_ Open https://colab.research.google.com/github/chauvinSimon/tri_stats/, and click on `notebooks/main.ipynb`.
+  - _[Only once]_ Click "Copy to Drive", and then "Open in a new tab".
+  - _[Every time]_ In the copied version (saved at https://drive.google.com/drive/my-drive, under `My Drive / Colab Notebooks`), follow the instructions.
 
 ---
 

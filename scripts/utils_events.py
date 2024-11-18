@@ -26,39 +26,6 @@ plt.rcParams['mathtext.default'] = 'rm'
 plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
 
 
-config = load_config()
-events_config = config["events"]
-
-distance_categories = events_config["distance_categories"]
-sports = events_config["sports"]
-program_names = events_config["program_names"]
-specification_ids = events_config["specification_ids"]
-category_ids = events_config["category_ids"]
-
-sport_outliers = events_config["cleaning"]["sport_outliers"]
-
-start_date = events_config["query"]["start_date"]
-end_date = events_config["query"]["end_date"]
-per_page = events_config["query"]["per_page"]
-
-pack_duration_s = events_config["pack_duration_s"]
-
-remove_extreme_diffs = events_config["cleaning"]["remove_extreme_diffs"]
-quantile_min = events_config["cleaning"]["quantile_min"]
-quantile_max = events_config["cleaning"]["quantile_max"]
-
-min_duration_s = events_config["cleaning"]["min_duration_s"]
-n_results_min = events_config["cleaning"]["n_results_min"]
-
-all_distance_categories = events_config["all_distance_categories"]
-label_manually = events_config["label_manually"]
-
-i_first = events_config["mean_computation"]["i_first"]
-i_last = events_config["mean_computation"]["i_last"]
-use_best_in_each_sport = events_config["mean_computation"]["use_best_in_each_sport"]
-
-
-
 def seconds_to_h_min_sec(
         time_sec: float,
         use_hours: bool = True,
@@ -115,7 +82,7 @@ def get_events_specifications():
     return res
 
 
-def get_program_listings(event_id: int):
+def get_program_listings(event_id: int, program_names: list):
     suffix = f"events/{event_id}/programs"
     res_req = get_request(url_suffix=suffix)
     res = []
@@ -130,6 +97,7 @@ def get_program_listings(event_id: int):
 def save_images(
         event_id: int,
         event_title: str = "",
+        per_page: int = 1000
 ):
     images_dir = cache_dir / "images"
     images_dir.mkdir(parents=True, exist_ok=True)
@@ -185,7 +153,17 @@ def save_images(
             print(filename)
 
 
-def save_race_results():
+def save_race_results(events_config: dict):
+    ###
+    program_names = events_config["program_names"]
+    specification_ids = events_config["specification_ids"]
+    category_ids = events_config["category_ids"]
+
+    start_date = events_config["query"]["start_date"]
+    end_date = events_config["query"]["end_date"]
+    per_page = events_config["query"]["per_page"]
+    ###
+
     ignored_event_file = cache_dir / "events" / "ignored_events.json"
     ignored_event_file.parent.mkdir(parents=True, exist_ok=True)
     if ignored_event_file.exists():
@@ -251,7 +229,7 @@ def save_race_results():
                 if spec_id not in res_specification_ids:
                     continue
 
-                listings = get_program_listings(event_id=event_id)
+                listings = get_program_listings(event_id=event_id, program_names=program_names)
                 if not listings:
                     print(f"\nERROR: no listing found for {event_title} ({event_id})\n")
                     ignored_events[event_id] = event_title
@@ -547,7 +525,25 @@ def extract_air_and_water_temperatures(long_string):
     return res
 
 
-def get_events_results() -> pd.DataFrame:
+def get_events_results(events_config: dict) -> pd.DataFrame:
+    ###
+    sports = events_config["sports"]
+    category_ids = events_config["category_ids"]
+
+    pack_duration_s = events_config["pack_duration_s"]
+
+    n_results_min = events_config["cleaning"]["n_results_min"]
+
+    all_distance_categories = events_config["all_distance_categories"]
+    label_manually = events_config["label_manually"]
+
+    i_first = events_config["mean_computation"]["i_first"]
+    i_last = events_config["mean_computation"]["i_last"]
+    use_best_in_each_sport = events_config["mean_computation"]["use_best_in_each_sport"]
+
+    per_page = events_config["query"]["per_page"]
+    ###
+
     print("\nget_events_results\n")
 
     events_dir = cache_dir / "events"
@@ -775,6 +771,7 @@ def get_events_results() -> pd.DataFrame:
                         save_images(
                             event_id=prog_data["event_id"],
                             event_title=prog_data["event_title"],
+                            per_page=per_page
                         )
 
                         if label_manually:
@@ -847,7 +844,7 @@ def add_year_and_event_cat(df):
     return df
 
 
-def clean_results(df):
+def clean_results(df, min_duration_s: float, sports, distance_categories):
     print(f"###\nprocessing {len(df)} results\n###")
 
     # drop rows where prog_distance_category_m != prog_distance_category_w
@@ -877,7 +874,7 @@ def clean_results(df):
     return df
 
 
-def compute_diff(df):
+def compute_diff(df, sports, distance_categories, remove_extreme_diffs: bool, quantile_min: float, quantile_max: float):
     assert set(df.prog_distance_category.unique()) == set(distance_categories)
 
     for sport in sports:
@@ -894,7 +891,7 @@ def compute_diff(df):
     return df
 
 
-def drop_outliers(data, i_sport: int):
+def drop_outliers(data, i_sport: int, sport_outliers: list):
     for _i_sport, event_id in sport_outliers:
         if i_sport == _i_sport:
             if event_id in data['event_id'].values:
@@ -905,14 +902,30 @@ def drop_outliers(data, i_sport: int):
                 data = data[data['event_id'] != event_id]
     return data
 
-def get_events_df():
-    save_race_results()
 
-    df = get_events_results()
+def get_events_df(events_config: dict = None):
+    if events_config is None:
+        config = load_config()
+        events_config = config["events"]
+
+    ###
+    distance_categories = events_config["distance_categories"]
+    sports = events_config["sports"]
+
+    remove_extreme_diffs = events_config["cleaning"]["remove_extreme_diffs"]
+    quantile_min = events_config["cleaning"]["quantile_min"]
+    quantile_max = events_config["cleaning"]["quantile_max"]
+
+    min_duration_s = events_config["cleaning"]["min_duration_s"]
+    ###
+
+    save_race_results(events_config=events_config)
+
+    df = get_events_results(events_config=events_config)
     # df = pd.read_csv(str(tmp_results_file_path))
 
-    df = clean_results(df)
-    df = compute_diff(df)
+    df = clean_results(df, min_duration_s=min_duration_s, sports=sports, distance_categories=distance_categories)
+    df = compute_diff(df, sports=sports, distance_categories=distance_categories, remove_extreme_diffs=remove_extreme_diffs, quantile_min=quantile_min, quantile_max=quantile_max)
     df = add_year_and_event_cat(df)
 
     # sort df by date and reset index

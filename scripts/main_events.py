@@ -11,15 +11,13 @@ from scripts.utils_events import get_events_df
 from scripts.utils_events import drop_outliers, seconds_to_h_min_sec
 from utils import data_dir, json_load, res_dir, country_emojis, add_watermark, load_config
 
-config = load_config()
-events_config = config["events"]
-distance_categories = events_config["distance_categories"]
-sports = events_config["sports"]
-program_names = events_config["program_names"]
-swim_diff_percent_max = events_config["cleaning"]["swim_diff_percent_max"]
 
-
-def process_results_wetsuit(df):
+def process_results_wetsuit(
+        df,
+        swim_diff_percent_max: float,
+        distance_categories,
+        sport_outliers
+):
     # remove outliers?
     outliers = df[df["swim_diff_percent"] >= swim_diff_percent_max]
     print(f"{len(outliers)} swim outliers:")
@@ -320,13 +318,13 @@ def process_results_wetsuit(df):
 
     for i_distance_category, distance_category in enumerate(distance_categories):
         x_max = max(
-            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_m"].max(),
-            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_w"].max()
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0, sport_outliers=sport_outliers)[f"swim_mean_m"].max(),
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0, sport_outliers=sport_outliers)[f"swim_mean_w"].max()
         ) + 10
 
         x_min = min(
-            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_m"].min(),
-            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0)[f"swim_mean_w"].min()
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0, sport_outliers=sport_outliers)[f"swim_mean_m"].min(),
+            drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=0, sport_outliers=sport_outliers)[f"swim_mean_w"].min()
         ) - 10
 
         for i_suffix, suffix in enumerate(["w", "m"]):
@@ -435,7 +433,7 @@ def process_results_wetsuit(df):
     plt.show()
 
 
-def process_sports(df):
+def process_sports(df, distance_categories, sports, sport_outliers):
     fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(16, 16))
 
     fig.suptitle(
@@ -449,13 +447,13 @@ def process_sports(df):
         for i_sport, sport in enumerate(sports):
 
             x_max = max(
-                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_m"].max(),
-                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_w"].max()
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport, sport_outliers=sport_outliers)[f"{sport}_mean_m"].max(),
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport, sport_outliers=sport_outliers)[f"{sport}_mean_w"].max()
             ) + 10
 
             x_min = min(
-                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_m"].min(),
-                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport)[f"{sport}_mean_w"].min()
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport, sport_outliers=sport_outliers)[f"{sport}_mean_m"].min(),
+                drop_outliers(df[df['prog_distance_category'] == distance_category], i_sport=i_sport, sport_outliers=sport_outliers)[f"{sport}_mean_w"].min()
             ) - 10
 
             for i_suffix, suffix in enumerate(["w", "m"]):
@@ -464,7 +462,7 @@ def process_sports(df):
                     "m": "deepskyblue"
                 }
                 data = df[df['prog_distance_category'] == distance_category]
-                data = drop_outliers(data, i_sport)
+                data = drop_outliers(data, i_sport, sport_outliers=sport_outliers)
                 data = data[f"{sport}_mean_{suffix}"]
                 data_mean = data.mean()
                 data_std = data.std()
@@ -526,7 +524,12 @@ def process_sports(df):
     plt.show()
 
 
-def process_results_w_vs_m(df):
+def process_results_w_vs_m(
+        df,
+        swim_diff_percent_max: float,
+        sports,
+        distance_categories
+):
     # max_diff_percent = max(df[f"{sport}_diff_percent"].max() for sport in sports)
     max_diff_percent = 0.21
     max_diff_percent += 0.01
@@ -825,7 +828,12 @@ def process_ages(df):
     plt.show()
 
 
-def process_results_repeated_events(df):
+def process_results_repeated_events(
+        df,
+        distance_categories,
+        sports,
+        sport_outliers
+):
     n_repetitions_min = 4
 
     df = df.sort_values("event_date_m")
@@ -875,7 +883,7 @@ def process_results_repeated_events(df):
             for i_sport, sport in enumerate(sports):
                 # add std to bars
                 data = df[df['prog_distance_category'] == distance_category]
-                data = drop_outliers(data, i_sport)
+                data = drop_outliers(data, i_sport, sport_outliers=sport_outliers)
 
                 year_grouping = data.groupby("event_year")
                 n_entries = dict(year_grouping["prog_distance_category"].count())
@@ -1098,7 +1106,10 @@ def process_results_repeated_events(df):
             plt.show()
 
 
-def process_sprint_finish(df):
+def process_sprint_finish(
+        df,
+        distance_categories
+):
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 20))
 
     for i_distance_category, distance_category in enumerate(distance_categories):
@@ -1430,7 +1441,10 @@ def process_sprint_finish(df):
     plt.show()
 
 
-def process_scenarios(df):
+def process_scenarios(
+        df,
+        distance_categories
+):
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 20))
 
     df = df[df["event_category"] != "world-cup"]
@@ -1812,7 +1826,7 @@ def process_scenarios(df):
     plt.show()
 
 
-def process_temperatures(df):
+def process_temperatures(df, distance_categories):
 
     # assert that consistency wetsuit / temperature
     # assert len(df[(df["wetsuit_w"]) & (df["water_temperature_w"] >= 20.0)]) == 0
@@ -2168,7 +2182,7 @@ def process_temperatures(df):
         plt.show()
 
 
-def process_sport_proportion(df):
+def process_sport_proportion(df, distance_categories):
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 16))
 
     for i_suffix, suffix in enumerate(["w", "m"]):
@@ -2301,7 +2315,7 @@ def process_sport_proportion(df):
     print(df["t1+t2_mean_w"].describe())
 
 
-def process_swim_gaps(df):
+def process_swim_gaps(df, distance_categories):
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 16))
 
     df = df[df["event_category"] != "games"]
@@ -2641,23 +2655,33 @@ def process_level(df):
 
 
 def main():
-    df = get_events_df()
+    ###
+    config = load_config()
+    events_config = config["events"]
+
+    distance_categories = events_config["distance_categories"]
+    sports = events_config["sports"]
+    swim_diff_percent_max = events_config["cleaning"]["swim_diff_percent_max"]
+    sport_outliers = events_config["cleaning"]["sport_outliers"]
+    ###
+
+    df = get_events_df(events_config=events_config)
 
     # df = df[df["event_category"] != "world-cup"]
     # df = df[df["prog_distance_category"] != "sprint"]
     # df = df[df["event_venue"].isin(["Yokohama", "Edmonton", "Cagliari", "Stockholm"])]
 
-    process_sports(df.copy())
-    process_results_wetsuit(df.copy())
-    process_results_w_vs_m(df.copy())
-    process_results_repeated_events(df.copy())
-    process_scenarios(df.copy())
-    process_sprint_finish(df.copy())
+    process_sports(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
+    process_results_wetsuit(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers)
+    process_results_w_vs_m(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sports=sports)
+    process_results_repeated_events(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
+    process_scenarios(df.copy(), distance_categories=distance_categories)
+    process_sprint_finish(df.copy(), distance_categories=distance_categories)
     process_ages(df.copy())
-    process_sport_proportion(df.copy())
-    process_swim_gaps(df.copy())
+    process_sport_proportion(df.copy(), distance_categories=distance_categories)
+    process_swim_gaps(df.copy(), distance_categories=distance_categories)
     process_event_country(df.copy())
-    process_temperatures(df.copy())
+    process_temperatures(df.copy(), distance_categories=distance_categories)
     # process_event_dates(df.copy())  # make sure to reduce the min-participants: n_results_min
     process_level(df.copy())
 
