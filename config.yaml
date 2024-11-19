@@ -56,11 +56,6 @@ events:
     #  - [ 595, "Winter Duathlon" ]
     #  - [ 358, "Winter Triathlon" ]
 
-  all_distance_categories:
-    - standard
-    - sprint
-    - super_sprint
-
   expected_distances:
     sprint:
       - [ 700, 800 ]
@@ -96,7 +91,7 @@ events:
     min_duration_s: 180
     swim_diff_percent_max: 0.22
 
-    sport_outliers: # todo: decide how many outliers to remove
+    sport_outliers: # todo: decide how many outliers to remove. 0=swim, 1=bike, 2=run
       - [ 0, 54303 ]  # 2012 Mooloolaba ITU Triathlon World Cup
 
       - [ 1, 165396 ]  # 2022 World Triathlon Cup Pontevedra

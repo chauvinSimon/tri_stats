@@ -527,6 +527,9 @@ def extract_air_and_water_temperatures(long_string):
 
 def get_events_results(events_config: dict) -> pd.DataFrame:
     ###
+    start_date = events_config["query"]["start_date"]
+    end_date = events_config["query"]["end_date"]
+
     sports = events_config["sports"]
     category_ids = events_config["category_ids"]
 
@@ -534,7 +537,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
 
     n_results_min = events_config["cleaning"]["n_results_min"]
 
-    all_distance_categories = events_config["all_distance_categories"]
+    distance_categories = events_config["distance_categories"]
     label_manually = events_config["label_manually"]
 
     i_first = events_config["mean_computation"]["i_first"]
@@ -550,13 +553,21 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
     events_results = []
 
     for event_file in events_dir.glob("*.json"):
-        # todo: should consider only the events of the query, not all that are saved
-        # ignore `events_query.json` and `ignored_events.json`
-        if not event_file.stem.isnumeric():
+        if not event_file.stem.isnumeric():  # ignore `events_query.json` and `ignored_events.json`
             continue
         event_dict = json_load(event_file)
         if len(event_dict) < 2:
             print(f"{event_file.stem}\n\tnot enough data: {list(event_dict.keys())}")
+            continue
+
+        valid = True
+        for prog_id, prog_data in event_dict.items():
+            if prog_data["event_date"] < start_date or prog_data["event_date"] > end_date:
+                print(f"{prog_id} - {prog_data['prog_name']} - {prog_data['prog_distance_category']} - "
+                      f"{len(prog_data['results'])} results ({prog_data['event_title']})")
+                print(f"\tskipped because date ({prog_data['event_date']}) not in range [{start_date}, {end_date}]")
+                valid = False
+        if not valid:
             continue
 
         valid = True
@@ -590,8 +601,9 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             else:
                 raise ValueError(f"{prog_data['prog_name'] = }")
 
-            if prog_data["prog_distance_category"] not in all_distance_categories:
-                raise ValueError(f"{prog_data['prog_distance_category'] = } not in {all_distance_categories = }")
+            if prog_data["prog_distance_category"] not in distance_categories:
+                print(f"category {prog_data['prog_distance_category'] = } not in {distance_categories = }")
+                continue
 
             print(f"{prog_id} - {prog_data['prog_name']} - {prog_data['prog_distance_category']} - "
                   f"{len(prog_data['results'])} results ({prog_data['event_title']})")
@@ -615,6 +627,9 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                                 if not is_distance_correct:
                                     print(f"\t\t\t{distance = } not in {d_min = }, {d_max = }")
                                     events_result["invalid"] = True
+                                    break
+                    if "invalid" in events_result:
+                        break
 
             events_result[f"wetsuit{suffix}"] = None
             if prog_data["prog_notes"] is not None:
@@ -648,7 +663,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             if n_results < n_results_min:
                 print(f"\t\tSkipping - only {n_results} results")
                 events_result["invalid"] = True
-                continue
+                break
 
             if use_best_in_each_sport:
                 for column in df_results.columns:
@@ -664,7 +679,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     if len(column_results) < n_results_min:
                         print(f"\t\tSkipping - only {len(column_results)} results")
                         events_result["invalid"] = True
-                        continue
+                        break
                     times = np.array(sorted(list(column_results))[i_first:i_last])
                     if column in [f"{s}_s" for s in sports]:
                         assert times[0] > 1, times
@@ -683,6 +698,8 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     #     f"{column.replace('_s', '')}_mean{suffix}"]
                     # if column in [f"{s}_s" for s in sports]:
                     #     assert first_advance > 0, f"{events_result['event_title']}: {first_advance}"
+                if "invalid" in events_result:
+                    break
 
                 df_age = df_results["age"].iloc[i_first:i_last]
                 if df_age.isnull().values.any():
@@ -755,6 +772,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             events_result[f"second{suffix}"] = prog_data["results"][1]["athlete_title"]
             events_result[f"second_country{suffix}"] = prog_data["results"][1]["athlete_noc"]
 
+            assert "invalid" not in events_result
             if "invalid" not in events_result:
                 if events_result[f"wetsuit{suffix}"] is None:
                     manual_labelled_wetsuit_file = data_dir / "manual_labelled_wetsuit.json"
@@ -767,14 +785,16 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     if wetsuit_key in manual_labelled_wetsuit:
                         events_result[f"wetsuit{suffix}"] = manual_labelled_wetsuit[wetsuit_key]
                     else:
-                        print(f"unknown wetsuit: {wetsuit_key}")
-                        save_images(
-                            event_id=prog_data["event_id"],
-                            event_title=prog_data["event_title"],
-                            per_page=per_page
-                        )
-
+                        print(f"unknown wetsuit: {wetsuit_key} ({prog_data['event_title']})")
+                        if prog_data["prog_notes"] is not None:
+                            print(prog_data["prog_notes"])
                         if label_manually:
+                            save_images(
+                                event_id=prog_data["event_id"],
+                                event_title=prog_data["event_title"],
+                                per_page=per_page
+                            )
+
                             images_dir = cache_dir / "images" / str(prog_data["event_id"])
 
                             # glob png and jpg and jpeg
