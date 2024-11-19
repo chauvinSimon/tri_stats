@@ -30,9 +30,9 @@ def correct_name(first_name, last_name):
     if ("JoseMiguel" == first_name) and ("Perez" == last_name):
         first_name = "Jose Miguel"
         last_name = "Perez"
-    if ("Javier" == first_name) and ("Gomez Noya" == last_name):
+    if ("Javier" == first_name) and ("Gomez" == last_name):
         first_name = "Javier"
-        last_name = "Gomez"
+        last_name = "Gomez Noya"
     if ("Rostyslav" == first_name) and ("Pevtsov" == last_name):
         first_name = "Rostislav"
         last_name = "Pevtsov"

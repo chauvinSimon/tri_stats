@@ -2525,13 +2525,13 @@ def process_event_dates(df):
         "world-cup": "silver"
     }
     for event_cat, durations in durations_all.items():
-        durations = {k: v for k, v in durations.items() if k < 2024}
+        durations = {k: v for k, v in durations.items() if k <= 2024}
 
         pre_covid_keys = [y for y in durations.keys() if y < 2020]
         pre_covid_vals = [durations[k] for k in pre_covid_keys]
         post_covid_keys = [y for y in durations.keys() if y >= 2022]
         post_covid_vals = [durations[k] for k in post_covid_keys]
-        during_covid_keys = [2019, 2020, 2021, 2022, 2023]
+        during_covid_keys = [2019, 2020, 2021, 2022, 2023, 2024]
         during_covid_vals = [durations[k] for k in during_covid_keys]
         kwargs = {
             "linestyle": "-",

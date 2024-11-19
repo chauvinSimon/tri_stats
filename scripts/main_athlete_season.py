@@ -100,6 +100,20 @@ def count_days_until(full_date_str):
 
     return day_of_year
 
+def update_athletes(years_to_update: list):
+    for _suffix in ["m", "w"]:
+        years_id_rankings = json_load(data_dir / f"years_id_rankings_{_suffix}.json")
+        for year in years_to_update:
+            for i_athlete, athlete_info in enumerate(years_id_rankings[str(year)]):
+                print(f"updating #{i_athlete} {athlete_info} ...")
+                athlete_id = athlete_info[0]
+                url_suffix = f"athletes/{athlete_id}/results?per_page=1000"
+                athlete_results_res = get_request(url_suffix)
+
+                athlete_results_file = cache_dir / f"athletes_results/{athlete_id}.json"
+                athlete_results_file.parent.mkdir(parents=True, exist_ok=True)
+                json_dump(athlete_results_res, athlete_results_file)
+
 
 def get_athlete_seasons(athlete_ids):
     all_dfs = []
@@ -150,6 +164,7 @@ def get_athlete_seasons(athlete_ids):
             event_count=("event_id", "count"),
             wcs_event_count=("event_category", lambda x: (x == "wcs").sum()),
             wc_event_count=("event_category", lambda x: (x == "world-cup").sum()),
+            games_event_count=("event_category", lambda x: (x == "games").sum()),
             first_date=("event_date", "min"),
             last_date=("event_date", "max"),
             season_start=("event_date_day", lambda x: x.min()),
@@ -624,5 +639,6 @@ def main():
 
 
 if __name__ == '__main__':
+    # update_athletes(years_to_update=[2024])
     main()
     # plot_end_of_career()
