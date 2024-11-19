@@ -41,7 +41,8 @@ years = [
     # 2020,  # no data. no series data
     2021,  # no ITU data
     2022,
-    2023  # no data
+    2023,  # no data
+    2024
 ]
 
 years_id_rankings_file = data_dir / f"years_id_rankings_{suffix}.json"

@@ -1,9 +1,7 @@
-from pathlib import Path
-
 import requests
 import re
 
-from utils import json_dump, json_load
+from utils import json_dump, json_load, data_dir
 
 
 def correct_name(first_name, last_name):
@@ -113,7 +111,7 @@ def get_ranking_via_web():
     """dirty but does the job"""
 
     for suffix in ["m", "w"]:
-        saving_path = Path(f"data/web_years_id_rankings_{suffix}.json")
+        saving_path = data_dir / f"web_years_id_rankings_{suffix}.json"
 
         _suffix = "male" if suffix == "m" else "female"
 
@@ -122,7 +120,7 @@ def get_ranking_via_web():
         else:
             rankings = {}
 
-        for year in range(2009, 2024):
+        for year in range(2009, 2025):
             if year == 2020:
                 continue
 
@@ -138,6 +136,8 @@ def get_ranking_via_web():
 
             if year < 2020:
                 url = f"https://triathlon.org/rankings/itu_world_triathlon_series_{year}/{_suffix}"
+            if year == 2024:  # current ranking
+                url = f"https://triathlon.org/rankings/itu_world_triathlon_series/{_suffix}"
 
             # Send a GET request to the webpage
             response = requests.get(url)
@@ -248,12 +248,12 @@ def get_ranking_via_web():
 
 
 def clean_rankings():
-    athlete_ids_mapping = json_load(Path("data") / "athlete_id_name_mapping.json")
+    athlete_ids_mapping = json_load(data_dir / "athlete_id_name_mapping.json")
 
     years_rankings = {}
     ranking_len = 50
     for suffix in ["m", "w"]:
-        web_years_rankings = json_load(Path(f"data/web_years_id_rankings_{suffix}.json"))
+        web_years_rankings = json_load(data_dir / f"web_years_id_rankings_{suffix}.json")
         for year, year_ranking in web_years_rankings.items():
             year_ranking = [x for x in year_ranking if (x[0] not in ["12721", "39175", '15849'])]
             if year == "2022":
@@ -276,7 +276,7 @@ def clean_rankings():
                         print(f"Could not find id for {to_find_first} {to_find_last}")
                 years_rankings[year] = year_id_ranking
 
-        json_dump(years_rankings, Path(f"data/years_id_rankings_{suffix}.json"))
+        json_dump(years_rankings, data_dir / f"years_id_rankings_{suffix}.json")
 
 
 if __name__ == '__main__':
