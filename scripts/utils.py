@@ -38,7 +38,7 @@ def json_dump(
         p: Path
 ) -> None:
     with p.open("w") as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=4)
 
 
 def json_load(

@@ -18,7 +18,13 @@ events:
   program_names:
     - Elite Men
     - Elite Women
+    # todo: currently not supported:
+    # - U23 Men
+    # - U23 Women
+    # - Junior Men
+    # - Junior Women
 
+  # get_events_categories()
   category_ids:
     # 483: Age-Group Event
     # 612: Arena Games Finals
@@ -43,6 +49,16 @@ events:
     # 449: World Para Cup
     # 448: World Para Series
     # 350: World Paratriathlon Event
+
+  # using own names, and merging categories together
+  event_category_mapping:
+    343: games
+    345: games
+    346: games
+    624: wcs
+    351: wcs
+    349: world-cup
+    # 348: world-champs
 
   # get_events_specifications()
   specification_ids:

@@ -44,13 +44,3 @@ def get_athlete_info(athlete_id: int):
     with open(saving_path, "w") as f:
         json.dump(res, f)
     return res
-
-
-category_mapping = {
-    343: "games",  # "Major Games",
-    345: "games",  # "Recognised Event",
-    346: "games",  # "Recognised Games",
-    624: "wcs",  # "World Championship Finals",
-    351: "wcs",  # "World Championship Series",
-    349: "world-cup",  # "World Cup",
-}
