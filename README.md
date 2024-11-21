@@ -676,6 +676,7 @@ Over **300m** a **wetsuit should save ~12s** (derivation below).
   - Maybe 4s or 5s when everything goes well? But up to 10s when one leg does not want to get out.
 - **Conclusion**: the **overall time gain of wearing the wetsuit for 300m seems to be positive: around 6s**.
   - Apart from time saving, wetsuits offer additional benefits: temperature **comfort** and probably saving some **energy in the legs**. Also, athletes may a couple of seconds to breath while removing it at T1.
+  - This information is apparently unknown to some athletes. At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/), [5/16 women](https://www.youtube.com/watch?v=asUQlc3Ic98&t=666) and [5/16 men](https://www.youtube.com/watch?v=asUQlc3Ic98&t=5163) decided **not to wear a wetsuit for the first 300m**. An interesting experiment!
 - Conversely, assuming an **overall 6s spent** for removal, wearing a **wetsuit is beneficial above ~150m** for top athletes. Under ~150m, time is lost overall.
 
 **Derivation:** The time for a 300m swim is probably **around 3:30 - 4:00**.

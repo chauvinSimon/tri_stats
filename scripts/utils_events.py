@@ -699,6 +699,9 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             if len(set([d[shared_key] for d in event_dict.values()])) != 1:
                 raise ValueError(f"{event_dict.values() = }")
             events_result[shared_key] = event_dict[prog_ids[0]][shared_key]
+            if shared_key == "event_venue":
+                # remove space as last char, if the case
+                events_result[shared_key] = events_result[shared_key].rstrip()
 
         program_name_cat = "Elite"  # todo: implement U23 and Junior
         for prog_id, prog_data in event_dict.items():
@@ -1039,6 +1042,19 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
     df["prog_distance_category"] = df["prog_distance_category_m"]
     df = df.drop(["prog_distance_category_m", "prog_distance_category_w"], axis=1)
 
+    # drop rows where wetsuit_m or wetsuit_w is none
+    df_wetsuit_unknown = df[(df['wetsuit_m'].isna()) | (df['wetsuit_w'].isna())]
+    if len(df_wetsuit_unknown) > 0:
+        print(f"dropping {len(df_wetsuit_unknown)} rows where wetsuit is unknown")
+        for row in df_wetsuit_unknown.itertuples(index=False):  # index=False excludes the index column from the tuple
+            update_log_file(
+                category="ignored",
+                event_id=row.event_id,
+                event_title=row.event_title,
+                txt=f"wetsuit is unknown: {row.wetsuit_m = }, {row.wetsuit_m = }"
+            )
+    df = df[~((df['wetsuit_m'].isna()) | (df['wetsuit_w'].isna()))]
+
     min_dur = min_duration_s
     df_not_long_enough_m = df[(df['swim_mean_m'] < min_dur) | (df['bike_mean_m'] < min_dur) | (df['run_mean_m'] < min_dur)]
     df_not_long_enough_w = df[(df['swim_mean_w'] < min_dur) | (df['bike_mean_w'] < min_dur) | (df['run_mean_w'] < min_dur)]
@@ -1158,8 +1174,3 @@ def get_events_df(events_config: dict = None):
 if __name__ == '__main__':
     _df = get_events_df()
     print(f"{len(_df)} events in final df")
-
-    # df_wetsuits_differ = _df[
-    #     _df["wetsuit_m"] != _df["wetsuit_w"]
-    # ]
-    # print(df_wetsuits_differ)
