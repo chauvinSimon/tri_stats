@@ -31,7 +31,13 @@ def clean_up_log_file():
     json_dump({}, log_file_path)
 
 
-def update_log_file(category: str, event_id: int, txt: str = "", event_title: str = ""):
+def update_log_file(
+        category: str,
+        event_id: int,
+        txt: str = "",
+        event_title: str = "",
+        event_listing: str = ""
+):
     if not log_file_path.exists():
         clean_up_log_file()
 
@@ -46,7 +52,7 @@ def update_log_file(category: str, event_id: int, txt: str = "", event_title: st
     if event_id in log_data[category]:
         log_data[category][event_id]["txt"] = log_data[category][event_id]["txt"] + "\n" + txt
     else:
-        log_data[category][event_id] = {"txt": txt, "event_title": event_title}
+        log_data[category][event_id] = {"txt": txt, "event_title": event_title, "event_listing": event_listing}
     json_dump(log_data, log_file_path)
 
 def print_log_file():
@@ -70,10 +76,11 @@ def print_log_file():
     for event_id, event_data in sorted(ignored_data.items(), key=lambda item: item[1]['txt']):
         print(f"event [{event_id}] ignored: {event_data['event_title']}")
         print("\t" + event_data['txt'])
+        print("\t" + event_data['event_listing'])
 
     # save to csv
     rows_dicts = [
-        {"event_id": k, "txt": v["txt"], "event_title": v["event_title"]} for k, v in ignored_data.items()
+        {"event_id": k, "txt": v["txt"], "event_title": v["event_title"], "event_listing": v["event_listing"]} for k, v in ignored_data.items()
     ]
     df = pd.DataFrame(rows_dicts)
     if not df.empty:
@@ -253,6 +260,7 @@ def save_race_results(events_config: dict):
             for r in res:
                 event_id = r["event_id"]
                 event_title = r["event_title"]
+                event_listing = r["event_listing"]
 
                 res_specification_ids = [s["cat_id"] for s in r["event_specifications"]]
                 assert spec_id in res_specification_ids, f"{event_title} ({event_id}): {spec_id = } not in {res_specification_ids = }"
@@ -294,6 +302,7 @@ def save_race_results(events_config: dict):
                     print(f"\nERROR: no listing found for {event_title} ({event_id})\n")
                     ignored_events[event_id] = {
                         "event_title": event_title,
+                        "event_listing": event_listing,
                         "txt": f"no listing found"
                     }
                     json_dump(ignored_events, p=ignored_event_file)
@@ -370,6 +379,7 @@ def save_race_results(events_config: dict):
                         print(f"\t\t\tMissing keys: {', '.join(missing_keys)}")
                         ignored_events[event_id] = {
                             "event_title": event_title,
+                            "event_listing": event_listing,
                             "txt": f"Missing keys: {', '.join(missing_keys)}"
                         }
 
@@ -388,6 +398,7 @@ def save_race_results(events_config: dict):
     rows_dicts = [{
         "event_id": k,
         "txt": v["txt"],
+        "event_listing": v["event_listing"],
         "event_title": v["event_title"]
     }
         for k, v in ignored_events.items()
@@ -639,17 +650,34 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             continue
         event_dict = json_load(event_file)
         _event_id = 0
-        _event_title = ""
         try:
             _event_id = set([prog_data["event_id"] for prog_data in event_dict.values()])
-            _event_title = set([prog_data["event_title"] for prog_data in event_dict.values()])
             assert len(_event_id) == 1
-            assert len(_event_title) == 1
             _event_id = _event_id.pop()
-            _event_title = _event_title.pop()
-            update_log_file(category="loaded", event_id=_event_id, event_title=_event_title)
         except Exception as e:
-            print(f"cannot log {event_file.stem} - {e}")
+            print(f"cannot find single event_id: {event_file.stem} - {e}")
+
+        _event_title = ""
+        try:
+            _event_title = set([prog_data["event_title"] for prog_data in event_dict.values()])
+            assert len(_event_title) == 1
+            _event_title = _event_title.pop()
+        except Exception as e:
+            print(f"cannot find single event_title: {event_file.stem} - {e}")
+
+        _event_listing = ""
+        try:
+            _event_listing = set([prog_data["event_listing"] for prog_data in event_dict.values()])
+            assert len(_event_listing) == 1
+            _event_listing = _event_listing.pop()
+        except Exception as e:
+            print(f"cannot find single event_listing: {event_file.stem} - {e}")
+        update_log_file(
+            category="loaded",
+            event_id=_event_id,
+            event_title=_event_title,
+            event_listing=_event_listing
+        )
 
         if len(event_dict) < 2:
             print(f"{event_file.stem}\n\tnot enough data: {list(event_dict.keys())}")
@@ -657,6 +685,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                 category="ignored",
                 event_id=_event_id,
                 event_title=_event_title,
+                event_listing=_event_listing,
                 txt=f"not enough data: {[prog_data['prog_name'] for prog_data in event_dict.values()]}"
             )
             continue
@@ -672,6 +701,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     category="ignored",
                     event_id=prog_data["event_id"],
                     event_title=prog_data["event_title"],
+                    event_listing=prog_data["event_listing"],
                     txt=f"date ({prog_data['event_date']}) not in range [{start_date}, {end_date}] for {prog_data['prog_name']}"
                 )
         if not valid:
@@ -693,6 +723,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                         category="ignored",
                         event_id=prog_data["event_id"],
                         event_title=prog_data["event_title"],
+                        event_listing=prog_data["event_listing"],
                         txt=f"prog_notes for {prog_data['prog_name']}: {prog_notes}"
                     )
         if not valid:
@@ -725,6 +756,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     category="ignored",
                     event_id=prog_data["event_id"],
                     event_title=prog_data["event_title"],
+                    event_listing=prog_data["event_listing"],
                     txt=f"prog_distance_category for {prog_data['prog_name']}: '{prog_data['prog_distance_category']}' not in {distance_categories = }"
                 )
                 events_result["invalid"] = True
@@ -743,6 +775,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     category="ignored",
                     event_id=prog_data["event_id"],
                     event_title=prog_data["event_title"],
+                    event_listing=prog_data["event_listing"],
                     txt=f"event_category_ids for {prog_data['prog_name']}: {events_result[f'event_category_ids{suffix}']} not in {category_ids.keys()}"
                 )
                 events_result["invalid"] = True
@@ -765,6 +798,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                                         category="ignored",
                                         event_id=prog_data["event_id"],
                                         event_title=prog_data["event_title"],
+                                        event_listing=prog_data["event_listing"],
                                         txt=f"distance #{i_distance} for {prog_data['prog_name']}: `{distance}` not in {d_min = }, {d_max = }"
                                     )
                                     break
@@ -807,6 +841,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     category="ignored",
                     event_id=prog_data["event_id"],
                     event_title=prog_data["event_title"],
+                    event_listing=prog_data["event_listing"],
                     txt=f"only {n_results = } for {prog_data['prog_name']}"
                 )
                 break
@@ -830,6 +865,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                                 category="ignored",
                                 event_id=prog_data["event_id"],
                                 event_title=prog_data["event_title"],
+                                event_listing=prog_data["event_listing"],
                                 txt=f"only {len(column_results) = } for {prog_data['prog_name']} for {column}"
                             )
                             break
@@ -1051,6 +1087,7 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
                 category="ignored",
                 event_id=row.event_id,
                 event_title=row.event_title,
+                event_listing=row.event_listing,
                 txt=f"{row.prog_distance_category_m = } != {row.prog_distance_category_w = }"
             )
     df = df[df['prog_distance_category_m'] == df['prog_distance_category_w']]
@@ -1066,6 +1103,7 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
                 category="ignored",
                 event_id=row.event_id,
                 event_title=row.event_title,
+                event_listing=row.event_listing,
                 txt=f"wetsuit is unknown: {row.wetsuit_m = }, {row.wetsuit_m = }"
             )
     df = df[~((df['wetsuit_m'].isna()) | (df['wetsuit_w'].isna()))]
@@ -1078,6 +1116,7 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
             category="ignored",
             event_id=row.event_id,
             event_title=row.event_title,
+            event_listing=row.event_listing,
             txt=f"{row.swim_mean_m = } < {min_dur} or {row.bike_mean_m = } < {min_dur} or {row.run_mean_m = } < {min_dur}"
         )
     for row in df_not_long_enough_w.itertuples(index=False):  # index=False excludes the index column from the tuple
@@ -1085,6 +1124,7 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
             category="ignored",
             event_id=row.event_id,
             event_title=row.event_title,
+            event_listing=row.event_listing,
             txt=f"{row.swim_mean_w = } < {min_dur} or {row.bike_mean_w = } < {min_dur} or {row.run_mean_w = } < {min_dur}"
         )
     df = df[(df['swim_mean_m'] >= min_dur) & (df['bike_mean_m'] >= min_dur) & (df['run_mean_m'] >= min_dur)]
@@ -1099,7 +1139,8 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
             category="ignored",
             event_id=row.event_id,
             event_title=row.event_title,
-            txt=f"{row.swim_diff = :.2f} < 0 or {row.bike_diff = :.2f} < 0 or {row.run_diff = :.2f} < 0\n\t{row.event_listing}"
+            event_listing=row.event_listing,
+            txt=f"{row.swim_diff = :.2f} < 0 or {row.bike_diff = :.2f} < 0 or {row.run_diff = :.2f} < 0"
         )
     # todo: why some of these have negative diffs? something is wrong!
     df = df[(df['swim_diff'] >= 0) & (df['bike_diff'] >= 0) & (df['run_diff'] >= 0)]
@@ -1111,6 +1152,7 @@ def clean_results(df, min_duration_s: float, sports, distance_categories):
             category="ignored",
             event_id=row.event_id,
             event_title=row.event_title,
+            event_listing=row.event_listing,
             txt=f"{row.prog_distance_category = } not in {distance_categories}"
         )
     df = df[df['prog_distance_category'].isin(distance_categories)]
