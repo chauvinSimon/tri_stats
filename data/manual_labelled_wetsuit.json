@@ -1498,5 +1498,65 @@
         "wetsuit": true,
         "event_title": "2024 World Triathlon Championship Finals Torremolinos-Andalucia",
         "event_listing": "https://www.triathlon.org/events/event/2024_world_triathlon_championship_finals_torremolinos"
+    },
+    "45129_w": {
+        "wetsuit": false,
+        "event_title": "2011 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2011_ishigaki_itu_triathlon_world_cup"
+    },
+    "45129_m": {
+        "wetsuit": false,
+        "event_title": "2011 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2011_ishigaki_itu_triathlon_world_cup"
+    },
+    "183774_m": {
+        "wetsuit": false,
+        "event_title": "2024 World Triathlon Cup Rome",
+        "event_listing": "https://www.triathlon.org/events/event/2024_world_triathlon_cup_rome"
+    },
+    "183774_w": {
+        "wetsuit": false,
+        "event_title": "2024 World Triathlon Cup Rome",
+        "event_listing": "https://www.triathlon.org/events/event/2024_world_triathlon_cup_rome"
+    },
+    "5183_w": {
+        "wetsuit": false,
+        "event_title": "2009 Mooloolaba ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2009_mooloolaba_itu_triathlon_world_cup"
+    },
+    "5183_m": {
+        "wetsuit": false,
+        "event_title": "2009 Mooloolaba ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2009_mooloolaba_itu_triathlon_world_cup"
+    },
+    "5184_w": {
+        "wetsuit": false,
+        "event_title": "2009 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2009_ishigaki_itu_triathlon_world_cup"
+    },
+    "5184_m": {
+        "wetsuit": false,
+        "event_title": "2009 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2009_ishigaki_itu_triathlon_world_cup"
+    },
+    "34496_w": {
+        "wetsuit": false,
+        "event_title": "2010 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2010_ishigaki_itu_triathlon_world_cup"
+    },
+    "34496_m": {
+        "wetsuit": false,
+        "event_title": "2010 Ishigaki ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2010_ishigaki_itu_triathlon_world_cup"
+    },
+    "54307_w": {
+        "wetsuit": false,
+        "event_title": "2012 Guatape ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2012_guatape_itu_triathlon_world_cup"
+    },
+    "54307_m": {
+        "wetsuit": false,
+        "event_title": "2012 Guatape ITU Triathlon World Cup",
+        "event_listing": "https://www.triathlon.org/events/event/2012_guatape_itu_triathlon_world_cup"
     }
 }
