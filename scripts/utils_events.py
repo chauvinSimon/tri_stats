@@ -36,8 +36,13 @@ def update_log_file(category: str, event_id: int, txt: str = "", event_title: st
         clean_up_log_file()
 
     log_data = json_load(log_file_path)
-    if category not in log_data:
-        log_data[category] = {}
+
+    all_cats = ["loaded", "ignored", "returned"]
+    assert category in all_cats, f"{category = } not in {all_cats = }"
+    for cat in all_cats:
+        if cat not in log_data:
+            log_data[cat] = {}
+
     if event_id in log_data[category]:
         log_data[category][event_id]["txt"] = log_data[category][event_id]["txt"] + "\n" + txt
     else:
@@ -71,7 +76,8 @@ def print_log_file():
         {"event_id": k, "txt": v["txt"], "event_title": v["event_title"]} for k, v in ignored_data.items()
     ]
     df = pd.DataFrame(rows_dicts)
-    df.sort_values("txt", inplace=True)
+    if not df.empty:
+        df.sort_values("txt", inplace=True)
     df.to_csv(ignored_dir / "ignored_events_after_processing.csv")
 
 
@@ -387,7 +393,8 @@ def save_race_results(events_config: dict):
         for k, v in ignored_events.items()
     ]
     df = pd.DataFrame(rows_dicts)
-    df.sort_values("txt", inplace=True)
+    if not df.empty:
+        df.sort_values("txt", inplace=True)
     df.to_csv(ignored_dir / "ignored_events_before_processing.csv")
 
 
