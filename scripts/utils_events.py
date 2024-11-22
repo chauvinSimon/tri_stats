@@ -720,6 +720,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     event_title=prog_data["event_title"],
                     txt=f"prog_distance_category for {prog_data['prog_name']}: '{prog_data['prog_distance_category']}' not in {distance_categories = }"
                 )
+                events_result["invalid"] = True
                 continue
 
             print(f"{prog_id} - {prog_data['prog_name']} - {prog_data['prog_distance_category']} - "
@@ -737,6 +738,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     event_title=prog_data["event_title"],
                     txt=f"event_category_ids for {prog_data['prog_name']}: {events_result[f'event_category_ids{suffix}']} not in {category_ids.keys()}"
                 )
+                events_result["invalid"] = True
                 continue
 
             expected_distances = events_config["expected_distances"]
@@ -865,7 +867,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             events_result[f"n_finishers{suffix}"] = len(df_results)
 
             time_max_s = min(df_results["start_to_t2_s"]) + pack_duration_s
-            events_result[f"pack_size{suffix}"] = (df_results["start_to_t2_s"] <= time_max_s).sum()
+            events_result[f"pack_size{suffix}"] = int((df_results["start_to_t2_s"] <= time_max_s).sum())
             events_result[f"is_winner_in_front_pack{suffix}"] = df_results["start_to_t2_s"].iloc[0] <= time_max_s
             id_best_runner = df_results.run_s.idxmin()
             events_result[f"is_best_runner_in_front_pack{suffix}"] = df_results["start_to_t2_s"].iloc[
@@ -906,7 +908,7 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
 
                 first_s = str_to_seconds(df_tmp["total_time"].iloc[0])
                 second_s = str_to_seconds(df_tmp["total_time"].iloc[1])
-                events_result[f"second_delay{suffix}"] = second_s - first_s
+                events_result[f"second_delay{suffix}"] = int(second_s - first_s)
             else:
                 print("\tno total time")
                 events_result[f"second_delay{suffix}"] = df_results["total_s"].iloc[1] - df_results["total_s"].iloc[0]
