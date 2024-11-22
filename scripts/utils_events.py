@@ -985,6 +985,12 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
 
         events_results.append(events_result)
 
+    # assert that the dicts of events_results have all same length, and same keys
+    if len(events_results) > 1:
+        keys = events_results[0].keys()
+        for events_result in events_results[1:]:
+            assert events_result.keys() == keys, f"{events_result.keys()} != {keys}"
+
     df = pd.DataFrame(events_results)
 
     df = df.dropna(subset=['swim_mean_m', 'bike_mean_m', 'run_mean_m'])
