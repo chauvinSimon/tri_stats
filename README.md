@@ -1545,6 +1545,7 @@ Athletes finishing 5th-9th are, on average, **26.3 to 27.7** years old.
 - Athletes are **slightly older** in the **olympic format** compared to the sprint format: about **1 year difference**.
   - _I would have expected a larger difference._
 - There are some small variations, but **no significant trends over the years**.
+- Do Olympics punctuate athletes' careers? The age of women on the olympic format reaches local peaks at the years of the Olympic Games in Rio ( :brazil : ), Tokyo ( :jp : ) and Paris ( :fr : ).
 
 ---
 
