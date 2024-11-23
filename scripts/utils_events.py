@@ -20,6 +20,8 @@ from utils_itu import get_request, get_athlete_info
 
 tmp_results_file_path = ignored_dir / "tmp_results.csv"
 log_file_path = ignored_dir / "log.json"
+conditions_logs_path = ignored_dir / "conditions.json"
+conditions_logs_path.parent.mkdir(parents=True, exist_ok=True)
 
 # todo: is it the correct way to set the math fonts?
 plt.rcParams["font.family"] = "monospace"  # todo: set in global config
@@ -29,6 +31,10 @@ plt.rcParams['mathtext.fontset'] = 'cm'  # "stix
 
 def clean_up_log_file():
     json_dump({}, log_file_path)
+
+
+def clean_up_conditions_log_file():
+    json_dump([], conditions_logs_path)
 
 
 def update_log_file(
@@ -154,6 +160,12 @@ def get_program_listings(event_id: int, program_names: list):
         if r["prog_name"] in program_names:
             res.append({"prog_id": r["prog_id"], "prog_name": r["prog_name"]})
     return res
+
+
+def get_program_info(event_id: int, prog_id: int):
+    suffix = f"events/{event_id}/programs/{prog_id}"
+    res_req = get_request(url_suffix=suffix)
+    return res_req
 
 
 def save_images(
@@ -618,6 +630,202 @@ def extract_air_and_water_temperatures(long_string):
     return res
 
 
+def extract_air_water_and_wetsuit(
+        prog_id: int,
+        prog_data,
+        suffix: str,
+        label_manually: bool
+) -> tuple[float|None, float|None, bool|None]:
+    if prog_data["prog_name"] == "Elite Men":
+        assert suffix == "_m"
+    elif prog_data["prog_name"] == "Elite Women":
+        assert suffix == "_w"
+    else:
+        raise ValueError(f"{prog_data['prog_name']} not supported")
+
+    if conditions_logs_path.exists():
+        conditions_logs = json_load(conditions_logs_path)
+    else:
+        conditions_logs = []
+
+    air_temperatures = []
+    water_temperatures = []
+    wetsuits = []
+
+    # 1st method: should be the most reliable
+    # url --request GET --url 'https://api.triathlon.org/v1/events/183774/programs/635344?per_page=10&order=asc' --header 'accept: application/json' --header 'apikey: 2649776ef9ece4c391003b521cbfce7a'
+    prog_file_path = cache_dir / "prog_info" / f"{prog_data['event_id']}_{prog_id}.json"
+    if prog_file_path.exists():
+        prog_info = json_load(prog_file_path)
+    else:
+        prog_info = get_program_info(event_id=prog_data["event_id"], prog_id=prog_id)
+        prog_file_path.parent.mkdir(parents=True, exist_ok=True)
+        json_dump(prog_info, prog_file_path)
+
+    try:
+        air_temperatures.append(prog_info["meta"]["temperature_air"])
+    except Exception as e:
+        print(e)
+    try:
+        water_temperatures.append(prog_info["meta"]["temperature_water"])
+    except Exception as e:
+        print(e)
+    try:
+        wetsuits.append(prog_info["meta"]["wetsuit"])
+    except Exception as e:
+        print(e)
+
+    # 2nd method
+    if prog_data["prog_notes"] is not None:
+        if any(substring in prog_data["prog_notes"].lower() for substring in
+               ["wetsuits allowed", "wetsuit allowed", ". wetsuit swim."]):
+            wetsuits.append(True)
+        elif "wetsuits not allowed" in prog_data["prog_notes"].lower():
+            wetsuits.append(False)
+
+    # 3rd method
+    air_and_water_temps = extract_air_and_water_temperatures(prog_data["prog_notes"])
+    air_temperatures.append(air_and_water_temps[0])
+    water_temperatures.append(air_and_water_temps[1])
+
+    # 4th method
+    manual_labelled_wetsuit_file = data_dir / "manual_labelled_wetsuit.json"
+    if manual_labelled_wetsuit_file.exists():
+        manual_labelled_wetsuit = json_load(manual_labelled_wetsuit_file)
+    else:
+        manual_labelled_wetsuit = {}
+
+    wetsuit_key = f'{prog_data["event_id"]}{suffix}'
+    if wetsuit_key in manual_labelled_wetsuit:
+        wetsuits.append(manual_labelled_wetsuit[wetsuit_key]["wetsuit"])
+
+    # resolve air temperature
+    air_temperatures = [t for t in air_temperatures if t is not None]
+    air_temperatures = [float(t) if isinstance(t, int) else t for t in air_temperatures]
+    # isnumeric only works for int numbers
+    air_temperatures = [float(t) if (isinstance(t, str) and t.replace(".", "", 1).isdigit()) else t for t in air_temperatures]
+    if not air_temperatures:
+        air_temperature = None
+    else:
+        if len(set(air_temperatures)) != 1:
+            print(f"different {air_temperatures = }")
+            conditions_logs.append({
+                "event_id": prog_data["event_id"],
+                "event_title": prog_data["event_title"],
+                "event_listing": prog_data["event_listing"],
+                "prog_id": prog_id,
+                "prog_name": prog_data["prog_name"],
+                "issue": f"{air_temperatures = }"
+            })
+        air_temperature = air_temperatures[0]
+
+    # resolve water temperature
+    water_temperatures = [t for t in water_temperatures if t is not None]
+    water_temperatures = [float(t) if isinstance(t, int) else t for t in water_temperatures]
+    # isnumeric only works for int numbers
+    water_temperatures = [float(t) if (isinstance(t, str) and t.replace(".", "", 1).isdigit()) else t for t in water_temperatures]
+    if not water_temperatures:
+        water_temperature = None
+    else:
+        if len(set(water_temperatures)) != 1:
+            print(f"different {water_temperatures = }")
+            conditions_logs.append({
+                "event_id": prog_data["event_id"],
+                "event_title": prog_data["event_title"],
+                "event_listing": prog_data["event_listing"],
+                "prog_id": prog_id,
+                "prog_name": prog_data["prog_name"],
+                "issue": f"{water_temperatures = }"
+            })
+        water_temperature = water_temperatures[0]
+
+    # 5th method
+    if water_temperature is not None:
+        try:
+            if float(water_temperature) >= 20:
+                wetsuits.append(False)
+            else:
+                wetsuits.append(True)
+        except Exception as e:
+            print(f"cannot compare {water_temperature = } to 20°: {e}")
+
+    # resolve wetsuit
+    wetsuits = [w for w in wetsuits if w is not None]
+    wetsuits = [True if (isinstance(w, str) and w.lower() == "allowed") else w for w in wetsuits]
+    wetsuits = [True if (isinstance(w, str) and w.lower() == "mandatory") else w for w in wetsuits]
+    wetsuits = [False if (isinstance(w, str) and w.lower() == "forbidden") else w for w in wetsuits]
+    if not wetsuits:
+        wetsuit = None
+    else:
+        if len(set(wetsuits)) != 1:
+            print(f"different {wetsuits = }")
+            conditions_logs.append({
+                "event_id": prog_data["event_id"],
+                "event_title": prog_data["event_title"],
+                "event_listing": prog_data["event_listing"],
+                "prog_id": prog_id,
+                "prog_name": prog_data["prog_name"],
+                "issue": f"{wetsuits = } (retrieved {water_temperatures = }) (retrieved {air_temperatures = })"
+            })
+        wetsuit = wetsuits[0]
+
+    # 6th method
+    if wetsuit is not None:
+        print(f"unknown wetsuit: {wetsuit_key} ({prog_data['event_title']})")
+        if prog_data["prog_notes"] is not None:
+            print(prog_data["prog_notes"])
+
+        if label_manually:
+            save_images(
+                event_id=prog_data["event_id"],
+                event_title=prog_data["event_title"],
+                per_page=1000
+            )
+
+            images_dir = cache_dir / "images" / str(prog_data["event_id"])
+
+            # glob png and jpg and jpeg
+            image_paths = list(images_dir.glob("*.[jpJP][npNP][egEG]*"))
+            if len(image_paths) == 0:
+                print(f"no images for manual wetsuit label: {wetsuit_key}")
+            else:
+                for image_file in image_paths:
+                    img = cv2.imread(str(image_file))
+
+                    # img = cv2.resize(img, (2000, 2000))
+
+                    # resize if shape too big
+                    shape = img.shape
+                    if shape[0] > 2000 or shape[1] > 2000:
+                        img = cv2.resize(img, (2000, 2000))
+
+                    cv2.imshow(f'{prog_data["event_id"]} - {prog_data["event_title"]}', img)
+                    k = cv2.waitKey(0)
+                    if k in [ord("q"), 27]:
+                        cv2.destroyAllWindows()
+                        break
+
+                # input, ask for wetsuit
+                response = input(f"wetsuit for {prog_data['prog_name']}? (y/n/?)")
+                if response == "y":
+                    wetsuit = True
+                elif response == "n":
+                    wetsuit = False
+                else:
+                    wetsuit = None
+
+                manual_labelled_wetsuit[wetsuit_key] = {
+                    "wetsuit": wetsuit,
+                    "event_title": prog_data["event_title"],
+                    "event_listing": prog_data["event_listing"]
+                }
+                json_dump(manual_labelled_wetsuit, manual_labelled_wetsuit_file)
+
+    json_dump(data=conditions_logs, p=conditions_logs_path)
+
+    return air_temperature, water_temperature, wetsuit
+
+
 def get_events_results(events_config: dict) -> pd.DataFrame:
     ###
     start_date = events_config["query"]["start_date"]
@@ -805,30 +1013,6 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                     if "invalid" in events_result:
                         break
 
-            events_result[f"wetsuit{suffix}"] = None
-            if prog_data["prog_notes"] is not None:
-                if any(substring in prog_data["prog_notes"].lower() for substring in
-                       ["wetsuits allowed", "wetsuit allowed", ". wetsuit swim."]):
-                    events_result[f"wetsuit{suffix}"] = True
-                elif "wetsuits not allowed" in prog_data["prog_notes"].lower():
-                    events_result[f"wetsuit{suffix}"] = False
-
-            if events_result[f"wetsuit{suffix}"] is None:
-                # print(f"\tcannot determine wetsuit - {prog_data['event_title'] = }")
-                if prog_data["prog_notes"] is not None:
-                    if prog_data["prog_notes"]:
-                        # print(prog_data["prog_notes"])
-                        # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="wetsuit")
-                        # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="temperature")
-                        # find_substring_with_context(long_string=prog_data["prog_notes"], target_word="water")
-                        _, water_temperature = extract_air_and_water_temperatures(prog_data["prog_notes"])
-                        if water_temperature is not None:
-                            # print(f"\t\twater_temperature found: {water_temperature}")
-                            if water_temperature >= 20:
-                                events_result[f"wetsuit{suffix}"] = False
-                            else:
-                                events_result[f"wetsuit{suffix}"] = True
-
             level = get_level(prog_data=prog_data)
             events_result[f"level{suffix}"] = level
 
@@ -925,11 +1109,6 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
             id_winner = df_results.total_s.idxmin()
             events_result[f"best_runner_wins{suffix}"] = id_best_runner == id_winner
 
-            # extract temperatures
-            air_temperature, water_temperature = extract_air_and_water_temperatures(prog_data["prog_notes"])
-            events_result[f"air_temperature{suffix}"] = air_temperature
-            events_result[f"water_temperature{suffix}"] = water_temperature
-
             if prog_data["results"][0]["total_time"] is not None:
                 def str_to_seconds(x):
                     h, m, s = x.split(":")
@@ -963,65 +1142,15 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
 
             assert "invalid" not in events_result
             if "invalid" not in events_result:
-                if events_result[f"wetsuit{suffix}"] is None:
-                    manual_labelled_wetsuit_file = data_dir / "manual_labelled_wetsuit.json"
-                    if manual_labelled_wetsuit_file.exists():
-                        manual_labelled_wetsuit = json_load(manual_labelled_wetsuit_file)
-                    else:
-                        manual_labelled_wetsuit = {}
-
-                    wetsuit_key = f'{prog_data["event_id"]}{suffix}'
-                    if wetsuit_key in manual_labelled_wetsuit:
-                        events_result[f"wetsuit{suffix}"] = manual_labelled_wetsuit[wetsuit_key]["wetsuit"]
-                    else:
-                        print(f"unknown wetsuit: {wetsuit_key} ({prog_data['event_title']})")
-                        if prog_data["prog_notes"] is not None:
-                            print(prog_data["prog_notes"])
-                        if label_manually:
-                            save_images(
-                                event_id=prog_data["event_id"],
-                                event_title=prog_data["event_title"],
-                                per_page=per_page
-                            )
-
-                            images_dir = cache_dir / "images" / str(prog_data["event_id"])
-
-                            # glob png and jpg and jpeg
-                            image_paths = list(images_dir.glob("*.[jpJP][npNP][egEG]*"))
-                            if len(image_paths) == 0:
-                                print(f"no images for manual wetsuit label: {wetsuit_key}")
-                                continue
-                            for image_file in image_paths:
-                                img = cv2.imread(str(image_file))
-
-                                # img = cv2.resize(img, (2000, 2000))
-
-                                # resize if shape too big
-                                shape = img.shape
-                                if shape[0] > 2000 or shape[1] > 2000:
-                                    img = cv2.resize(img, (2000, 2000))
-
-                                cv2.imshow(f'{prog_data["event_id"]} - {prog_data["event_title"]}', img)
-                                k = cv2.waitKey(0)
-                                if k in [ord("q"), 27]:
-                                    cv2.destroyAllWindows()
-                                    break
-
-                            # input, ask for wetsuit
-                            response = input(f"wetsuit for {suffix}? (y/n/?)")
-                            if response == "y":
-                                events_result[f"wetsuit{suffix}"] = True
-                            elif response == "n":
-                                events_result[f"wetsuit{suffix}"] = False
-                            else:
-                                events_result[f"wetsuit{suffix}"] = None
-
-                            manual_labelled_wetsuit[wetsuit_key] = {
-                                "wetsuit": events_result[f"wetsuit{suffix}"],
-                                "event_title": events_result["event_title"],
-                                "event_listing": events_result["event_listing"]
-                            }
-                            json_dump(manual_labelled_wetsuit, manual_labelled_wetsuit_file)
+                air_temperature, water_temperature, wetsuit = extract_air_water_and_wetsuit(
+                    prog_id=prog_id,
+                    prog_data=prog_data,
+                    label_manually=label_manually,
+                    suffix=suffix
+                )
+                events_result[f"air_temperature{suffix}"] = air_temperature
+                events_result[f"water_temperature{suffix}"] = water_temperature
+                events_result[f"wetsuit{suffix}"] = wetsuit
 
         if "invalid" in events_result:
             continue
@@ -1192,6 +1321,7 @@ def drop_outliers(data, i_sport: int, sport_outliers: list):
 
 def get_events_df(events_config: dict = None):
     clean_up_log_file()
+    clean_up_conditions_log_file()
 
     if events_config is None:
         config = load_config()

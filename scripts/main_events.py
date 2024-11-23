@@ -1965,6 +1965,23 @@ def process_temperatures(df, distance_categories):
                     if suffix == "w":
                         # drop event_id 154591 for women because wetsuit at 21.3 deg
                         df2 = df2[df2["event_id"] != 154591]
+                        # drop event_id 66637 for women because NO-WETSUIT at 17.4 deg
+                        df2 = df2[df2["event_id"] != 66637]
+                        # drop event_id 45141 for women because NO-WETSUIT at 19.2 deg
+                        df2 = df2[df2["event_id"] != 45141]
+                        # drop event_id 78729 for women because NO-WETSUIT at 19.2 deg
+                        df2 = df2[df2["event_id"] != 78729]
+                    elif suffix == "m":
+                        # drop event_id 66637 for men because NO-WETSUIT at 18.3 deg
+                        df2 = df2[df2["event_id"] != 66637]
+                        # drop event_id 45139 for men because wetsuit at 20.5 deg
+                        df2 = df2[df2["event_id"] != 45139]
+                        # drop event_id 78729 for men because NO-WETSUIT at 19.2 deg
+                        df2 = df2[df2["event_id"] != 78729]
+                        # drop event_id 45141 for men because NO-WETSUIT at 19.5 deg
+                        df2 = df2[df2["event_id"] != 45141]
+                        # drop event_id 54370 for men because NO-WETSUIT at 19.5 deg
+                        df2 = df2[df2["event_id"] != 54370]
 
                     assert len(df2[(df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] >= 20.0)]) == 0
                     assert len(df2[(~df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] < 20.0)]) == 0

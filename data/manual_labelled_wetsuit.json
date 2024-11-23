@@ -1195,12 +1195,12 @@
         "event_listing": "https://www.triathlon.org/events/event/2023_world_triathlon_cup_chengdu"
     },
     "174958_m": {
-        "wetsuit": false,
+        "wetsuit": true,
         "event_title": "2023 World Triathlon Championship Series Montreal",
         "event_listing": "https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal"
     },
     "174958_w": {
-        "wetsuit": false,
+        "wetsuit": true,
         "event_title": "2023 World Triathlon Championship Series Montreal",
         "event_listing": "https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal"
     },
