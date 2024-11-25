@@ -20,7 +20,7 @@ from utils_itu import get_request, get_athlete_info
 
 tmp_results_file_path = ignored_dir / "tmp_results.csv"
 log_file_path = ignored_dir / "log.json"
-conditions_logs_path = ignored_dir / "conditions.json"
+conditions_logs_path = ignored_dir / "conditions_inconsistencies.json"
 conditions_logs_path.parent.mkdir(parents=True, exist_ok=True)
 
 # todo: is it the correct way to set the math fonts?
@@ -643,6 +643,18 @@ def extract_air_water_and_wetsuit(
     else:
         raise ValueError(f"{prog_data['prog_name']} not supported")
 
+    log_dict = {
+        "event_id": prog_data["event_id"],
+        "event_title": prog_data["event_title"],
+        "event_listing": prog_data["event_listing"],
+        "event_venue": prog_data["event_venue"],
+        "event_country_noc": prog_data["event_country_noc"],
+        "event_date": prog_data["event_date"],
+        "prog_id": prog_id,
+        "prog_name": prog_data["prog_name"],
+        "issues": []
+    }
+
     if conditions_logs_path.exists():
         conditions_logs = json_load(conditions_logs_path)
     else:
@@ -709,34 +721,23 @@ def extract_air_water_and_wetsuit(
     else:
         if len(set(air_temperatures)) != 1:
             print(f"different {air_temperatures = }")
-            conditions_logs.append({
-                "event_id": prog_data["event_id"],
-                "event_title": prog_data["event_title"],
-                "event_listing": prog_data["event_listing"],
-                "prog_id": prog_id,
-                "prog_name": prog_data["prog_name"],
-                "issue": f"{air_temperatures = }"
-            })
+            log_dict["issues"].append(f"{air_temperatures = }")
         air_temperature = air_temperatures[0]
+
 
     # resolve water temperature
     water_temperatures = [t for t in water_temperatures if t is not None]
     water_temperatures = [float(t) if isinstance(t, int) else t for t in water_temperatures]
     # isnumeric only works for int numbers
     water_temperatures = [float(t) if (isinstance(t, str) and t.replace(".", "", 1).isdigit()) else t for t in water_temperatures]
+
+
     if not water_temperatures:
         water_temperature = None
     else:
         if len(set(water_temperatures)) != 1:
             print(f"different {water_temperatures = }")
-            conditions_logs.append({
-                "event_id": prog_data["event_id"],
-                "event_title": prog_data["event_title"],
-                "event_listing": prog_data["event_listing"],
-                "prog_id": prog_id,
-                "prog_name": prog_data["prog_name"],
-                "issue": f"{water_temperatures = }"
-            })
+            log_dict["issues"].append(f"{water_temperatures = }")
         water_temperature = water_temperatures[0]
 
     # 5th method
@@ -759,14 +760,7 @@ def extract_air_water_and_wetsuit(
     else:
         if len(set(wetsuits)) != 1:
             print(f"different {wetsuits = }")
-            conditions_logs.append({
-                "event_id": prog_data["event_id"],
-                "event_title": prog_data["event_title"],
-                "event_listing": prog_data["event_listing"],
-                "prog_id": prog_id,
-                "prog_name": prog_data["prog_name"],
-                "issue": f"{wetsuits = } (retrieved {water_temperatures = }) (retrieved {air_temperatures = })"
-            })
+            log_dict["issues"].append(f"{wetsuits = } (retrieved {water_temperatures = }) (retrieved {air_temperatures = })")
         wetsuit = wetsuits[0]
 
     # 6th method
@@ -821,7 +815,13 @@ def extract_air_water_and_wetsuit(
                 }
                 json_dump(manual_labelled_wetsuit, manual_labelled_wetsuit_file)
 
-    json_dump(data=conditions_logs, p=conditions_logs_path)
+    log_dict["air_temperature"] = air_temperature
+    log_dict["water_temperature"] = water_temperature
+    log_dict["wetsuit"] = wetsuit
+
+    if len(log_dict["issues"]) > 0:
+        conditions_logs.append(log_dict)
+        json_dump(data=conditions_logs, p=conditions_logs_path)
 
     return air_temperature, water_temperature, wetsuit
 

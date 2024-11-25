@@ -9,7 +9,7 @@ import seaborn as sns
 from scripts.utils_events import get_events_df
 
 from scripts.utils_events import drop_outliers, seconds_to_h_min_sec
-from utils import data_dir, json_load, res_dir, country_emojis, add_watermark, load_config
+from utils import data_dir, json_load, res_dir, country_emojis, add_watermark, load_config, ignored_dir
 
 
 def process_results_wetsuit(
@@ -1962,29 +1962,55 @@ def process_temperatures(df, distance_categories):
                 df2.sort_values([f"{measure}_temperature_{suffix}"], inplace=True)
 
                 if sport == "swim":
-                    if suffix == "w":
-                        # drop event_id 154591 for women because wetsuit at 21.3 deg
-                        df2 = df2[df2["event_id"] != 154591]
-                        # drop event_id 66637 for women because NO-WETSUIT at 17.4 deg
-                        df2 = df2[df2["event_id"] != 66637]
-                        # drop event_id 45141 for women because NO-WETSUIT at 19.2 deg
-                        df2 = df2[df2["event_id"] != 45141]
-                        # drop event_id 78729 for women because NO-WETSUIT at 19.2 deg
-                        df2 = df2[df2["event_id"] != 78729]
-                    elif suffix == "m":
-                        # drop event_id 66637 for men because NO-WETSUIT at 18.3 deg
-                        df2 = df2[df2["event_id"] != 66637]
-                        # drop event_id 45139 for men because wetsuit at 20.5 deg
-                        df2 = df2[df2["event_id"] != 45139]
-                        # drop event_id 78729 for men because NO-WETSUIT at 19.2 deg
-                        df2 = df2[df2["event_id"] != 78729]
-                        # drop event_id 45141 for men because NO-WETSUIT at 19.5 deg
-                        df2 = df2[df2["event_id"] != 45141]
-                        # drop event_id 54370 for men because NO-WETSUIT at 19.5 deg
-                        df2 = df2[df2["event_id"] != 54370]
+                    # ignore races with hot-wetsuit or cold-swimsuit
+                    conditions_logs_path = ignored_dir / "conditions_inconsistencies.json"
+                    conditions_logs = []
+                    if conditions_logs_path.exists():
+                        conditions_logs = json_load(conditions_logs_path)
 
-                    assert len(df2[(df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] >= 20.0)]) == 0
-                    assert len(df2[(~df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] < 20.0)]) == 0
+                    hot_wetsuit_filter = (df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] >= 20.0)
+                    df_hot_wetsuit = df2[hot_wetsuit_filter]
+                    cold_swimsuit_filter = (~df2[f"wetsuit_{suffix}"]) & (df2[f"water_temperature_{suffix}"] < 20.0)
+                    df_cold_swimsuit = df2[cold_swimsuit_filter]
+
+                    if len(df_hot_wetsuit) > 0:
+                        print(f"\n[{len(df_hot_wetsuit)}] WETSUIT ({distance_category}_{suffix}) despite WATER TEMPERATURE >= 20°C:")
+                        for row in df_hot_wetsuit.itertuples(index=False):
+                            water_temperature = row.water_temperature_w if suffix == "w" else row.water_temperature_m
+                            air_temperature = row.air_temperature_w if suffix == "w" else row.air_temperature_m
+                            msg = f"{row.event_id} ({suffix}): {water_temperature} °C (air at {air_temperature} °C) for {row.event_year} {row.event_venue} - {row.event_title}\n\t{row.event_listing}"
+                            print(f"\t{msg}")
+                            found = False
+                            for condition_log in conditions_logs:
+                                if condition_log["event_id"] == row.event_id:
+                                    if ((condition_log["prog_name"] == "Elite Men") and (suffix == "m")) or ((condition_log["prog_name"] == "Elite Women") and (suffix == "w")):
+                                        for issue in condition_log["issues"]:
+                                            if "wetsuit" in issue:
+                                                found = True
+                                                continue
+                            if not found:
+                                raise Exception(f"Hot wetsuit: not found in {conditions_logs_path.absolute()}:\n{msg}")
+
+                    if len(df_cold_swimsuit) > 0:
+                        print(f"\n[{len(df_cold_swimsuit)}] NO-WETSUIT ({distance_category}_{suffix}) despite WATER TEMPERATURE < 20°C:")
+                        for row in df_cold_swimsuit.itertuples(index=False):
+                            water_temperature = row.water_temperature_w if suffix == "w" else row.water_temperature_m
+                            air_temperature = row.air_temperature_w if suffix == "w" else row.air_temperature_m
+                            msg = f"{row.event_id} ({suffix}): {water_temperature} °C (air at {air_temperature} °C) for {row.event_year} {row.event_venue} - {row.event_title}\n\t{row.event_listing}"
+                            print(f"\t{msg}")
+                            found = False
+                            for condition_log in conditions_logs:
+                                if condition_log["event_id"] == row.event_id:
+                                    if ((condition_log["prog_name"] == "Elite Men") and (suffix == "m")) or ((condition_log["prog_name"] == "Elite Women") and (suffix == "w")):
+                                        for issue in condition_log["issues"]:
+                                            if "wetsuit" in issue:
+                                                found = True
+                                                continue
+                            if not found:
+                                raise Exception(f"Cold swimsuit: not found in {conditions_logs_path.absolute()}:\n{msg}")
+
+                    df2 = df2[~hot_wetsuit_filter]
+                    df2 = df2[~cold_swimsuit_filter]
 
                     colours = ["navy" if t >= 20 else "dodgerblue" for t in df2[f"{measure}_temperature_{suffix}"]]
                     kwargs = dict(
