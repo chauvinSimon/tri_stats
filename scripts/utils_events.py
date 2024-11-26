@@ -665,7 +665,7 @@ def extract_air_water_and_wetsuit(
     wetsuits = []
 
     # 1st method: should be the most reliable
-    # url --request GET --url 'https://api.triathlon.org/v1/events/183774/programs/635344?per_page=10&order=asc' --header 'accept: application/json' --header 'apikey: 2649776ef9ece4c391003b521cbfce7a'
+    # url --request GET --url 'https://api.triathlon.org/v1/events/183774/programs/635344?per_page=10&order=asc' --header 'accept: application/json' --header 'apikey: 12345abcdefghijklmnopqrstuvwxyz'
     prog_file_path = cache_dir / "prog_info" / f"{prog_data['event_id']}_{prog_id}.json"
     if prog_file_path.exists():
         prog_info = json_load(prog_file_path)

@@ -1201,7 +1201,7 @@ The **temperature ranges** are **broad**:
 - :ocean: 80% of the recorded **water** temperatures are between **16.3 and 26.6 °C**.
   - (**Mean: 21.4 °C**, SD: 3.8 °C, Min: 13.7 °C, Max: 31.8 °C)
 - :parasol_on_ground: 80% of the recorded **air** temperatures are between **17.0 and 29.6 °C**.
-  - (**Mean: 23.3 °C**, SD: 5.2 °C, Min: 7.6 °C, Max: 35.5 °C)
+  - (**Mean: 23.2 °C**, SD: 5.2 °C, Min: 7.6 °C, Max: 35.5 °C)
 
 ---
 
@@ -1231,6 +1231,12 @@ The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup
   - For instance: Air at 15°C and water at 22°C -> The **water temperature is adjusted** at 18.5°C -> Wetsuit allowed.
   - It is possible that the 15°C threshold was higher in 2021, leading to the discrepancy.
 
+Swim appears **slightly faster in water temperatures below 20°C**.
+- Likely because **wetsuits are allowed** at these lower temperatures.
+- Further research could analyse the **impact of temperature on swim performance** (see already [Gay et al, 2021](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/a-1481-8473)), and try to determine the **optimal water temperature range** for races, with and without wetsuits.
+
+---
+
 <details>
   <summary>Click to expand - ❌ <strong>Anomalies ignored for this analysis.</strong></summary>
 
@@ -1246,11 +1252,13 @@ The [women's race](https://triathlon.org/results/result/2021_world_triathlon_cup
 | :snowflake: no-wetsuit & water<20°C |      [2011 London (m)](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )       |  False  |              19.5              |                21.3                |
 |    :fire: wetsuit & water>=20°C     | [2011 Kitzbuhel (m)](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_kitzbuhel) ( :austria: ) |  True   |              20.5              |        16.0 ( :snowflake: )        |
 
-</details>
+As already explained above for [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae), when the **air temperature** is **extreme**, the water temperature is **adjusted**.
 
-Swim appears **slightly faster in water temperatures below 20°C**.
-- Likely because **wetsuits are allowed** at these lower temperatures.
-- Further research could analyse the **impact of temperature on swim performance** (see already [Gay et al, 2021](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/a-1481-8473)), and try to determine the **optimal water temperature range** for races, with and without wetsuits.
+But what is the reason for the other **inconsistencies** with the 20°C rule?
+- Probably **errors in the data reported**?
+- Unless the 20°C threshold was different at the time. 
+
+</details>
 
 ---
 

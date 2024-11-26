@@ -1931,7 +1931,7 @@ def process_temperatures(df, distance_categories):
         axes[i_measure].set_xticks(range(int(measure_min) - 1, int(measure_max) + 2, 1))
         axes[i_measure].tick_params(axis='x', which='major', labelsize=14)
         axes[i_measure].legend(fontsize=15)
-        axes[i_measure].set_title(f"{measure.upper()}\n{len(data)} events", fontsize=15)
+        axes[i_measure].set_title(f"{measure.upper()}\n{len(data)} races", fontsize=15)
         axes[i_measure].set_xlabel("TEMPERATURE °C", fontsize=12)
         axes[i_measure].set_ylabel("Percentage".upper(), fontsize=12)
         # format y as percentage
