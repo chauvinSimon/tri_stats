@@ -1207,6 +1207,10 @@ def add_year_and_event_cat(df, event_category_mapping):
 def clean_results(df, min_duration_s: float, sports, distance_categories):
     print(f"###\nprocessing {len(df)} results\n###")
 
+    # consolidation
+    df.loc[df["event_venue"] == "Huatulco, Santa Cruz Bay", "event_venue"] = "Huatulco"
+    df.loc[df["event_venue"] == "Salinas, Ecuador", "event_venue"] = "Salinas"
+
     # drop rows where prog_distance_category_m != prog_distance_category_w
     df_different_distance = df[df['prog_distance_category_m'] != df['prog_distance_category_w']]
     if len(df_different_distance) > 0:
@@ -1361,3 +1365,10 @@ def get_events_df(events_config: dict = None):
 if __name__ == '__main__':
     _df = get_events_df()
     print(f"{len(_df)} events in final df")
+
+    # count percentage of wetsuit_m
+    if not _df.empty:
+        n_wetsuit_m_true = _df['wetsuit_m'].value_counts()[True]
+        print(f"wetsuit_m in {n_wetsuit_m_true}/{len(_df)} events: {100 * n_wetsuit_m_true / len(_df):.1f}%")
+        n_wetsuit_w_true = _df['wetsuit_w'].value_counts()[True]
+        print(f"wetsuit_w in {n_wetsuit_w_true}/{len(_df)} events: {100 * n_wetsuit_w_true / len(_df):.1f}%")

@@ -125,6 +125,23 @@ events:
     quantile_min: 0.1
     quantile_max: 0.9
 
+  t1_with_wetsuit:
+    # ignore the last5
+    i_first: 0
+    i_last: -5
+
+    events:
+      max_year_gap: 15
+      min_t1_delta: 4
+      max_t1_delta: 16
+
+    wm:
+#      model: "1d"
+      model: "1.5d"
+#      model: "2d"
+      helmet: 3
+      min_t1: 10  # how many seconds should t1 last (without wetsuit)? The larger, the less important the part of "static phase putting the helmet on", therefore the more focus on the running part.
+
 seasons:
   suffix: "w"
 #  suffix: "m"

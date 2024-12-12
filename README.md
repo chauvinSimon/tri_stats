@@ -3,6 +3,7 @@ This document **analyses data** of [**World Triathlon**](https://triathlon.org/)
 - :penguin: Should bad swimmers be happy when the **wetsuit is allowed**?
 - :one_piece_swimsuit: Can the **benefit of swim wetsuits** be estimated?
 - :athletic_shoe: Are runs faster since **carbon plates shoes**? 
+- :shower: How much time does the **wetsuit add to T1**?
 - :three: Does each sport (swim - bike - run) accounts for 1/3 of race durations? What about transitions?
 - :couple: How much faster are **men over women**? In which sport is the gap larger/smaller? How has the gap evolved over the years?
 - :hourglass_flowing_sand: How much faster are athletes in **_sprint_ over _olympic_** distance?
@@ -80,6 +81,7 @@ What about the data quality?
 - **[Women vs men](#couple-WOMEN-VS-MEN)** :star:
 - **[Swim gaps](#swimmer-SWIM-GAPS)**
 - **[Swim wetsuit benefit](#penguin-WETSUIT-BENEFIT)** :star:
+- **[Wetsuit at T1](#shower-wetsuit-at-t1)** :star:
 - **[Race scenario](#dart-RACE-SCENARIO)**
 - **[Sprint finish](#rocket-SPRINT-FINISH)**
 - **[Level over years](#spiral_calendar-LEVEL-OVER-YEARS)** :star:
@@ -352,7 +354,7 @@ Notes about **swim data**:
 
 ---
 
-Findings:
+:bulb: FINDINGS:
 - :swimmer: The **swim** is the sport where the **relative difference** between women and men is the **smallest**.
   - Swimming is highly **technique-oriented**.
   - Women often excel in technical sports because these **rely less on raw strength** and more on skill, coordination, and efficiency.
@@ -474,8 +476,8 @@ Approach:
 
 **QUESTION**:
 - Would the wetsuit enable the **slowest swimmers** (last 9-5th) to **catch the good swimmers** (first 5-9th)?
-  - On the olympic format, the **gap is about 50s and 45s** without wetsuit, while the fast women and men swim [on average in 19:30 and 17:57](#stopwatch-paces).
-  - A **4.9% improvement** for the slowest swimmers represent `0.049 * (19:30 + 0:50) =` **60s**, and  `0.049 * (17:57 + 0:45) =` **55s**.
+  - On the olympic format, the **gap is about 56s and 49s** without wetsuit, while the fast women and men swim [on average in 19:30 and 17:57](#stopwatch-paces).
+  - A **4.9% improvement** for the slowest swimmers represent `0.049 * (19:30 + 0:56) =` **60s**, and  `0.049 * (17:57 + 0:49) =` **55s**.
   - Conclusion: the slowest swimmers with the **benefit of the wetsuit** would be **~10s faster that the good swimmers** without.
 
 <details>
@@ -516,9 +518,15 @@ I.e.
 time_with_wetsuit = (1 - improve_percent) * time_without_wetsuit
 ```
 
+Main challenge:
+- **Only one of [`time_no_wetsuit`, `time_wetsuit`]** is typically available: the one recorded during the race.
+- This sections introduces two methods to **estimate the missing `time_`**, enabling the calculation of `improve_percent`.
+
 Reminder:
 - The scope here is **elite triathletes**, going **5-9th** out of water on top World Triathlon events.
 - Results would certainly **differ for beginners** and hobby triathletes.
+
+### :couple: Method 1: using **women/men differences**
 
 The idea of the **derivation** is as follows:
 - **Women [have been found](#focus-on-the-swim-swimmer) to swim on average ~8.8% slower than men**, with the **same equipment**.
@@ -624,6 +632,10 @@ The idea of the **derivation** is as follows:
   - It would be valuable to include events with the **opposite scenario**: _"women-without / men-with"_.
     - I have found only one: [New Plymouth ( :new_zealand: ) 2017](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup).
   - Future events may **provide additional examples** to further refine the estimate.
+- **4) Function approximation**:
+  - Currently, the **relationship between `swim_w` and `swim_m`** is **modelled as linear**: `swim_w = swim_m * (1 + wm_percent)`.
+    - Could this relationship be better captured using **more sophisticated models**, such as neural networks?
+    - _What additional inputs might enhance prediction accuracy? For example, should the model consider the complete list of swim times?_
 
 <details>
   <summary>Click to expand - 🌍 <strong>Events used for the derivation.</strong></summary>
@@ -672,12 +684,12 @@ When they can choose, **pro athletes decide to use the wetsuit** for **~300m swi
   <summary>Click to expand - 🐧 <strong>Answering the question <i>"wetsuit for 300m?"</i></strong></summary>
 
 Over **300m** a **wetsuit should save ~12s** (derivation below).
-- Most of the time, athletes spend **just a bit less than 6s in transition to remove their wetsuit**, and put it correctly into their box.
-  - Maybe 4s or 5s when everything goes well? But up to 10s when one leg does not want to get out.
-- **Conclusion**: the **overall time gain of wearing the wetsuit for 300m seems to be positive: around 6s**.
+- According to [the next section](#shower-wetsuit-at-t1), the **extra-time added by the wetsuit during T1** is **around 8-9 seconds**.
+  - _Before this analysis, I would have estimated a lower impact, around 6s._
+- **Conclusion**: the **overall time gain of wearing the wetsuit for 300m seems to be positive: around 4s**.
   - Apart from time saving, wetsuits offer additional benefits: temperature **comfort** and probably saving some **energy in the legs**. Also, athletes may a couple of seconds to breath while removing it at T1.
   - This information is apparently unknown to some athletes. At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/), [5/16 women](https://www.youtube.com/watch?v=asUQlc3Ic98&t=666) and [5/16 men](https://www.youtube.com/watch?v=asUQlc3Ic98&t=5163) decided **not to wear a wetsuit for the first 300m**. An interesting experiment!
-- Conversely, assuming an **overall 6s spent** for removal, wearing a **wetsuit is beneficial above ~150m** for top athletes. Under ~150m, time is lost overall.
+- Conversely, assuming **~8 seconds spent in T1** due to the wetsuit, wetsuit becomes advantageous only for swims longer than **~200m** for top athletes. For swims under ~200m, the wetsuit results in a net time loss.
 
 **Derivation:** The time for a 300m swim is probably **around 3:30 - 4:00**.
 - Here are some swim-times measured for 300m, without wetsuit:
@@ -714,10 +726,271 @@ Over **300m** a **wetsuit should save ~12s** (derivation below).
 
 ---
 
-The benefit of the wetsuit could be estimated with a second method (less reliable):
+### :earth_africa: Method 2: Using **Recurring Events**
+
+This method identifies **pairs of events** held at the **same venue**, where wetsuits were **required in one year** but **not in another**.
+- The approach assumes that the **course layout remains consistent** across years.
+- For example, in the men's race at Yokohama ( :jp: ), wetsuits were worn in 2023 (swim time: `17:31`) but not in 2022 (swim time: `18:35`) and not in 2021 (swim time: `18:23`).
+- Using these **three events**, **two comparisons** can be made to estimate `improve_percent`:
+  - improve_percent = (time_no_wetsuit - time_wetsuit) / time_no_wetsuit
+  - **2023 (wetsuit) vs 2021 (no-wetsuit):** `improve_percent = (18:23 - 17:31) / 18:23 = 4.7%`.
+  - **2023 (wetsuit) vs 2022 (no-wetsuit):** `improve_percent = (18:35 - 17:31) / 18:35 = 5.7%`.
+- By collecting many such comparisons, a **distribution of `improve_percent`** is generated, see the figure below.
+- The **mean and median** of this distribution provide an answer to the initial question: **_"How much advantage (in percent) does the wetsuit bring to top swimmers?"_**
+
+|          ![wetsuit_in_swim_year_to_year.png](res/wetsuit_in_swim_year_to_year.png)          | 
+|:-------------------------------------------------------------------------------------------:| 
+| *Distribution of the estimated `improve_percent` using the method of **recurring events**.* |
+
+Results from **186 comparisons**:
+- **`improve_percent`**:
+	- Women+Men  : **`mean = 3.5%`**, **`median = 3.6%`**. (`std = 3.5`)
+	- Women only : `mean = 3.6%`, `median = 3.6%`. (`std = 3.2`)
+	- Men only   : `mean = 3.4%`, `median = 3.3%`. (`std = 3.7`)
+- **Women vs Men: `0.2%` (with means) or `0.3%` (with medians)**.
+
+:bulb: FINDINGS AND DISCUSSION:
+- Challenge: **the swim course varies** across years.
+  - The year-to-year comparison incorporates a substantial amount of data (nearly **200 estimates**) and assumes that while some samples may yield **low estimates** and **others high**, the **large dataset size** ensures **these variations balance out**.
+    - This approach justifies **including negative estimates**, as the presence of very large benefits is also unlikely.
+    - Together, they create a **near-normal distribution**, leading to robust overall estimates.
+    - Just to check: _When applied to events using the same swim equipment, the year-to-year comparison yields also a symmetric distribution centered around ~0%, as expected: the swim level does not change, while swim course lengths vary slightly year to year (sometimes longer, sometimes shorter), but remain constant on average._
+  - Outliers, however, are addressed by removing estimates **below -5% and above 14%**.
+  - To further limit the impact of outliers, comparisons are restricted to **years in close proximity**.
+    - The choice of **5 years** as the cutoff is another parameter of the analysis.
+- Comparison between methods:
+  - First method: **`improve_percent = 5.4%`** (women only), leveraging events where the "`women-without` / `men-with-wetsuit` scenario" occurs.
+  - Second method: **`improve_percent = 3.6%`**, using on **year-to-year comparisons**.
+  - The second method also suggests that **women benefit _slightly_ more from the wetsuit**, with an improvement difference of 0.2–0.3%.
+    - This finding is somewhat surprising, given that women already have **a higher natural buoyancy**, which could suggest a smaller relative benefit.
+    - The first method **could only compute `improve_percent` for women**, limiting direct comparability.
 
 <details>
-  <summary>Click to expand - <strong>Second approach.</strong></summary>
+  <summary>Click to expand - ⚖️ <strong>Full list of comparisons used for this derivation.</strong></summary>
+
+Distributions:
+- Event category:
+	- WTCS      : 73% (135)
+	- World-Cup : 27% (51)
+- Distance category:
+	- Olympic   : 48% (90)
+	- Sprint    : 52% (96)
+
+**Venues of the comparisons:**
+- 52 (28.0%): Hamburg ( :de: )
+- 40 (21.5%): Yokohama ( :jp: )
+- 16 ( 8.6%): Edmonton ( :canada: )
+- 12 ( 6.5%): New Plymouth ( :new_zealand: )
+- 12 ( 6.5%): London ( :gb: )
+- 11 ( 5.9%): Tongyeong ( :kr: )
+- 10 ( 5.4%): Cagliari ( :it: )
+- 10 ( 5.4%): Karlovy Vary ( :czech_republic: )
+-  7 ( 3.8%): Auckland ( :new_zealand: )
+-  4 ( 2.2%): Cannigione, Arzachena ( :it: )
+-  2 ( 1.1%): Valencia ( :es: )
+-  2 ( 1.1%): San Diego ( :us: )
+-  2 ( 1.1%): Stockholm ( :sweden: )
+-  2 ( 1.1%): Montreal ( :canada: )
+-  2 ( 1.1%): Sydney ( :australia: )
+-  2 ( 1.1%): Chicago ( :us: )
+
+|                                                                EVENT                                                                 |  FORMAT  |  GENDER  |     SWIM WITH WETSUIT      |    SWIM WITHOUT WETSUIT    |  **WETSUIT GAIN (%)**  |
+|:------------------------------------------------------------------------------------------------------------------------------------:|:--------:|:--------:|:--------------------------:|:--------------------------:|:----------------------:|
+|                  [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    W     | 10:11 (01:21 /100m) (2019) | 09:47 (01:18 /100m) (2017) |       **-4.0%**        |
+|   [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )    | OLYMPIC  |    M     | 17:26 (01:10 /100m) (2011) | 16:46 (01:07 /100m) (2010) |       **-4.0%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    M     | 17:08 (01:09 /100m) (2010) | 16:33 (01:06 /100m) (2014) |       **-3.5%**        |
+|            [Cagliari](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_cagliari) ( :it: )             | OLYMPIC  |    W     | 19:01 (01:16 /100m) (2024) | 18:23 (01:14 /100m) (2023) |       **-3.4%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    M     | 18:12 (01:13 /100m) (2009) | 17:36 (01:10 /100m) (2011) |       **-3.4%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2018_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    M     | 09:27 (01:16 /100m) (2019) | 09:13 (01:14 /100m) (2018) |       **-2.5%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    M     | 18:54 (01:16 /100m) (2011) | 18:28 (01:14 /100m) (2015) |       **-2.3%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    M     | 09:27 (01:16 /100m) (2019) | 09:15 (01:14 /100m) (2017) |       **-2.2%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                  |  SPRINT  |    M     | 09:07 (01:13 /100m) (2018) | 08:55 (01:11 /100m) (2016) |       **-2.2%**        |
+|             [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )              |  SPRINT  |    W     | 09:28 (01:16 /100m) (2020) | 09:17 (01:14 /100m) (2022) |       **-2.0%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    M     | 09:54 (01:19 /100m) (2018) | 09:42 (01:18 /100m) (2019) |       **-2.0%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 19:12 (01:17 /100m) (2015) | 18:50 (01:15 /100m) (2019) |       **-1.9%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    W     | 20:16 (01:21 /100m) (2011) | 19:55 (01:20 /100m) (2014) |       **-1.7%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:59 (01:12 /100m) (2016) | 08:50 (01:11 /100m) (2013) |       **-1.7%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 18:02 (01:12 /100m) (2015) | 17:45 (01:11 /100m) (2019) |       **-1.7%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2018_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    W     | 10:11 (01:21 /100m) (2019) | 10:02 (01:20 /100m) (2018) |       **-1.4%**        |
+|   [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )    | OLYMPIC  |    W     | 18:35 (01:14 /100m) (2011) | 18:23 (01:14 /100m) (2010) |       **-1.1%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:43 (01:18 /100m) (2016) | 09:36 (01:17 /100m) (2018) |       **-1.1%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    W     | 20:16 (01:21 /100m) (2011) | 20:06 (01:20 /100m) (2015) |       **-0.8%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:56 (01:11 /100m) (2019) | 08:52 (01:11 /100m) (2022) |       **-0.8%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:58 (01:16 /100m) (2014) | 18:50 (01:15 /100m) (2019) |       **-0.7%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    W     | 09:51 (01:19 /100m) (2016) | 09:47 (01:18 /100m) (2017) |       **-0.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:59 (01:12 /100m) (2016) | 08:56 (01:11 /100m) (2014) |       **-0.4%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:55 (01:16 /100m) (2022) | 18:50 (01:15 /100m) (2019) |       **-0.4%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    W     | 18:50 (01:15 /100m) (2010) | 18:46 (01:15 /100m) (2015) |       **-0.3%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 18:02 (01:12 /100m) (2015) | 17:59 (01:12 /100m) (2012) |       **-0.3%**        |
+|                    [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                     |  SPRINT  |    W     | 09:26 (01:15 /100m) (2020) | 09:25 (01:15 /100m) (2022) |       **-0.2%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:59 (01:12 /100m) (2016) | 08:58 (01:12 /100m) (2018) |       **-0.1%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2018) | 18:50 (01:15 /100m) (2019) |       **-0.0%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:50 (01:11 /100m) (2017) | 08:50 (01:11 /100m) (2013) |        **0.0%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 19:12 (01:17 /100m) (2015) | 19:13 (01:17 /100m) (2017) |        **0.0%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2018_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    M     | 09:12 (01:14 /100m) (2016) | 09:13 (01:14 /100m) (2018) |        **0.1%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:56 (01:11 /100m) (2019) | 08:56 (01:11 /100m) (2014) |        **0.1%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    M     | 17:08 (01:09 /100m) (2010) | 17:10 (01:09 /100m) (2015) |        **0.2%**        |
+|                [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )                 |  SPRINT  |    M     | 08:39 (01:09 /100m) (2016) | 08:40 (01:09 /100m) (2013) |        **0.2%**        |
+|                    [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                     |  SPRINT  |    M     | 08:35 (01:09 /100m) (2020) | 08:37 (01:09 /100m) (2022) |        **0.3%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:56 (01:11 /100m) (2019) | 08:58 (01:12 /100m) (2018) |        **0.4%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:43 (01:18 /100m) (2016) | 09:45 (01:18 /100m) (2013) |        **0.4%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:50 (01:11 /100m) (2017) | 08:52 (01:11 /100m) (2022) |        **0.4%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    M     | 09:12 (01:14 /100m) (2016) | 09:15 (01:14 /100m) (2017) |        **0.4%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:43 (01:18 /100m) (2016) | 09:45 (01:18 /100m) (2014) |        **0.5%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    M     | 09:39 (01:17 /100m) (2016) | 09:42 (01:18 /100m) (2019) |        **0.5%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:39 (01:09 /100m) (2016) | 08:43 (01:10 /100m) (2017) |        **0.7%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:42 (01:15 /100m) (2023) | 18:50 (01:15 /100m) (2019) |        **0.7%**        |
+|                [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )                 |  SPRINT  |    W     | 09:09 (01:13 /100m) (2015) | 09:14 (01:14 /100m) (2013) |        **0.8%**        |
+|                [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )                 |  SPRINT  |    W     | 09:08 (01:13 /100m) (2016) | 09:14 (01:14 /100m) (2013) |        **1.0%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:33 (01:10 /100m) (2014) | 17:45 (01:11 /100m) (2019) |        **1.1%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:39 (01:09 /100m) (2016) | 08:46 (01:10 /100m) (2019) |        **1.3%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:50 (01:11 /100m) (2017) | 08:56 (01:11 /100m) (2014) |        **1.3%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:31 (01:10 /100m) (2018) | 17:45 (01:11 /100m) (2019) |        **1.3%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:58 (01:16 /100m) (2014) | 19:13 (01:17 /100m) (2017) |        **1.3%**        |
+|                [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )                 |  SPRINT  |    M     | 08:33 (01:08 /100m) (2015) | 08:40 (01:09 /100m) (2013) |        **1.4%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:55 (01:16 /100m) (2022) | 19:13 (01:17 /100m) (2017) |        **1.5%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:50 (01:11 /100m) (2017) | 08:58 (01:12 /100m) (2018) |        **1.6%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:56 (01:11 /100m) (2019) | 09:05 (01:13 /100m) (2024) |        **1.6%**        |
+|             [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )              |  SPRINT  |    W     | 09:08 (01:13 /100m) (2021) | 09:17 (01:14 /100m) (2022) |        **1.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:43 (01:18 /100m) (2016) | 09:53 (01:19 /100m) (2015) |        **1.7%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    M     | 17:37 (01:10 /100m) (2012) | 17:57 (01:12 /100m) (2014) |        **1.8%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:40 (01:09 /100m) (2012) | 08:50 (01:11 /100m) (2013) |        **1.8%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:33 (01:08 /100m) (2015) | 08:43 (01:10 /100m) (2017) |        **1.9%**        |
+|   [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )    | OLYMPIC  |    M     | 16:27 (01:06 /100m) (2009) | 16:46 (01:07 /100m) (2010) |        **1.9%**        |
+|                  [Cagliari](https://www.triathlon.org/events/event/2018_cagliari_itu_triathlon_world_cup) ( :it: )                   |  SPRINT  |    W     | 09:51 (01:19 /100m) (2016) | 10:02 (01:20 /100m) (2018) |        **1.9%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2018) | 19:13 (01:17 /100m) (2017) |        **1.9%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:59 (01:12 /100m) (2016) | 09:10 (01:13 /100m) (2015) |        **2.0%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:25 (01:15 /100m) (2019) | 09:36 (01:17 /100m) (2018) |        **2.0%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    W     | 18:22 (01:13 /100m) (2011) | 18:46 (01:15 /100m) (2015) |        **2.1%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:24 (01:15 /100m) (2017) | 09:36 (01:17 /100m) (2018) |        **2.2%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 18:02 (01:12 /100m) (2015) | 18:27 (01:14 /100m) (2017) |        **2.2%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:33 (01:08 /100m) (2015) | 08:46 (01:10 /100m) (2019) |        **2.4%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:33 (01:10 /100m) (2014) | 17:59 (01:12 /100m) (2012) |        **2.4%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:56 (01:11 /100m) (2019) | 09:10 (01:13 /100m) (2015) |        **2.5%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:09 (01:13 /100m) (2015) | 09:24 (01:15 /100m) (2017) |        **2.5%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:22 (01:15 /100m) (2021) | 09:36 (01:17 /100m) (2018) |        **2.5%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:18 (01:09 /100m) (2023) | 17:45 (01:11 /100m) (2019) |        **2.5%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:22 (01:13 /100m) (2024) | 18:50 (01:15 /100m) (2019) |        **2.5%**        |
+|            [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )            | OLYMPIC  |    M     | 17:18 (01:09 /100m) (2023) | 17:45 (01:11 /100m) (2024) |        **2.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:29 (01:16 /100m) (2012) | 09:45 (01:18 /100m) (2013) |        **2.7%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    M     | 17:08 (01:09 /100m) (2010) | 17:36 (01:10 /100m) (2011) |        **2.7%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:38 (01:09 /100m) (2021) | 08:52 (01:11 /100m) (2022) |        **2.7%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:08 (01:13 /100m) (2016) | 09:24 (01:15 /100m) (2017) |        **2.7%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:29 (01:16 /100m) (2012) | 09:45 (01:18 /100m) (2014) |        **2.7%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 19:12 (01:17 /100m) (2015) | 19:45 (01:19 /100m) (2012) |        **2.8%**        |
+|    [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:52 (01:15 /100m) (2012) | 19:25 (01:18 /100m) (2011) |        **2.8%**        |
+|    [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2013) | 19:25 (01:18 /100m) (2011) |        **2.9%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:25 (01:15 /100m) (2019) | 09:42 (01:18 /100m) (2022) |        **3.0%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:40 (01:09 /100m) (2012) | 08:56 (01:11 /100m) (2014) |        **3.1%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:24 (01:15 /100m) (2017) | 09:42 (01:18 /100m) (2022) |        **3.2%**        |
+|    [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:52 (01:15 /100m) (2012) | 19:30 (01:18 /100m) (2010) |        **3.2%**        |
+|    [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2013) | 19:30 (01:18 /100m) (2010) |        **3.3%**        |
+|             [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )              |  SPRINT  |    M     | 08:34 (01:09 /100m) (2021) | 08:52 (01:11 /100m) (2022) |        **3.5%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:22 (01:15 /100m) (2021) | 09:42 (01:18 /100m) (2022) |        **3.5%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:25 (01:15 /100m) (2019) | 09:45 (01:18 /100m) (2014) |        **3.6%**        |
+|            [Cagliari](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_cagliari) ( :it: )             | OLYMPIC  |    W     | 19:01 (01:16 /100m) (2024) | 19:43 (01:19 /100m) (2022) |        **3.6%**        |
+|                   [San Diego](https://www.triathlon.org/events/event/2012_itu_world_triathlon_san_diego) ( :us: )                    | OLYMPIC  |    W     | 17:54 (01:12 /100m) (2013) | 18:34 (01:14 /100m) (2012) |        **3.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:24 (01:15 /100m) (2017) | 09:45 (01:18 /100m) (2013) |        **3.6%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    M     | 17:31 (01:10 /100m) (2018) | 18:11 (01:13 /100m) (2021) |        **3.6%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    W     | 18:55 (01:16 /100m) (2022) | 19:38 (01:19 /100m) (2021) |        **3.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:50 (01:11 /100m) (2017) | 09:10 (01:13 /100m) (2015) |        **3.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:24 (01:15 /100m) (2017) | 09:45 (01:18 /100m) (2014) |        **3.7%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:38 (01:09 /100m) (2021) | 08:58 (01:12 /100m) (2018) |        **3.8%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    W     | 19:09 (01:17 /100m) (2012) | 19:55 (01:20 /100m) (2014) |        **3.8%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    W     | 19:05 (01:16 /100m) (2021) | 19:51 (01:19 /100m) (2019) |        **3.8%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 10:32 (01:24 /100m) (2016) | 10:57 (01:28 /100m) (2019) |        **3.9%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:29 (01:16 /100m) (2012) | 09:53 (01:19 /100m) (2015) |        **3.9%**        |
+|  [Yokohama](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: )   | OLYMPIC  |    M     | 18:02 (01:12 /100m) (2015) | 18:47 (01:15 /100m) (2011) |        **4.0%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:58 (01:16 /100m) (2014) | 19:45 (01:19 /100m) (2012) |        **4.0%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2018) | 19:38 (01:19 /100m) (2021) |        **4.0%**        |
+|   [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )    | OLYMPIC  |    W     | 17:38 (01:11 /100m) (2009) | 18:23 (01:14 /100m) (2010) |        **4.0%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:30 (01:08 /100m) (2020) | 08:52 (01:11 /100m) (2022) |        **4.2%**        |
+|                 [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )                  | OLYMPIC  |    M     | 18:42 (01:15 /100m) (2013) | 19:32 (01:18 /100m) (2015) |        **4.2%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:39 (01:09 /100m) (2016) | 09:02 (01:12 /100m) (2018) |        **4.2%**        |
+|    [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:52 (01:15 /100m) (2012) | 19:42 (01:19 /100m) (2009) |        **4.3%**        |
+|    [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2013) | 19:42 (01:19 /100m) (2009) |        **4.3%**        |
+|  [Yokohama](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: )   | OLYMPIC  |    W     | 19:12 (01:17 /100m) (2015) | 20:05 (01:20 /100m) (2011) |        **4.4%**        |
+|    [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:15 (01:09 /100m) (2013) | 18:02 (01:12 /100m) (2010) |        **4.4%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:09 (01:13 /100m) (2015) | 09:35 (01:17 /100m) (2019) |        **4.5%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                  |  SPRINT  |    M     | 08:31 (01:08 /100m) (2021) | 08:55 (01:11 /100m) (2016) |        **4.6%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    M     | 17:37 (01:10 /100m) (2012) | 18:28 (01:14 /100m) (2015) |        **4.6%**        |
+|    [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:12 (01:09 /100m) (2012) | 18:02 (01:12 /100m) (2010) |        **4.7%**        |
+|                [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )                | OLYMPIC  |    W     | 19:09 (01:17 /100m) (2012) | 20:06 (01:20 /100m) (2015) |        **4.7%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:08 (01:13 /100m) (2016) | 09:35 (01:17 /100m) (2019) |        **4.7%**        |
+|            [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )             | OLYMPIC  |    M     | 17:31 (01:10 /100m) (2018) | 18:23 (01:14 /100m) (2022) |        **4.7%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    W     | 18:42 (01:15 /100m) (2023) | 19:38 (01:19 /100m) (2021) |        **4.7%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:25 (01:15 /100m) (2019) | 09:53 (01:19 /100m) (2015) |        **4.8%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    M     | 17:18 (01:09 /100m) (2023) | 18:11 (01:13 /100m) (2021) |        **4.9%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:24 (01:15 /100m) (2017) | 09:53 (01:19 /100m) (2015) |        **4.9%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:33 (01:10 /100m) (2014) | 18:27 (01:14 /100m) (2017) |        **4.9%**        |
+|    [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:15 (01:09 /100m) (2013) | 18:08 (01:13 /100m) (2009) |        **4.9%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:38 (01:09 /100m) (2021) | 09:05 (01:13 /100m) (2024) |        **5.0%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:07 (01:13 /100m) (2020) | 09:36 (01:17 /100m) (2018) |        **5.0%**        |
+|    [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:15 (01:09 /100m) (2013) | 18:10 (01:13 /100m) (2011) |        **5.0%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:31 (01:10 /100m) (2018) | 18:27 (01:14 /100m) (2017) |        **5.1%**        |
+|    [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:12 (01:09 /100m) (2012) | 18:08 (01:13 /100m) (2009) |        **5.2%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    M     | 17:29 (01:10 /100m) (2020) | 18:27 (01:14 /100m) (2019) |        **5.2%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:30 (01:08 /100m) (2020) | 08:58 (01:12 /100m) (2018) |        **5.3%**        |
+|    [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )     | OLYMPIC  |    M     | 17:12 (01:09 /100m) (2012) | 18:10 (01:13 /100m) (2011) |        **5.3%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:40 (01:09 /100m) (2012) | 09:10 (01:13 /100m) (2015) |        **5.4%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    M     | 08:33 (01:08 /100m) (2015) | 09:02 (01:12 /100m) (2018) |        **5.4%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    M     | 09:11 (01:13 /100m) (2023) | 09:42 (01:18 /100m) (2019) |        **5.4%**        |
+|                  [Montreal](https://www.triathlon.org/events/event/2019_itu_world_triathlon_montreal) ( :canada: )                   |  SPRINT  |    W     | 08:55 (01:11 /100m) (2023) | 09:26 (01:15 /100m) (2019) |        **5.4%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    W     | 18:45 (01:15 /100m) (2020) | 19:51 (01:19 /100m) (2019) |        **5.5%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 10:32 (01:24 /100m) (2016) | 11:09 (01:29 /100m) (2017) |        **5.5%**        |
+|  [Yokohama](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: )   | OLYMPIC  |    W     | 18:58 (01:16 /100m) (2014) | 20:05 (01:20 /100m) (2011) |        **5.6%**        |
+|           [Cannigione, Arzachena](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup) ( :it: )            |  SPRINT  |    M     | 08:34 (01:09 /100m) (2021) | 09:04 (01:13 /100m) (2020) |        **5.6%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 19:12 (01:17 /100m) (2015) | 20:23 (01:22 /100m) (2016) |        **5.7%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:25 (01:15 /100m) (2019) | 09:59 (01:20 /100m) (2024) |        **5.8%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:09 (01:13 /100m) (2015) | 09:44 (01:18 /100m) (2018) |        **5.9%**        |
+|            [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )             | OLYMPIC  |    M     | 17:18 (01:09 /100m) (2023) | 18:23 (01:14 /100m) (2022) |        **5.9%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:07 (01:13 /100m) (2020) | 09:42 (01:18 /100m) (2022) |        **6.0%**        |
+|                  [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                   |  SPRINT  |    W     | 09:08 (01:13 /100m) (2016) | 09:44 (01:18 /100m) (2018) |        **6.1%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 10:17 (01:22 /100m) (2018) | 10:57 (01:28 /100m) (2019) |        **6.1%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:22 (01:15 /100m) (2021) | 09:59 (01:20 /100m) (2024) |        **6.3%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    W     | 18:35 (01:14 /100m) (2018) | 19:51 (01:19 /100m) (2019) |        **6.4%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    M     | 08:30 (01:08 /100m) (2020) | 09:05 (01:13 /100m) (2024) |        **6.4%**        |
+|                      [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                       | OLYMPIC  |    W     | 18:22 (01:13 /100m) (2024) | 19:38 (01:19 /100m) (2021) |        **6.5%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 18:02 (01:12 /100m) (2015) | 19:18 (01:17 /100m) (2016) |        **6.5%**        |
+|  [Yokohama](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: )   | OLYMPIC  |    M     | 17:33 (01:10 /100m) (2014) | 18:47 (01:15 /100m) (2011) |        **6.6%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:58 (01:16 /100m) (2014) | 20:23 (01:22 /100m) (2016) |        **6.9%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                  | OLYMPIC  |    W     | 17:26 (01:10 /100m) (2014) | 18:46 (01:15 /100m) (2015) |        **7.2%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    M     | 08:30 (01:08 /100m) (2020) | 09:10 (01:13 /100m) (2015) |        **7.3%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    W     | 18:51 (01:15 /100m) (2018) | 20:23 (01:22 /100m) (2016) |        **7.5%**        |
+| [Sydney](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_sydney) ( :australia: ) | OLYMPIC  |    W     | 19:38 (01:19 /100m) (2012) | 21:15 (01:25 /100m) (2010) |        **7.6%**        |
+|                     [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                      |  SPRINT  |    W     | 09:07 (01:13 /100m) (2020) | 09:53 (01:19 /100m) (2015) |        **7.7%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 10:17 (01:22 /100m) (2018) | 11:09 (01:29 /100m) (2017) |        **7.7%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    M     | 16:59 (01:08 /100m) (2018) | 18:27 (01:14 /100m) (2019) |        **8.0%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    M     | 16:56 (01:08 /100m) (2021) | 18:27 (01:14 /100m) (2019) |        **8.2%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                  |  SPRINT  |    M     | 08:11 (01:05 /100m) (2017) | 08:55 (01:11 /100m) (2016) |        **8.3%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 10:03 (01:20 /100m) (2023) | 10:57 (01:28 /100m) (2019) |        **8.3%**        |
+|                   [San Diego](https://www.triathlon.org/events/event/2012_itu_world_triathlon_san_diego) ( :us: )                    | OLYMPIC  |    M     | 16:12 (01:05 /100m) (2013) | 17:41 (01:11 /100m) (2012) |        **8.3%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    W     | 18:08 (01:13 /100m) (2023) | 19:51 (01:19 /100m) (2019) |        **8.7%**        |
+|             [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )              |  SPRINT  |    W     | 09:07 (01:13 /100m) (2020) | 09:59 (01:20 /100m) (2024) |        **8.7%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    M     | 08:51 (01:11 /100m) (2014) | 09:42 (01:18 /100m) (2019) |        **8.8%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    W     | 18:06 (01:12 /100m) (2022) | 19:51 (01:19 /100m) (2019) |        **8.8%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:33 (01:10 /100m) (2014) | 19:18 (01:17 /100m) (2016) |        **9.1%**        |
+|                    [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                     | OLYMPIC  |    M     | 17:31 (01:10 /100m) (2018) | 19:18 (01:17 /100m) (2016) |        **9.2%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 09:56 (01:19 /100m) (2015) | 10:57 (01:28 /100m) (2019) |        **9.3%**        |
+|                 [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )                  | OLYMPIC  |    M     | 17:42 (01:11 /100m) (2016) | 19:32 (01:18 /100m) (2015) |        **9.4%**        |
+|                  [Montreal](https://www.triathlon.org/events/event/2019_itu_world_triathlon_montreal) ( :canada: )                   |  SPRINT  |    M     | 08:09 (01:05 /100m) (2023) | 09:00 (01:12 /100m) (2019) |        **9.4%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    M     | 16:40 (01:07 /100m) (2022) | 18:27 (01:14 /100m) (2019) |        **9.7%**        |
+|                 [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                  |  SPRINT  |    M     | 08:00 (01:04 /100m) (2019) | 08:55 (01:11 /100m) (2016) |       **10.4%**        |
+|        [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )         | OLYMPIC  |    M     | 16:27 (01:06 /100m) (2023) | 18:27 (01:14 /100m) (2019) |       **10.9%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    W     | 09:56 (01:19 /100m) (2015) | 11:09 (01:29 /100m) (2017) |       **10.9%**        |
+| [Sydney](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_sydney) ( :australia: ) | OLYMPIC  |    W     | 19:38 (01:19 /100m) (2012) | 22:07 (01:28 /100m) (2011) |       **11.2%**        |
+|          [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )          |  SPRINT  |    M     | 08:33 (01:08 /100m) (2015) | 09:42 (01:18 /100m) (2019) |       **11.9%**        |
+|                     [Chicago](https://www.triathlon.org/events/event/2014_itu_world_triathlon_chicago) ( :us: )                      | OLYMPIC  |    W     | 17:56 (01:12 /100m) (2015) | 20:26 (01:22 /100m) (2014) |       **12.3%**        |
+|                     [Chicago](https://www.triathlon.org/events/event/2014_itu_world_triathlon_chicago) ( :us: )                      | OLYMPIC  |    M     | 16:31 (01:06 /100m) (2015) | 19:09 (01:17 /100m) (2014) |       **13.8%**        |
+
+</details>
+
+---
+
+The benefit of the wetsuit could be estimated with a third method (less reliable):
+
+<details>
+  <summary>Click to expand - <strong>Third approach.</strong></summary>
 
 |             ![wetsuit_2.png](res/wetsuit_2.png)              | 
 |:------------------------------------------------------------:| 
@@ -745,6 +1018,467 @@ Outliers:
 </details>
 
 ---
+
+---
+
+# :shower: WETSUIT AT T1
+
+This section addresses the question:
+> **"How much time does the wetsuit add to T1?"**
+
+To answer this, the goal is to calculate:
+```
+extra_time_for_wetsuit = t1_with_wetsuit - t1_without_wetsuit
+```
+
+The challenge is that **only one of these two `t1_` values is typically available**: the one recorded during the race.
+- In practice, when the wetsuit is allowed, **everyone wears it**.
+  - It does not happen for a race to have groups of athletes split between wearing and not wearing wetsuits, which would have allowed direct measurement of both `t1_` times under the same conditions.
+- Consequently, this section introduces **two methods** to **estimate the missing `t1_`**, enabling the calculation of the `extra_time_for_wetsuit` difference.
+
+Note: For each race analysed, the average T1 duration is calculated, **excluding the 5 slowest transition times** to reduce the influence of outliers.
+
+---
+
+### :earth_africa: Method 1: Using **Recurring Events**
+
+This method identifies **pairs of events** held at the **same venue**, where wetsuits were **required in one year** but **not in another**.
+- The approach assumes that the **course layout remains consistent** across years and that **timing method** for T1 do not change significantly.
+- For example, in the women’s race at Cagliari ( :italy: ), wetsuits were worn in 2024 (T1 time: `46.9s`) but not in 2023 (T1 time: `39.1s`) and not in 2022 (T1 time: `37.8s`).
+- Using these **three events**, **two comparisons** can be made to estimate `extra_time_for_wetsuit`:
+  - **2024 (wetsuit) vs 2023 (no-wetsuit):** `extra_time_for_wetsuit = 46.9s - 39.1s = 7.9s`.
+  - **2024 (wetsuit) vs 2022 (no-wetsuit):** `extra_time_for_wetsuit = 46.9s - 37.8s = 9.1s`.
+- By collecting many such comparisons, a **distribution of `extra_time_for_wetsuit`** is generated, see the following figure.
+- The **mean and median** of this distribution provide an answer to the initial question: **_"How much time does the wetsuit add to T1?"_**
+
+Limitations:
+- The **exact length of T1** may vary if the course layout changes between years or if **timing mats** are moved.
+  - Such differences can render comparisons inaccurate.
+  - For instance, an **extra 15 meters** in T1 would add about **3 seconds** at a speed of 18 km/h. 
+  - One option considered was to exclude comparisons between events that were **several years apart**. However, since the final results were not significantly affected, this rule was not applied to maintain a larger dataset.
+- To address this, data cleaning is applied to remove implausible entries.
+  - Determining the **appropriate upper threshold** for such exclusions remains a challenge: _15s? 20s? 30s?_
+  - But this choice is not critical, as explained below.
+
+Advantages:
+- `extra_time_for_wetsuit` can be calculated separately for **men**, **women**, or **combined** datasets.
+- The method benefits from a **large number of comparisons** (more than 300), improving the robustness of the estimate:
+  - Variations in course length are **mitigated** since some comparisons will involve longer and others shorter T1 courses, **balancing the overall distribution**.
+  - Outliers have minimal impact on the final aggregated estimate due to the **high volume of data points**. Testing with different thresholds did not show any significant difference in the final estimate.
+
+|                                                        ![t1_with_wetsuit.png](res/t1_with_wetsuit.png)                                                         | 
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------:| 
+| *Distribution of the estimated `extra_time_for_wetsuit`, i.e. the **additional time charged to the wetsuit at T1**, using the method of **recurring events**.* |
+
+Results from **270 comparisons**:
+- The wetsuit **adds `9.3` (mean) or `9.2` (median) seconds in T1**. (`std = 2.7`)
+- **Women are `0.1` (with means) or `0.4` (with medians) seconds slower** than men.
+	- Women only: `mean = 9.4`, `median = 9.4`. (`std = 2.6`)
+	- Men only: `mean = 9.3`, `median = 9.0`. (`std = 2.7`) 
+
+- Restricting to **world-series** yields **`~9.6` extra seconds** (from 206 comparisons) **both for men and women**.
+
+<details>
+  <summary>Click to expand - ⚖️ <strong>Full list of comparisons used for this derivation.</strong></summary>
+
+**Distributions:**
+- Event category:
+	- WTCS      : 80% (215)
+	- World-Cup : 20% (55)
+- Distance category:
+	- Olympic   : 52% (140)
+	- Sprint    : 48% (130)
+
+**Venues of the comparisons:**
+- 95 (35.2%): Hamburg ( :de: )
+- 63 (23.3%): Yokohama ( :jp: )
+- 28 (10.4%): Edmonton ( :canada: )
+- 21 ( 7.8%): London ( :gb: )
+- 20 ( 7.4%): Tongyeong ( :kr: )
+- 13 ( 4.8%): New Plymouth ( :new_zealand: )
+- 10 ( 3.7%): Karlovy Vary ( :czech_republic: )
+-  7 ( 2.6%): Auckland ( :new_zealand: )
+-  4 ( 1.5%): Cannigione, Arzachena ( :it: )
+-  4 ( 1.5%): Cagliari ( :it: )
+-  2 ( 0.7%): San Diego ( :us: )
+-  2 ( 0.7%): Valencia ( :es: )
+-  1 ( 0.4%): Stockholm ( :sweden: )
+
+|                                                               EVENT                                                               |  GENDER  |  T1 WITH WETSUIT (s)  |  T1 WITHOUT WETSUIT (s)  |  **EXTRA TIME FOR WETSUIT (s)**  |
+|:---------------------------------------------------------------------------------------------------------------------------------:|:--------:|:---------------------:|:------------------------:|:--------------------------------:|
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      41.3 (2012)      |       37.3 (2009)        |             **4.0**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      66.7 (2023)      |       62.4 (2009)        |             **4.3**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    M     |      27.2 (2022)      |       22.8 (2019)        |             **4.3**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      48.5 (2017)      |       44.1 (2015)        |             **4.5**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    M     |      37.0 (2021)      |       32.5 (2022)        |             **4.5**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      67.1 (2022)      |       62.4 (2009)        |             **4.8**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    M     |      27.7 (2023)      |       22.8 (2019)        |             **4.9**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.4 (2013)      |       40.3 (2011)        |             **5.0**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      39.9 (2019)      |       34.8 (2010)        |             **5.0**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      48.5 (2017)      |       43.3 (2016)        |             **5.2**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      38.8 (2016)      |       33.6 (2010)        |             **5.2**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      38.8 (2016)      |       33.6 (2022)        |             **5.3**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    W     |      52.2 (2017)      |       46.9 (2015)        |             **5.3**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      42.2 (2014)      |       36.8 (2011)        |             **5.4**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.7 (2014)      |       40.3 (2011)        |             **5.4**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      39.1 (2017)      |       33.6 (2010)        |             **5.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.1 (2017)      |       33.6 (2022)        |             **5.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      36.2 (2019)      |       30.6 (2024)        |             **5.6**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      39.2 (2009)      |       33.6 (2010)        |             **5.6**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.2 (2009)      |       33.6 (2022)        |             **5.6**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    M     |      61.6 (2023)      |       55.9 (2009)        |             **5.6**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    W     |      30.2 (2022)      |       24.6 (2019)        |             **5.7**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    W     |      30.3 (2023)      |       24.6 (2019)        |             **5.7**              |
+|               [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )               |    W     |      68.0 (2014)      |       62.2 (2013)        |             **5.8**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.2 (2009)      |       36.4 (2022)        |             **5.9**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      39.5 (2021)      |       33.6 (2010)        |             **5.9**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.5 (2021)      |       33.6 (2022)        |             **5.9**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.3 (2017)      |       36.4 (2022)        |             **5.9**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      48.5 (2017)      |       42.6 (2014)        |             **6.0**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.4 (2021)      |       36.4 (2022)        |             **6.0**              |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      39.8 (2012)      |       33.8 (2009)        |             **6.1**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      36.2 (2019)      |       30.1 (2015)        |             **6.1**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    M     |      61.6 (2023)      |       55.5 (2021)        |             **6.1**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.6 (2016)      |       36.4 (2022)        |             **6.2**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      30.5 (2018)      |       24.2 (2017)        |             **6.3**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    M     |      38.9 (2019)      |       32.5 (2022)        |             **6.3**              |
+|            [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )            |    W     |      48.2 (2020)      |       41.9 (2022)        |             **6.4**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    W     |      41.5 (2021)      |       35.1 (2022)        |             **6.4**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      39.9 (2019)      |       33.4 (2015)        |             **6.5**              |
+|               [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )               |    W     |      68.8 (2021)      |       62.2 (2013)        |             **6.5**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    M     |      28.2 (2017)      |       21.6 (2019)        |             **6.5**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    W     |      41.7 (2019)      |       35.1 (2022)        |             **6.5**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    W     |      31.1 (2021)      |       24.6 (2019)        |             **6.6**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      30.8 (2014)      |       24.2 (2017)        |             **6.6**              |
+|                [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )                |    M     |      51.7 (2016)      |       45.1 (2015)        |             **6.6**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      66.7 (2023)      |       60.1 (2021)        |             **6.6**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      36.2 (2019)      |       29.5 (2013)        |             **6.6**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      52.6 (2009)      |       45.9 (2011)        |             **6.6**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      69.1 (2015)      |       62.4 (2009)        |             **6.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      36.2 (2019)      |       29.4 (2018)        |             **6.7**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    M     |      28.4 (2018)      |       21.6 (2019)        |             **6.7**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      61.6 (2023)      |       54.8 (2017)        |             **6.8**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      69.2 (2024)      |       62.4 (2009)        |             **6.8**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      43.3 (2012)      |       36.4 (2022)        |             **6.9**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    M     |      39.4 (2023)      |       32.5 (2022)        |             **6.9**              |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.0 (2014)      |       61.1 (2019)        |             **7.0**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      36.2 (2019)      |       29.2 (2014)        |             **7.0**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      67.1 (2022)      |       60.1 (2021)        |             **7.1**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      43.9 (2013)      |       36.8 (2011)        |             **7.1**              |
+|          [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )           |    M     |      61.6 (2023)      |       54.5 (2024)        |             **7.1**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      69.6 (2018)      |       62.4 (2009)        |             **7.2**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    M     |      30.0 (2020)      |       22.8 (2019)        |             **7.2**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      30.5 (2018)      |       23.3 (2019)        |             **7.2**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      39.9 (2019)      |       32.7 (2024)        |             **7.2**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      39.9 (2019)      |       32.6 (2013)        |             **7.2**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    M     |      30.1 (2021)      |       22.8 (2019)        |             **7.3**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      31.5 (2016)      |       24.2 (2017)        |             **7.3**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    W     |      69.7 (2014)      |       62.4 (2009)        |             **7.3**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      42.2 (2009)      |       34.8 (2010)        |             **7.4**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    M     |      63.4 (2015)      |       55.9 (2009)        |             **7.4**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      42.3 (2017)      |       34.8 (2010)        |             **7.5**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    M     |      63.4 (2018)      |       55.9 (2009)        |             **7.5**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      30.8 (2014)      |       23.3 (2019)        |             **7.5**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      61.6 (2023)      |       54.0 (2016)        |             **7.5**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      42.4 (2021)      |       34.8 (2010)        |             **7.6**              |
+|           [Cagliari](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_cagliari) ( :it: )           |    W     |      46.3 (2024)      |       38.8 (2023)        |             **7.6**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    W     |      32.2 (2020)      |       24.6 (2019)        |             **7.6**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      44.4 (2015)      |       36.8 (2011)        |             **7.6**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      66.7 (2023)      |       59.0 (2017)        |             **7.7**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      66.7 (2023)      |       59.0 (2016)        |             **7.7**              |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.8 (2021)      |       61.1 (2019)        |             **7.7**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    W     |      54.6 (2014)      |       46.9 (2015)        |             **7.7**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    M     |      29.5 (2014)      |       21.6 (2019)        |             **7.8**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      42.6 (2016)      |       34.8 (2010)        |             **7.8**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      39.9 (2019)      |       32.0 (2018)        |             **7.9**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    M     |      63.4 (2015)      |       55.5 (2021)        |             **7.9**              |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      62.5 (2014)      |       54.6 (2019)        |             **8.0**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    M     |      63.4 (2018)      |       55.5 (2021)        |             **8.0**              |
+|            [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )            |    W     |      49.9 (2021)      |       41.9 (2022)        |             **8.0**              |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.4 (2013)      |       37.3 (2009)        |             **8.1**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      67.1 (2022)      |       59.0 (2017)        |             **8.1**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      67.1 (2022)      |       59.0 (2016)        |             **8.1**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      39.9 (2019)      |       31.7 (2014)        |             **8.1**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    M     |      31.0 (2018)      |       22.8 (2019)        |             **8.2**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      38.8 (2016)      |       30.6 (2024)        |             **8.2**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      31.5 (2016)      |       23.3 (2019)        |             **8.2**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    W     |      43.4 (2023)      |       35.1 (2022)        |             **8.3**              |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      42.2 (2014)      |       33.8 (2009)        |             **8.4**              |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.7 (2014)      |       37.3 (2009)        |             **8.4**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      43.3 (2012)      |       34.8 (2010)        |             **8.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.1 (2017)      |       30.6 (2024)        |             **8.5**              |
+|          [Cannigione, Arzachena](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup) ( :it: )          |    M     |      46.4 (2021)      |       37.9 (2020)        |             **8.5**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      42.1 (2012)      |       33.6 (2010)        |             **8.5**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      52.6 (2009)      |       44.1 (2015)        |             **8.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      42.1 (2012)      |       33.6 (2022)        |             **8.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.2 (2009)      |       30.6 (2024)        |             **8.6**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      66.7 (2023)      |       58.1 (2019)        |             **8.6**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    M     |      41.1 (2018)      |       32.5 (2022)        |             **8.6**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2015)      |       54.8 (2017)        |             **8.6**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2018)      |       54.8 (2017)        |             **8.7**              |
+|               [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )               |    W     |      70.9 (2016)      |       62.2 (2013)        |             **8.7**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    M     |      30.4 (2016)      |       21.6 (2019)        |             **8.7**              |
+|            [Cannigione, Arzachena](https://www.triathlon.org/events/event/2022_world_triathlon_cup_arzachena) ( :it: )            |    M     |      46.4 (2021)      |       37.7 (2022)        |             **8.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      38.8 (2016)      |       30.1 (2015)        |             **8.7**              |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    M     |      42.4 (2011)      |       33.6 (2010)        |             **8.8**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      42.4 (2011)      |       33.6 (2022)        |             **8.8**              |
+|           [Cagliari](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_cagliari) ( :it: )           |    W     |      46.3 (2024)      |       37.5 (2022)        |             **8.8**              |
+|       [Karlovy Vary](https://www.triathlon.org/events/event/2019_karlovy_vary_itu_triathlon_world_cup) ( :czech_republic: )       |    W     |      33.4 (2018)      |       24.6 (2019)        |             **8.8**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      39.5 (2021)      |       30.6 (2024)        |             **8.9**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.2 (2009)      |       33.4 (2015)        |             **8.9**              |
+|   [London](https://www.triathlon.org/events/event/2011_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      49.2 (2015)      |       40.3 (2011)        |             **8.9**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    M     |      30.5 (2015)      |       21.6 (2019)        |             **8.9**              |
+|           [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )           |    M     |      61.6 (2023)      |       52.7 (2022)        |             **8.9**              |
+|          [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )           |    M     |      63.4 (2015)      |       54.5 (2024)        |             **8.9**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.3 (2017)      |       33.4 (2015)        |             **8.9**              |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      41.3 (2012)      |       32.4 (2010)        |             **9.0**              |
+|          [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )           |    M     |      63.4 (2018)      |       54.5 (2024)        |             **9.0**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.4 (2021)      |       33.4 (2015)        |             **9.0**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.1 (2017)      |       30.1 (2015)        |             **9.0**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      61.6 (2023)      |       52.6 (2019)        |             **9.0**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      67.1 (2022)      |       58.1 (2019)        |             **9.0**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      69.1 (2015)      |       60.1 (2021)        |             **9.0**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.2 (2009)      |       30.1 (2015)        |             **9.1**              |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      39.8 (2012)      |       30.7 (2010)        |             **9.1**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      69.2 (2024)      |       60.1 (2021)        |             **9.1**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      52.6 (2009)      |       43.3 (2016)        |             **9.2**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.6 (2016)      |       33.4 (2015)        |             **9.2**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      38.8 (2016)      |       29.5 (2013)        |             **9.3**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    W     |      56.2 (2009)      |       46.9 (2015)        |             **9.3**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2015)      |       54.0 (2016)        |             **9.3**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.5 (2021)      |       30.1 (2015)        |             **9.4**              |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2018)      |       54.0 (2016)        |             **9.4**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      38.8 (2016)      |       29.4 (2018)        |             **9.4**              |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      64.0 (2016)      |       54.6 (2019)        |             **9.4**              |
+|        [New Plymouth](https://www.triathlon.org/events/event/2017_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      33.6 (2015)      |       24.2 (2017)        |             **9.5**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      69.6 (2018)      |       60.1 (2021)        |             **9.5**              |
+| [Yokohama](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_yokohama) ( :jp: ) |    M     |      65.4 (2014)      |       55.9 (2009)        |             **9.5**              |
+|                  [Tongyeong](https://www.triathlon.org/events/event/2022_world_triathlon_cup_tongyeong) ( :kr: )                  |    W     |      44.6 (2018)      |       35.1 (2022)        |             **9.5**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.1 (2017)      |       29.5 (2013)        |             **9.5**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.2 (2009)      |       32.7 (2024)        |             **9.6**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.2 (2009)      |       29.5 (2013)        |             **9.6**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    W     |      69.7 (2014)      |       60.1 (2021)        |             **9.6**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.2 (2009)      |       32.6 (2013)        |             **9.6**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.1 (2017)      |       29.4 (2018)        |             **9.6**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.3 (2017)      |       32.7 (2024)        |             **9.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.3 (2017)      |       32.6 (2013)        |             **9.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      38.8 (2016)      |       29.2 (2014)        |             **9.7**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.4 (2021)      |       32.7 (2024)        |             **9.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.2 (2009)      |       29.4 (2018)        |             **9.7**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.4 (2021)      |       32.6 (2013)        |             **9.7**              |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    W     |      56.8 (2011)      |       46.9 (2015)        |             **9.8**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      43.3 (2012)      |       33.4 (2015)        |             **9.9**              |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      70.9 (2016)      |       61.1 (2019)        |             **9.9**              |
+|            [Hamburg](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      46.3 (2011)      |       36.4 (2022)        |             **9.9**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.5 (2021)      |       29.5 (2013)        |             **9.9**              |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.1 (2017)      |       29.2 (2014)        |             **9.9**              |
+|                     [Yokohama](https://www.triathlon.org/events/event/2021_world_triathlon_yokohama) ( :jp: )                     |    M     |      65.4 (2014)      |       55.5 (2021)        |             **10.0**             |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      42.6 (2016)      |       32.7 (2024)        |             **10.0**             |
+|                [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    M     |      52.6 (2009)      |       42.6 (2014)        |             **10.0**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.2 (2009)      |       29.2 (2014)        |             **10.0**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.6 (2016)      |       32.6 (2013)        |             **10.0**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.5 (2021)      |       29.4 (2018)        |             **10.0**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.1 (2015)      |       59.0 (2017)        |             **10.1**             |
+|             [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )             |    M     |      62.5 (2014)      |       52.5 (2021)        |             **10.1**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.1 (2015)      |       59.0 (2016)        |             **10.1**             |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      43.9 (2013)      |       33.8 (2009)        |             **10.1**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.2 (2024)      |       59.0 (2017)        |             **10.2**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.2 (2024)      |       59.0 (2016)        |             **10.2**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.0 (2014)      |       57.8 (2017)        |             **10.2**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.2 (2009)      |       32.0 (2018)        |             **10.3**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      39.5 (2021)      |       29.2 (2014)        |             **10.3**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.3 (2017)      |       32.0 (2018)        |             **10.3**             |
+|        [New Plymouth](https://www.triathlon.org/events/event/2019_new_plymouth_itu_triathlon_world_cup) ( :new_zealand: )         |    W     |      33.6 (2015)      |       23.3 (2019)        |             **10.4**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      62.5 (2014)      |       52.1 (2017)        |             **10.4**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.4 (2021)      |       32.0 (2018)        |             **10.4**             |
+|                [Tongyeong](https://www.triathlon.org/events/event/2015_tongyeong_itu_triathlon_world_cup) ( :kr: )                |    W     |      57.4 (2016)      |       46.9 (2015)        |             **10.4**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.2 (2009)      |       31.7 (2014)        |             **10.5**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.6 (2018)      |       59.0 (2017)        |             **10.5**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.6 (2018)      |       59.0 (2016)        |             **10.5**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.3 (2017)      |       31.7 (2014)        |             **10.6**             |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      43.3 (2012)      |       32.7 (2024)        |             **10.6**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      43.3 (2012)      |       32.6 (2013)        |             **10.6**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.4 (2021)      |       31.7 (2014)        |             **10.6**             |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      44.4 (2015)      |       33.8 (2009)        |             **10.7**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      65.4 (2014)      |       54.8 (2017)        |             **10.7**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2017_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.7 (2014)      |       59.0 (2017)        |             **10.7**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      65.3 (2015)      |       54.6 (2019)        |             **10.7**             |
+|           [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )           |    M     |      63.4 (2015)      |       52.7 (2022)        |             **10.7**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.7 (2014)      |       59.0 (2016)        |             **10.7**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.6 (2016)      |       32.0 (2018)        |             **10.7**             |
+|           [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )           |    M     |      63.4 (2018)      |       52.7 (2022)        |             **10.7**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2015)      |       52.6 (2019)        |             **10.8**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2018)      |       52.6 (2019)        |             **10.9**             |
+|               [Edmonton](https://www.triathlon.org/events/event/2013_edmonton_itu_triathlon_world_cup) ( :canada: )               |    W     |      73.1 (2015)      |       62.2 (2013)        |             **10.9**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.8 (2021)      |       57.8 (2017)        |             **10.9**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      42.6 (2016)      |       31.7 (2014)        |             **10.9**             |
+|          [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )           |    M     |      65.4 (2014)      |       54.5 (2024)        |             **10.9**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.1 (2015)      |       58.1 (2019)        |             **10.9**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.2 (2024)      |       58.1 (2019)        |             **11.1**             |
+|                  [San Diego](https://www.triathlon.org/events/event/2012_itu_world_triathlon_san_diego) ( :us: )                  |    M     |      69.1 (2013)      |       57.9 (2012)        |             **11.3**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      43.3 (2012)      |       32.0 (2018)        |             **11.3**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2016_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      65.4 (2014)      |       54.0 (2016)        |             **11.4**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.6 (2018)      |       58.1 (2019)        |             **11.4**             |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      42.2 (2014)      |       30.7 (2010)        |             **11.4**             |
+|  [Hamburg](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_hamburg) ( :de: )  |    W     |      46.3 (2011)      |       34.8 (2010)        |             **11.5**             |
+|              [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )               |    M     |      65.2 (2011)      |       53.7 (2015)        |             **11.5**             |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      42.1 (2012)      |       30.6 (2024)        |             **11.5**             |
+|             [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )             |    M     |      64.0 (2016)      |       52.5 (2021)        |             **11.5**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      43.3 (2012)      |       31.7 (2014)        |             **11.5**             |
+|                  [San Diego](https://www.triathlon.org/events/event/2012_itu_world_triathlon_san_diego) ( :us: )                  |    W     |      75.5 (2013)      |       64.0 (2012)        |             **11.5**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      69.7 (2014)      |       58.1 (2019)        |             **11.6**             |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    M     |      42.4 (2011)      |       30.6 (2024)        |             **11.8**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      64.0 (2016)      |       52.1 (2017)        |             **11.9**             |
+|   [London](https://www.triathlon.org/events/event/2009_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      49.2 (2015)      |       37.3 (2009)        |             **11.9**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.1 (2012)      |       30.1 (2015)        |             **12.0**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      73.1 (2015)      |       61.1 (2019)        |             **12.1**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.0 (2014)      |       55.8 (2018)        |             **12.2**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      62.5 (2014)      |       50.3 (2018)        |             **12.3**             |
+|              [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )               |    W     |      71.3 (2011)      |       59.0 (2015)        |             **12.3**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.4 (2011)      |       30.1 (2015)        |             **12.3**             |
+|              [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )               |    M     |      65.2 (2011)      |       52.7 (2014)        |             **12.5**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.1 (2012)      |       29.5 (2013)        |             **12.5**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.1 (2012)      |       29.4 (2018)        |             **12.7**             |
+|           [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )           |    M     |      65.4 (2014)      |       52.7 (2022)        |             **12.7**             |
+|             [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )             |    M     |      65.3 (2015)      |       52.5 (2021)        |             **12.8**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.4 (2011)      |       29.5 (2013)        |             **12.8**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2019_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      65.4 (2014)      |       52.6 (2019)        |             **12.8**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2015_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      46.3 (2011)      |       33.4 (2015)        |             **12.9**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.1 (2012)      |       29.2 (2014)        |             **12.9**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.4 (2011)      |       29.4 (2018)        |             **12.9**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      68.8 (2021)      |       55.8 (2018)        |             **13.0**             |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.4 (2013)      |       32.4 (2010)        |             **13.0**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      70.9 (2016)      |       57.8 (2017)        |             **13.1**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      65.3 (2015)      |       52.1 (2017)        |             **13.1**             |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      43.9 (2013)      |       30.7 (2010)        |             **13.1**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    M     |      42.4 (2011)      |       29.2 (2014)        |             **13.2**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      61.6 (2023)      |       48.2 (2012)        |             **13.4**             |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    W     |      45.7 (2014)      |       32.4 (2010)        |             **13.4**             |
+|                   [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                   |    W     |      53.0 (2020)      |       39.6 (2022)        |             **13.4**             |
+|                   [Valencia](https://www.triathlon.org/events/event/2022_world_triathlon_cup_valencia) ( :es: )                   |    M     |      49.9 (2020)      |       36.3 (2022)        |             **13.5**             |
+|            [Hamburg](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_hamburg) ( :de: )            |    W     |      46.3 (2011)      |       32.7 (2024)        |             **13.6**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2013_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      46.3 (2011)      |       32.6 (2013)        |             **13.7**             |
+|   [London](https://www.triathlon.org/events/event/2010_dextro_energy_triathlon_-_itu_world_championship_series_london) ( :gb: )   |    M     |      44.4 (2015)      |       30.7 (2010)        |             **13.7**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      64.0 (2016)      |       50.3 (2018)        |             **13.7**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2019_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      68.7 (2011)      |       54.6 (2019)        |             **14.1**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2018_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      46.3 (2011)      |       32.0 (2018)        |             **14.3**             |
+|                 [Cagliari](https://www.triathlon.org/events/event/2018_cagliari_itu_triathlon_world_cup) ( :it: )                 |    W     |      59.7 (2016)      |       45.3 (2018)        |             **14.4**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      66.7 (2023)      |       52.3 (2012)        |             **14.4**             |
+|                    [Hamburg](https://www.triathlon.org/events/event/2014_itu_world_triathlon_hamburg) ( :de: )                    |    W     |      46.3 (2011)      |       31.7 (2014)        |             **14.6**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                   |    W     |      67.1 (2022)      |       52.3 (2012)        |             **14.9**             |
+|              [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )               |    M     |      68.6 (2012)      |       53.7 (2015)        |             **14.9**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    M     |      65.3 (2015)      |       50.3 (2018)        |             **15.0**             |
+|              [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )               |    W     |      71.3 (2011)      |       56.2 (2014)        |             **15.1**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2018_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      70.9 (2016)      |       55.8 (2018)        |             **15.2**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2015)      |       48.2 (2012)        |             **15.2**             |
+|                   [Yokohama](https://www.triathlon.org/events/event/2012_itu_world_triathlon_yokohama) ( :jp: )                   |    M     |      63.4 (2018)      |       48.2 (2012)        |             **15.2**             |
+|                 [Edmonton](https://www.triathlon.org/events/event/2017_itu_world_triathlon_edmonton) ( :canada: )                 |    W     |      73.1 (2015)      |       57.8 (2017)        |             **15.3**             |
+|              [Auckland](https://www.triathlon.org/events/event/2015_itu_world_triathlon_auckland) ( :new_zealand: )               |    W     |      74.9 (2012)      |       59.0 (2015)        |             **15.9**             |
+|              [Auckland](https://www.triathlon.org/events/event/2014_itu_world_triathlon_auckland) ( :new_zealand: )               |    M     |      68.6 (2012)      |       52.7 (2014)        |             **16.0**             |
+|                 [Cagliari](https://www.triathlon.org/events/event/2017_cagliari_itu_triathlon_world_cup) ( :it: )                 |    W     |      59.7 (2016)      |       43.7 (2017)        |             **16.0**             |
+
+
+</details>
+
+---
+
+### :couple: Method 2: using **women/men differences**
+
+The method leverages the **women/men comparison**, resembling the [approach to estimate the **benefit of the wetsuit**](#penguin-wetsuit-benefit).
+
+As a riminder, the **formula** to compute the **extra-time for wetsuit** is:
+```
+extra_time_for_wetsuit = t1_with_wetsuit - t1_no_wetsuit
+```
+
+Let's consider as an example the [2024 Cagliari ( :italy: )](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) event:
+- This event is **very special** because **women raced with wetsuits**, while **men did not**.
+- Trying to apply the formula for women:
+  - `t1_with_wetsuit` is **known**.
+  - `t1_no_wetsuit` is **unknown**.
+- To estimate the **missing `t1_no_wetsuit` for women**, we introduce a **function**, `f_from_men_to_women_no_wetsuit`:
+  - Input: `t1_no_wetsuit` for men.
+  - Output: `t1_no_wetsuit` for women in the same event.
+- Using this function, the **women's extra-time for wetsuit** can be computed:
+  - `extra_time_for_wetsuit_women = t1_with_wetsuit_women - f(t1_no_wetsuit_men)`
+- This approach will be repeated for all events where **women used wetsuits and men did not**: see the table below.
+
+How to **derive the `f_from_men_to_women_no_wetsuit` function**?
+- Using all events where **both men and women swam without wetsuits**.
+
+**What model** for this `f_from_men_to_women_no_wetsuit` function?
+- It is a **design choice**: _A linear model? An affine model? A more complex function approximation such as a neural network? How many layers and parameters then?_
+- I have decided to model T1 as a **composition of two parts**:
+  - **Static part:** The athlete **stands in front of the bike**, drop the swimming equipments (goggles and caps) into the box, and **put the helmet on**. Reminder: both women and men without wetsuit here.
+  - **Moving part:** The athlete **runs** from the water to the bike, and then **runs pushing the bike** until the mounting line at the end of the blue carpet.
+- I have made the following **assumptions**:
+  - The duration of the static part, named **`helmet_duration`**, is **identical for men and women**.
+  - Women are assumed to **run slower than men** by a **constant percentage**, **`diff_wm_t1_run`**.
+    - `diff_wm_t1_run = (t1_run_women - t1_run_men) / t1_run_men`, where:
+      - `t1_run_women = t1_women - helmet_duration`
+      - `t1_run_men = t1_men - helmet_duration`
+
+The resulting model to **estimate the missing `t1_no_wetsuit` for women** is:
+```
+t1_women_no_wetsuit = f(t1_men_no_wetsuit)
+                    = (t1_men_no_wetsuit - helmet_duration) * (1 + diff_wm_t1_run) + helmet_duration`
+```
+
+Parameters:
+- `helmet_duration` is set to **3s**.
+  - Testing **values of 1 or 5 seconds** showed variations of less than 0.15 seconds in the final `extra_time_for_wetsuit` estimate.
+- `diff_wm_t1_run` is estimating using the **147 events** where both women and men swam without wetsuit.
+  - It is found to be **`11.8%`**, i.e. **women run 11.8% slower than men during T1**.
+  - This value is further discussed in a subsequent paragraph.
+
+The derived `f_from_men_to_women_no_wetsuit` function is applied to events featuring the **women-without / men-with** scenario:
+
+|  YEAR  |                                                      EVENT                                                      |  **EXTRA TIME FOR WETSUIT** (women) (s)  |  EVENT CATEGORY  |
+|:------:|:---------------------------------------------------------------------------------------------------------------:|:----------------------------------------:|:----------------:|
+|  2011  |       [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **5.8**                  |    WORLD-CUP     |
+|  2020  | [Cannigione, Arzachena](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup) ( :it: ) |                 **6.2**                  |    WORLD-CUP     |
+|  2021  |          [Haeundae](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) ( :kr: )          |                 **7.3**                  |    WORLD-CUP     |
+|  2014  |       [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **7.4**                  |    WORLD-CUP     |
+|  2012  |        [Sydney](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney) ( :australia: )         |                 **7.5**                  |       WTCS       |
+|  2024  |  [Cagliari](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) ( :it: )  |                 **8.1**                  |       WTCS       |
+|  2022  |  [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )  |                 **8.6**                  |       WTCS       |
+|  2024  | [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )  |                 **8.7**                  |       WTCS       |
+|  2015  |       [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )       |                 **9.1**                  |       WTCS       |
+|  2016  |       [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **9.3**                  |    WORLD-CUP     |
+|  2021  |    [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )    |                 **10.4**                 |       WTCS       |
+
+Results:
+- mean = median = **8.1 seconds** (from 11 events).
+- Restricting to **world-series**:
+  - The w/m difference for running during T1 drops from 11.8% to **9.4%** (from 59 events).
+  - The estimated `extra_time_for_wetsuit` for women raises to **9.9 seconds** (from 6 events).
+
+Notes:
+- Using the women/men comparison offers a strong advantage: the **exact distance** of T1 **does not matter**, as the course and timing methods are **identical for both genders**.
+- One limitation: this method **relies on rare events** where women raced with wetsuits while men did not, or inversely for the men-estimate but the scenario is even rarer.
+
+---
+
+:bulb: FINDINGS AND DISCUSSION:
+- **Both methods** to estimate `extra_time_for_wetsuit` yield **similar results**:
+  - The **time charged to the wetsuit** during the T1 transition lays **between 8 and 10 seconds**.
+    - For **world-series events**, both methods give the same estimate: **around 10 seconds**.
+  - These estimations could serve as **training references for coaches and athletes**.
+- I would first have **expected a lower time**.
+  - However, T1 involves **more than just removing the wetsuit** in front of the bike.
+  - Athletes must also run while wearing the wetsuit, which is **heavy and elastic**.
+  - Additionally, they need to **unzip the wetsuit**, begin **removing the sleeves while running**, and ensure it is **properly placed in the designated box**.
+- Two additional findings regarding the **women/men comparison**:
+  - Women appear **slightly more affected** by the wetsuit.
+    - But the **difference is tiny: < 0.4s**, and completely **negligible at the world-series level**.
+  - **Women run 11.8% slower** than men during T1 (**9.4%** when restricted to **world-series**).
+    - This percentage can be compared to the results of [the women/men comparison section](#couple-women-vs-men), in particular the **~14% for the running leg**.
+    - Probably all athletes **run slower** during T1 compared to the subsequent 5k or 10k. For diverse reasons:
+      - They are **barefoot**.
+      - Their hands are occupied with **swim gear or pushing the bike**.
+      - The course often **includes stairs**, e.g. [at Pont Alexandre III during the 2024 Paris Olympics ( :fr: )](https://youtu.be/bXIAfVppavI?t=1920), or sharp turns.
+    - Probably the **decrease in running speed** is more important for men, leading to a lower gender difference.
+- Finally, while these estimates **focus on time**, the wetsuit also **provides energy savings** (e.g. buoyancy and warmth), as discussed in the section _[Is the wetsuit worth for 300m?](#is-the-wetsuit-worth-for-300m)_.
 
 ---
 
@@ -2221,6 +2955,7 @@ Here are some simplified **key takeaways**:
 - :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**.
 - :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**.
 - :runner: Women run the 10k at **3:33 min/km** (3:26 for 5k), men at **3:07 min/km** (3:00 for 5k).
+- :shower: The time charged to the **wetsuit during the T1** transition is **~10s**.
 - :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
 - :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
 - :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.

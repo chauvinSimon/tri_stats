@@ -2674,6 +2674,259 @@ def process_event_dates(df):
 
     plt.show()
 
+def process_wetsuit_from_repeated_events(
+        df,
+        swim_diff_percent_max: float,
+        distance_categories,
+        sport_outliers
+):
+    # remove outliers?
+    outliers = df[df["swim_diff_percent"] >= swim_diff_percent_max]
+    print(f"{len(outliers)} swim outliers:")
+    print(list(outliers["event_listing"]))
+    print(list(outliers["event_title"]))
+    print(outliers["swim_diff_percent"])
+    df = df[df["swim_diff_percent"] < swim_diff_percent_max]
+
+    df = drop_outliers(df, i_sport=0, sport_outliers=sport_outliers)
+
+    # rows with no wetsuit info have already been dropped
+
+
+    # todo: config
+    max_year_gap = 5
+    # todo: config
+    min_wet_gain_percent = -5
+    max_wet_gain_percent = 14
+
+    swim_time_infos = []
+    groups = df.groupby(["event_venue"])
+    for suffix in ["w", "m"]:
+        for group in groups:
+            df_group = group[1]
+            event_venue = group[0][0]
+            # print(f"{len(df_group)} event(s) at {event_venue}")
+            wetsuit_dict = df_group[f"wetsuit_{suffix}"].value_counts().to_dict()
+            if len(wetsuit_dict) > 1:
+                # print(f"\t{wetsuit_dict}")
+                df_wet = df_group[df_group[f"wetsuit_{suffix}"]]
+                df_no_wet = df_group[~df_group[f"wetsuit_{suffix}"]]
+                for row_no_wet in df_no_wet.itertuples(index=False):
+                    for row_wet in df_wet.itertuples(index=False):
+                        # if row_no_wet.event_year >= row_wet.event_year:
+                        #     continue
+                        if row_no_wet.prog_distance_category != row_wet.prog_distance_category:
+                            continue
+                        prog_distance_category = row_no_wet.prog_distance_category
+                        assert prog_distance_category in distance_categories, prog_distance_category
+                        if abs(row_no_wet.event_year - row_wet.event_year) <= max_year_gap:
+                            if suffix == "w":
+                                wet_swim = row_wet.swim_mean_w
+                                no_wet_swim = row_no_wet.swim_mean_w
+                            else:
+                                wet_swim = row_wet.swim_mean_m
+                                no_wet_swim = row_no_wet.swim_mean_m
+
+                            wet_gain_percent = 100 * (no_wet_swim - wet_swim) / no_wet_swim
+                            swim_time_infos.append({
+                                "prog_distance_category": prog_distance_category,
+                                "wet_swim": wet_swim,
+                                "no_wet_swim": no_wet_swim,
+                                "wet_gain_percent": wet_gain_percent,
+                                "event_venue": event_venue,
+                                "wet_year": row_wet.event_year,
+                                "no_wet_year": row_no_wet.event_year,
+                                "event_country_noc": row_no_wet.event_country_noc,
+                                "event_listing": row_no_wet.event_listing,
+                                "suffix": suffix,
+                                "event_category": row_no_wet.event_category,
+                            })
+
+    df_wet_gain = pd.DataFrame(swim_time_infos)
+    df_wet_gain.sort_values("wet_gain_percent", inplace=True)
+    df_wet_gain = df_wet_gain[df_wet_gain["wet_gain_percent"] > min_wet_gain_percent]
+    df_wet_gain = df_wet_gain[df_wet_gain["wet_gain_percent"] < max_wet_gain_percent]
+
+    df_table = df_wet_gain
+    df_table["EVENT"] = df_table[["event_country_noc", "event_listing", "event_venue"]].apply(
+        lambda
+            x: f"[{x.event_venue}]({x.event_listing}) ( {country_emojis[x.event_country_noc] if x.event_country_noc in country_emojis else x.event_country_noc} )",
+        axis=1
+    )
+    df_table["swim_wet"] = df_table[["wet_year", "wet_swim"]].apply(
+        lambda x: f"{seconds_to_h_min_sec(round(x.wet_swim), use_hours=False, sport='swim', use_units=True)} ({x.wet_year:.0f})",
+        axis=1
+    )
+    df_table["swim_no_wet"] = df_table[["no_wet_year", "no_wet_swim"]].apply(
+        lambda x: f"{seconds_to_h_min_sec(round(x.no_wet_swim), use_hours=False, sport='swim', use_units=True)} ({x.no_wet_year:.0f})",
+        axis=1
+    )
+    df_table["wet_gain_str"] = df_table[["wet_gain_percent"]].apply(
+        lambda x: f"**{x.wet_gain_percent/100:.1%}**",
+        axis=1
+    )
+    df_table["GENDER"] = df_table[["suffix"]].apply(
+        lambda x: "M" if x.suffix == "m" else "W",
+        axis=1
+    )
+    df_table["FORMAT"] = df_table[["prog_distance_category"]].apply(
+        lambda x: "SPRINT" if x.prog_distance_category == "sprint" else "OLYMPIC",
+        axis=1
+    )
+    df_table = df_table[["EVENT", "FORMAT", "GENDER", "swim_wet", "swim_no_wet", "wet_gain_str"]]
+
+    df_table = df_table.rename(columns={
+        "swim_wet": "Swim with wetsuit".upper(),
+        "swim_no_wet": "Swim without wetsuit".upper(),
+        "wet_gain_str": "**Wetsuit gain".upper() + " (%)**",
+    })
+
+    print("Distributions:")
+    d = df_wet_gain["event_category"].value_counts()
+    d_normed = df_wet_gain["event_category"].value_counts(normalize=True)
+    print("- Event category:")
+    for k in ["wcs", "world-cup", "games"]:
+        if k in d:
+            print(f"\t- {k.title().replace('Wcs', 'WTCS'):<10}: {d_normed[k]:.0%} ({d[k]})")
+    d = df_wet_gain["prog_distance_category"].value_counts()
+    d_normed = df_wet_gain["prog_distance_category"].value_counts(normalize=True)
+    print("- Distance category:")
+    for k in ["standard", "sprint"]:
+        if k in d:
+            print(f"\t- {k.replace('standard', 'olympic').title():<10}: {d_normed[k]:.0%} ({d[k]})")
+
+    print("\n**Venues of the comparisons:**")
+    df_wet_gain["event_venue_with_flag"] = df_wet_gain[["event_country_noc", "event_venue"]].apply(
+        lambda x: f"{x.event_venue} ( {country_emojis[x.event_country_noc] if x.event_country_noc in country_emojis else x.event_country_noc} )",
+        axis=1
+    )
+    for venue, venue_count in df_wet_gain["event_venue_with_flag"].value_counts().to_dict().items():
+        print(f"- {venue_count:>2} ({venue_count / len(df_wet_gain):>5.1%}): {venue}")
+    print()
+
+    print(df_table.to_markdown(
+        index=False,
+        colalign=["center"] * len(df_table.columns)
+    ))
+
+    print(df_wet_gain["wet_gain_percent"].describe())
+    print("answer 1:")
+    print(f'{df_wet_gain["wet_gain_percent"].mean():.2f} mean')
+    print(f'{df_wet_gain["wet_gain_percent"].median():.2f} median')
+    for suffix in ["w", "m"]:
+        print(f"\t{suffix.upper()}:")
+        print(f'\t\t{df_wet_gain[df_wet_gain["suffix"] == suffix]["wet_gain_percent"].mean():.2f} mean')
+        print(f'\t\t{df_wet_gain[df_wet_gain["suffix"] == suffix]["wet_gain_percent"].median():.2f} median')
+
+    fig, ax = plt.subplots(figsize=(16, 16))
+
+    data_min = min(df_wet_gain["wet_gain_percent"])
+    data_max = max(df_wet_gain["wet_gain_percent"])
+    bins = np.arange(int(data_min) - 1, int(data_max) + 1, 1)
+    kwargs_hist = {
+        "density": True,
+        "bins": bins,
+    }
+
+    print("w vs m:")
+    mean_all = df_wet_gain["wet_gain_percent"].mean()
+    median_all = df_wet_gain["wet_gain_percent"].median()
+    std_all = df_wet_gain["wet_gain_percent"].std()
+
+    mean_w = df_wet_gain[df_wet_gain["suffix"] == "w"]["wet_gain_percent"].mean()
+    mean_m = df_wet_gain[df_wet_gain["suffix"] == "m"]["wet_gain_percent"].mean()
+    median_w = df_wet_gain[df_wet_gain["suffix"] == "w"]["wet_gain_percent"].median()
+    median_m = df_wet_gain[df_wet_gain["suffix"] == "m"]["wet_gain_percent"].median()
+    std_w = df_wet_gain[df_wet_gain["suffix"] == "w"]["wet_gain_percent"].std()
+    std_m = df_wet_gain[df_wet_gain["suffix"] == "m"]["wet_gain_percent"].std()
+
+    print(f"Results from **{len(df_wet_gain)} comparisons**:")
+    print(f'- **`improve_percent`**:')
+    print(f'\t- Women+Men  : **`mean = {mean_all:.1f}%`**, **`median = {median_all:.1f}%`**. (`std = {std_all:.1f}`)')
+    print(f'\t- Women only : `mean = {mean_w:.1f}%`, `median = {median_w:.1f}%`. (`std = {std_w:.1f}`)')
+    print(f'\t- Men only   : `mean = {mean_m:.1f}%`, `median = {median_m:.1f}%`. (`std = {std_m:.1f}`)')
+    print(f'- **Women vs Men: `{mean_w - mean_m:.1f}%` (with means) or `{median_w - median_m:.1f}%` (with medians)**.')
+
+    ax.hist(
+        df_wet_gain["wet_gain_percent"],
+        label=r"all  : [: = median = ${:.1f}$] [-- = mean = ${:.1f}$]".format(median_all, mean_all),
+        alpha=0.2,
+        color="gray",
+        **kwargs_hist
+    )
+    kwargs_axv_all = {
+        "color": "black",
+        "linewidth": 3,
+        "alpha": 1
+    }
+    ax.axvline(
+        mean_all,
+        linestyle="-",
+        **kwargs_axv_all
+    )
+    ax.axvline(
+        median_all,
+        linestyle=":",
+        **kwargs_axv_all
+    )
+
+    for suffix in ["w", "m"]:
+        color = "magenta" if suffix == "w" else "mediumblue"
+        label = r"women: [: = median = ${:.1f}$] [-- = mean = ${:.1f}$]".format(median_w, mean_w) if suffix == "w" else r"men  : [: = median = ${:.1f}$] [-- = mean = ${:.1f}$]".format(median_m, mean_m)
+        ax.hist(
+            df_wet_gain[df_wet_gain["suffix"] == suffix]["wet_gain_percent"],
+            label=label,
+            alpha=0.5 if suffix == "w" else 0.4,
+            color=color,
+            histtype="step",
+            linewidth=4 if suffix == "w" else 2,
+            **kwargs_hist
+        )
+
+        kwargs_axv = {
+            "color": color,
+            "linewidth": 2,
+            "alpha": 0.5
+        }
+        ax.axvline(
+            mean_w if suffix == "w" else mean_m,
+            linestyle="-",
+            **kwargs_axv
+        )
+        ax.axvline(
+            median_w if suffix == "w" else median_m,
+            linestyle=":",
+            **kwargs_axv
+        )
+
+    from scipy.stats import norm
+    mu, std = norm.fit(df_wet_gain["wet_gain_percent"])
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = norm.pdf(x, mu, std)
+    plt.plot(x, p, 'gray', linewidth=1, linestyle="-", label=f"Normal distribution ($\mu={mu:.1f}$, $\sigma={std:.1f}$)")
+
+    ax.set_ylabel("Percentage".upper(), fontsize=16)
+    ax.set_xlabel("GAIN OFFERED BY THE WETSUIT (%)", fontsize=16)
+
+    ax.tick_params(axis='both', which='major', labelsize=14)
+
+    ax.grid()
+    ax.set_xlim(int(data_min) - 2, int(data_max) + 2)
+    ax.set_xticks(range(int(data_min) - 1, int(data_max) + 2, 1))
+    ax.legend(loc='upper right', fontsize=15)
+    ax.yaxis.set_major_formatter(PercentFormatter(1))
+    fig.suptitle(
+        f"WETSUIT IMPACT DURING THE SWIM\nusing {len(df_wet_gain)} year-to-year comparisons",
+        fontsize=18
+    )
+    plt.tight_layout()
+    add_watermark(fig, y=0.92, x=0.12)
+    plt.savefig(str(res_dir / "wetsuit_in_swim_year_to_year.png"), dpi=300)
+    plt.show()
+
+
+
 
 def process_level(df):
     for suffix in ["w", "m"]:
@@ -2716,6 +2969,7 @@ def main():
 
     process_sports(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
     process_results_wetsuit(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers)
+    process_wetsuit_from_repeated_events(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers)
     process_results_w_vs_m(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sports=sports)
     process_results_repeated_events(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
     process_scenarios(df.copy(), distance_categories=distance_categories)
