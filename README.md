@@ -520,11 +520,13 @@ time_with_wetsuit = (1 - improve_percent) * time_without_wetsuit
 
 Main challenge:
 - **Only one of [`time_no_wetsuit`, `time_wetsuit`]** is typically available: the one recorded during the race.
-- This sections introduces two methods to **estimate the missing `time_`**, enabling the calculation of `improve_percent`.
+- This sections introduces different methods to **estimate the missing `time_`**, enabling the calculation of `improve_percent`.
 
 Reminder:
 - The scope here is **elite triathletes**, going **5-9th** out of water on top World Triathlon events.
 - Results would certainly **differ for beginners** and hobby triathletes.
+
+---
 
 ### :couple: Method 1: using **women/men differences**
 
@@ -617,18 +619,18 @@ The idea of the **derivation** is as follows:
 - **2) Events consistency**:
   - `wm_percent_w_fast = 2.9%` was computed from **five** _"women-with-wetsuit, men-without"_ examples that **all have the following properties**: **WTCS** and **olympic-format**.
     - The five **venues** are: Yokohama ( :jp: ) (twice), Cagliari ( :it: ), Stockholm ( :sweden: ) and Edmonton ( :canada: ).
-  - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **230 events**.
+  - In contrast, `wm_percent = 8.8%` was obtained by considering **all** the sprint- and olympic-format WCTS, world-cups and games-related events since 2009, totaling **220 events**.
     - This is inconsistent.
   - Instead, `wm_percent` should be estimated considering events with **similar swim conditions** as those for `wm_percent_w_fast`.
     - Idea #1: Only consider events with the **same event-category** (WTCS), and possibly the **same format** (olympic). For comparison:
-      - WTCS-only: **`improve_percent=4.8%`**, with a lower women/men difference (8.1%).
-      - World-cups-only: **`improve_percent=4.0%`**, with a higher women/men difference (9.4%).
+      - :warning: WTCS-only: **`improve_percent=4.8%`**, with a lower women/men difference (8.1%).
+      - :warning: World-cups-only: **`improve_percent=4.0%`**, with a higher women/men difference (9.4%).
     - Idea #2: Further restrict Idea #1 (same format and event-category), by considering only with the **same venues**.
       - The four venues mentioned have **hosted multiple** olympic-WTCS: 20 times, from which **15** had women and men sharing the same equipment for the swim.
       - This gives `wm_percent = 7.4% ± 1.6%` (`SE = 1.6/sqrt(15) = 0.4%`), leading to **`improve_percent = 4.2%` with `0.3%` standard error**.
-    - Conclusions:
+    - **IMPORTANT CONCLUSION:**
       - There is a **trade-off between data-quantity and data-quality**.
-      - First refinements suggest wetsuit improvements **closer to 4-5%**.
+      - :arrow_right: First refinements suggest wetsuit improvements **closer to 4-5%**. :arrow_left:
 - **3) Additional examples**:
   - Several **other events** feature the _"women-with / men-without"_ scenario.
     - Tongyeong ( :kr: ) ([2011](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup), [2014](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup), [2016](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup)), [Arzachena ( :it: ) (2020)](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup), [Haeundae ( :kr: ) (2021)](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) are **world-cups** events, so they have not been included.
@@ -656,80 +658,6 @@ The idea of the **derivation** is as follows:
 
 ---
 
-### :mortar_board: Literature review
-
-Here are **some findings of related scientific works**:
-
-- [This 2019 research by Gay et al.](https://pubmed.ncbi.nlm.nih.gov/30958047/) asked 33 swimmers to perform 2×400-m maximal front crawl in a 25-m swimming pool, with wetsuit and with swimsuit. Participants were good swimmers, but not as fast as ITU elite athletes: **1:27 / 100m** average on the 400m with swimsuit.
-  - The **wetsuit** allows for a **~6% improvement**.
-  - Interestingly: _"Swimmers **reduced stroke rate** and **increased stroke length** (by 4%) to benefit from the hydrodynamic reduction of the wetsuit and increase their swimming efficiency."_
-- [This 2022 meta study by Gay et al.](https://www.mdpi.com/2673-9488/2/4/16) concludes from 26 studies, a _"**3.2–12.9% velocity increments** in distances ranging from 25 to 1500 m"_ for the **full-body wetsuit**.
-  - The range is broad: it depends on many factors such as the **profile of the swimmer** (age, level, triathlete or swimmer), the **swimming conditions** (temperature, 25m pool vs open water) and the **wetsuit** itself.
-  - [This interview of Ana Gay in triathlete.com](https://www.triathlete.com/gear/swim/how-much-faster-does-a-wetsuit-make-you-swim/) gives a good introduction to her study.
-- In [this episode by scientifictriathlon.com](https://scientifictriathlon.com/tts392/), [Maria Francesca Piacentini](https://www.researchgate.net/profile/Maria-Francesca-Piacentini) mentions some of her research on wetsuit, and **claims 6% to 11% improvements**.
-  - Apart from the time reduction, her team found that **wetsuit usage** can make athletes **feel less fatigued**: during the [2x7x200m tests](https://www.researchgate.net/publication/366991271_The_Effects_of_a_Wetsuit_on_Biomechanical_Physiological_and_Perceptual_Variables_in_Experienced_Triathletes), the [**stroke index**](https://blog.tritonwear.com/interpreting-to-improving-stroke-index#:~:text=It's%20called%20the%20Stroke%20Index,dig%20further%20into%20this%20shortly.) and the **stroke length** significantly **decreased in the swimsuit** condition, whereas they remained relatively **stable in the wetsuit condition**.
-- [This article from sports-performance-bulletin](https://www.sportsperformancebulletin.com/training/triathlon-clothing-the-benefits-of-wearing-a-wetsuit) reports **improvements by 3% to 7%**.
-  - Sources are not explicitly referenced, but the article probably mentions [this 1995 research by Chatard et al.](https://www.researchgate.net/publication/15406796_Wet_suit_effect_A_comparison_between_competitive_swimmers_and_triathletes) which apart from computing improvements, shows that the **impact of the wetsuit** is very different for **competitive swimmers than for competitive triathletes**.
-
-The **5.4% improvement** for top swimmer (5th-9th) **derived from the World Triathlon data** seems **compatible** with the findings of these research publications.
-
----
-
-### Is the wetsuit worth for 300m?
-
-When they can choose, **pro athletes decide to use the wetsuit** for **~300m swim**, e.g. during **mixed team relay**. Examples:
-  - [2018 Nottingham ( :gb: ) ](https://www.triathlon.org/results/result/2018_itu_world_triathlon_mixed_relay_series_nottingham/323321): [video](https://www.youtube.com/watch?v=B4LHN6GeTF4).
-  - [2022 Leeds ( :gb: )](https://triathlon.org/results/result/2022_world_triathlon_championship_series_leeds/550671): [pic1](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2553.jpg) and [pic2](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2448.jpg).
-  - [2023 Sunderland ( :gb: ) ](https://triathlon.org/results/result/2023_world_triathlon_championship_series_sunderland/576189): [video](https://www.youtube.com/watch?v=xufIoKMYlLo). (Here the wetsuit was mandatory: 13.7°C water :cold_face:)
-
-**_Is this decision sound?_**
-
-<details>
-  <summary>Click to expand - 🐧 <strong>Answering the question <i>"wetsuit for 300m?"</i></strong></summary>
-
-Over **300m** a **wetsuit should save ~12s** (derivation below).
-- According to [the next section](#shower-wetsuit-at-t1), the **extra-time added by the wetsuit during T1** is **around 9 seconds**.
-  - _Before this analysis, I would have estimated a lower impact, around 6s._
-- **Conclusion**: the **overall time gain of wearing the wetsuit for 300m seems to be positive: around 3s**.
-  - Apart from time saving, wetsuits offer additional benefits: temperature **comfort** and probably saving some **energy in the legs**. Also, athletes may a couple of seconds to breath while removing it at T1.
-  - This information is apparently unknown to some athletes. At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/), [5/16 women](https://www.youtube.com/watch?v=asUQlc3Ic98&t=666) and [5/16 men](https://www.youtube.com/watch?v=asUQlc3Ic98&t=5163) decided **not to wear a wetsuit for the first 300m**. An interesting experiment!
-- Conversely, assuming **~9 seconds spent in T1** due to the wetsuit, wetsuit becomes advantageous only for swims longer than **~220m** for top athletes. For swims under ~220m, the wetsuit results in a net time loss.
-
-**Derivation:** The time for a 300m swim is probably **around 3:30 - 4:00**.
-- Here are some swim-times measured for 300m, without wetsuit:
-  - The 5-th **man** out of water was at **~3:35** at [2024 Hamburg ( :de: )](https://youtu.be/WyfYD2wsHPg?t=76) during the first leg.
-  - The 5-th **man** out of water was at **~3:37** at [2023 Hamburg ( :de: )](https://youtu.be/nJ4sm5ULXj8?t=1322) during the first leg.
-  - The 5-th **man** was at **~3:41** at [2023 Super-Sprint Hamburg ( :de: )](https://triathlon.org/results/result/2023_world_triathlon_sprint_relay_championships_hamburg/582516) .
-  - The 5-th **women** was at **~3:46** at [2021 Tokyo ( :jp: )](https://youtu.be/oQQEa_je2Vg?t=777).
-  - The 5-th **women** was at **~3:58** at [2018 Hamburg ( :de: )](https://youtu.be/oAwzJnX44Yg?t=42).
-  - The 5-th **woman** was at **~4:05** at [2023 Super-Sprint Hamburg ( :de: )](https://triathlon.org/results/result/2023_world_triathlon_sprint_relay_championships_hamburg/582517).
-- Variations occur depending on the **actual swim distance** (buoys positions) and the **position of the timing mat**.
-- Considering the broad **range (3:30 - 4:00)** seems relevant.
-  - For the (3:30 - 4:00) range, the **5.4% gain** offered by the wetsuit leads to a **~12s saving**.
-
-| Benefit | 03:30 | 03:35 |  03:40   |  03:45   |  03:50   | 03:55 | 04:00 | 04:05 | 04:10 |
-|:-------:|:-----:|:-----:|:--------:|:--------:|:--------:|:-----:|:-----:|:-----:|:-----:|
-|  4.0%   |  8.4  |  8.6  |   8.8    |   9.0    |   9.2    |  9.4  |  9.6  |  9.8  | 10.0  |
-|  4.2%   |  8.8  |  9.0  |   9.2    |   9.5    |   9.7    |  9.9  | 10.1  | 10.3  | 10.5  |
-|  4.4%   |  9.2  |  9.5  |   9.7    |   9.9    |   10.1   | 10.3  | 10.6  | 10.8  | 11.0  |
-|  4.6%   |  9.7  |  9.9  |   10.1   |   10.4   |   10.6   | 10.8  | 11.0  | 11.3  | 11.5  |
-|  4.8%   | 10.1  | 10.3  |   10.6   |   10.8   |   11.0   | 11.3  | 11.5  | 11.8  | 12.0  |
-|  5.0%   | 10.5  | 10.8  |   11.0   |   11.2   |   11.5   | 11.8  | 12.0  | 12.2  | 12.5  |
-|  5.2%   | 10.9  | 11.2  |   11.4   |   11.7   |   12.0   | 12.2  | 12.5  | 12.7  | 13.0  |
-|  5.4%   | 11.3  | 11.6  | **11.9** | **12.2** | **12.4** | 12.7  | 13.0  | 13.2  | 13.5  |
-|  5.6%   | 11.8  | 12.0  |   12.3   |   12.6   |   12.9   | 13.2  | 13.4  | 13.7  | 14.0  |
-|  5.8%   | 12.2  | 12.5  |   12.8   |   13.1   |   13.3   | 13.6  | 13.9  | 14.2  | 14.5  |
-|  6.0%   | 12.6  | 12.9  |   13.2   |   13.5   |   13.8   | 14.1  | 14.4  | 14.7  | 15.0  |
-|  6.2%   | 13.0  | 13.3  |   13.6   |   14.0   |   14.3   | 14.6  | 14.9  | 15.2  | 15.5  |
-|  6.4%   | 13.4  | 13.8  |   14.1   |   14.4   |   14.7   | 15.0  | 15.4  | 15.7  | 16.0  |
-|  6.6%   | 13.9  | 14.2  |   14.5   |   14.9   |   15.2   | 15.5  | 15.8  | 16.2  | 16.5  |
-|  6.8%   | 14.3  | 14.6  |   15.0   |   15.3   |   15.6   | 16.0  | 16.3  | 16.7  | 17.0  |
-|  7.0%   | 14.7  | 15.1  |   15.4   |   15.8   |   16.1   | 16.5  | 16.8  | 17.2  | 17.5  |
-
-</details>
-
----
-
 ### :earth_africa: Method 2: Using **Recurring Events**
 
 This method identifies **pairs of events** held at the **same venue**, where wetsuits were **required in one year** but **not in another**.
@@ -740,7 +668,7 @@ This method identifies **pairs of events** held at the **same venue**, where wet
   - **2023 (wetsuit) vs 2021 (no-wetsuit):** `improve_percent = (18:23 - 17:31) / 18:23 = 4.7%`.
   - **2023 (wetsuit) vs 2022 (no-wetsuit):** `improve_percent = (18:35 - 17:31) / 18:35 = 5.7%`.
 - By collecting many such comparisons, a **distribution of `improve_percent`** is generated, see the figure below.
-- The **mean and median** of this distribution provide an answer to the initial question: **_"How much advantage (in percent) does the wetsuit bring to top swimmers?"_**
+- The **mean and median** of this distribution provide an answer to the initial question: **_"How much faster are top swimmers with the wetsuit?"_**
 
 |          ![wetsuit_in_swim_year_to_year.png](res/wetsuit_in_swim_year_to_year.png)          | 
 |:-------------------------------------------------------------------------------------------:| 
@@ -755,7 +683,7 @@ Results from **186 comparisons**:
 
 ---
 
-:bulb: **FINDINGS AND DISCUSSION:**
+:bulb: **DISCUSSION:**
 - Challenge: **the swim course varies** across years.
   - The year-to-year comparison incorporates a substantial amount of data (nearly **200 estimates**) and assumes that while some samples may yield **low estimates** and **others high**, the **large dataset size** ensures **these variations balance out**.
     - This approach justifies **including negative estimates**, as the presence of very large benefits is also unlikely.
@@ -764,16 +692,6 @@ Results from **186 comparisons**:
   - Outliers, however, are addressed by removing estimates **below -5% and above 14%**.
   - To further limit the impact of outliers, comparisons are restricted to **years in close proximity**.
     - The choice of **5 years** as the cutoff is another parameter of the analysis.
-- Women/men:
-  - The second and third methods suggest that **women benefit _slightly_ more from the wetsuit**, with a tiny improvement difference of 0.1-0.3%.
-    - This finding is somewhat surprising, given that women already have **a higher natural buoyancy**, which could suggest a smaller relative benefit.
-    - The first method **could only compute `improve_percent` for women**, limiting direct comparability.
-- **Wetsuit benefit:**
-  - First method: **`improve_percent = 5.4%`** (women only), leveraging events where the "`women-without` / `men-with-wetsuit` scenario" occurs.
-    - **Refinements** of this method suggest **lower benefits**, around **4-5%**.
-  - Second method: **`improve_percent = 3.6%`**, using on **year-to-year comparisons**.
-  - Third method (below): **`improve_percent = 4.1%`** (olympic format only), comparing average times with- and without-wetsuit.
-  - _Which method do you think is the most appropriate? What could be improved? If you have any comments or ideas, please do not hesitate to contact me!_
 
 <details>
   <summary>Click to expand - ⚖️ <strong>Full list of comparisons used for this derivation.</strong></summary>
@@ -997,7 +915,7 @@ Distributions:
 
 ---
 
-The benefit of the wetsuit could be estimated with a third method (less reliable):
+The benefit of the wetsuit could be estimated with a **third method** (more naive):
 
 <details>
   <summary>Click to expand - <strong>Third approach.</strong></summary>
@@ -1009,7 +927,7 @@ The benefit of the wetsuit could be estimated with a third method (less reliable
 The idea is to compare the **average swim durations**, **with-** and **without wetsuit**:
 - `improve_percent = (time_no_wetsuit - time_wetsuit) / time_no_wetsuit`.
 - This formula is applied to **four cases**: W-sprint, W-olympic, M-sprint, M-olympic. And results are written in the title of the above figure.
-- Note how the **swim histograms** of the [:stopwatch: PACES](#stopwatch-paces) section **reveals two distinct modes**: **with-** (in violet, with lower times) and **without wetsuit** (larger times).  
+- Note how the **swim histograms** of the [:stopwatch: PACES](#stopwatch-paces) section **reveals two distinct modes**: **with-** (in violet, with lower times) and **without wetsuit** (larger times).
 
 Outliers:
 - The swim from [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) has been dropped, see the previous section on [T1](#T1).
@@ -1024,6 +942,117 @@ Outliers:
     - Specifically, swim times at **Mooloolaba** ( :australia: ) are **unusually fast** considering the **absence of wetsuit**.
   - For `olympic`+`men`+`no-wetsuit`, the difference is **5:45**.
 - Clearly, **swim distances** or **timing methods** vary between races, even when they are **labeled with the same format**.
+- Nonetheless, we can hope that these variations will **balance out** thanks to the **large amount of data**.
+
+</details>
+
+---
+
+### :bar_chart: Conclusion
+
+**How much faster are top swimmers (5-9th) with the wetsuit?**
+- Method 1: **`improve_percent = 5.4%`** (women only), leveraging events where the "`women-without` / `men-with-wetsuit` scenario" occurs.
+  - **Refinements** of this method suggest **lower benefits**, around **4-5%**.
+- Method 2: **`improve_percent = 3.6%`**, using on **year-to-year comparisons**.
+- Method 3: **`improve_percent = 4.1%`** (olympic format only), naively comparing the overall average times _with_ and _without_ wetsuit.
+- _Which method do you think is the most appropriate? What could be improved? If you have any comments or ideas, please do not hesitate to contact me!_
+
+**Does the wetsuit benefit equally women and men?**
+- The methods 2 and 3 suggest that **women benefit _slightly_ more from the wetsuit**, with a tiny improvement difference of 0.1-0.3%.
+  - It that **statistically significant**?
+  - This finding is somewhat surprising, given that women already have **a higher natural buoyancy**, which could suggest a smaller relative benefit.
+  - The first method **could only compute `improve_percent` for women**, limiting direct comparability.
+
+---
+
+### :mortar_board: Literature review
+
+Here are **some findings of related scientific works**:
+
+- [This 2019 research by Gay et al.](https://pubmed.ncbi.nlm.nih.gov/30958047/) asked 33 swimmers to perform 2×400-m maximal front crawl in a 25-m swimming pool, with wetsuit and with swimsuit. Participants were good swimmers, but not as fast as ITU elite athletes: **1:27 / 100m** average on the 400m with swimsuit.
+  - The **wetsuit** allows for a **~6% improvement**.
+  - Interestingly: _"Swimmers **reduced stroke rate** and **increased stroke length** (by 4%) to benefit from the hydrodynamic reduction of the wetsuit and increase their swimming efficiency."_
+- [This 2022 meta study by Gay et al.](https://www.mdpi.com/2673-9488/2/4/16) concludes from 26 studies, a _"**3.2–12.9% velocity increments** in distances ranging from 25 to 1500 m"_ for the **full-body wetsuit**.
+  - The range is broad: it depends on many factors such as the **profile of the swimmer** (age, level, triathlete or swimmer), the **swimming conditions** (temperature, 25m pool vs open water) and the **wetsuit** itself.
+  - [This interview of Ana Gay in triathlete.com](https://www.triathlete.com/gear/swim/how-much-faster-does-a-wetsuit-make-you-swim/) gives a good introduction to her study.
+- In [this episode by scientifictriathlon.com](https://scientifictriathlon.com/tts392/), [Maria Francesca Piacentini](https://www.researchgate.net/profile/Maria-Francesca-Piacentini) mentions some of her research on wetsuit, and **claims 6% to 11% improvements**.
+  - Apart from the time reduction, her team found that **wetsuit usage** can make athletes **feel less fatigued**: during the [2x7x200m tests](https://www.researchgate.net/publication/366991271_The_Effects_of_a_Wetsuit_on_Biomechanical_Physiological_and_Perceptual_Variables_in_Experienced_Triathletes), the [**stroke index**](https://blog.tritonwear.com/interpreting-to-improving-stroke-index#:~:text=It's%20called%20the%20Stroke%20Index,dig%20further%20into%20this%20shortly.) and the **stroke length** significantly **decreased in the swimsuit** condition, whereas they remained relatively **stable in the wetsuit condition**.
+- [This article from sports-performance-bulletin](https://www.sportsperformancebulletin.com/training/triathlon-clothing-the-benefits-of-wearing-a-wetsuit) reports **improvements by 3% to 7%**.
+  - Sources are not explicitly referenced, but the article probably mentions [this 1995 research by Chatard et al.](https://www.researchgate.net/publication/15406796_Wet_suit_effect_A_comparison_between_competitive_swimmers_and_triathletes) which apart from computing improvements, shows that the **impact of the wetsuit** is very different for **competitive swimmers than for competitive triathletes**.
+
+The **4-5% improvement** observed in top swimmers (ranked 5th-9th) based on **World Triathlon race data** appears to align reasonably well with the findings of related research publications.
+- :warning: It is important to note that the **conditions in most of the referenced studies differ significantly** from the **real-world, open-water race** environment.
+
+---
+
+### Is the wetsuit worth for 300m?
+
+When they can choose, **pro athletes decide to use the wetsuit** for **~300m swim**, e.g. during **mixed team relay**. Examples:
+  - [2018 Nottingham ( :gb: ) ](https://www.triathlon.org/results/result/2018_itu_world_triathlon_mixed_relay_series_nottingham/323321): [video](https://www.youtube.com/watch?v=B4LHN6GeTF4).
+  - [2022 Leeds ( :gb: )](https://triathlon.org/results/result/2022_world_triathlon_championship_series_leeds/550671): [pic1](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2553.jpg) and [pic2](https://triathlon-uploads.imgix.net/webgalleries/163472/tomz2448.jpg).
+  - [2023 Sunderland ( :gb: ) ](https://triathlon.org/results/result/2023_world_triathlon_championship_series_sunderland/576189): [video](https://www.youtube.com/watch?v=xufIoKMYlLo). (Here the wetsuit was mandatory: 13.7°C water :cold_face:)
+
+**_Is this decision sound?_**
+
+<details>
+  <summary>Click to expand - 🐧 <strong>Answering the question <i>"wetsuit for 300m?"</i></strong></summary>
+
+**Two quantities** must be compared:
+- 1) How much **time is spent** for the wetsuit during T1?
+  - According to [the next section](#shower-wetsuit-at-t1), the **extra-time added by the wetsuit during T1** is **around 9 seconds**.
+  - _Before this analysis, I would have estimated a lower impact, around 6s._
+- 2) How much **time is saved** by the wetsuit during the 300m swim?
+  - According to the present section, the benefit of the wetsuit ranges **between 3.6% and 5.4%**.
+  - _These estimates are based on the 1500m swim in Olympic-distance triathlons. Are they applicable to a 300m swim?_
+  - A 300m swim typically takes between 3:30 and 4:00. See justification below.
+  - Therefore, the **time saved** with a wetsuit is estimated to be **7.6 seconds** (`3.6% of 3:30`) and **13 seconds** (`5.4% of 4:00`).
+
+:bulb: **Conclusion**
+- `7.6 - 9 = -1.4  < 0`
+- ` 13 - 9 =    4  > 0`
+- Depending on the selected parameters, the **total wetsuit gain** for a 300m swim ranges **from -1.4 to 4.0 seconds**.
+- Beyond **time saving**, wetsuits provide additional benefits:
+  - **Temperature comfort** and potential **energy savings in the legs**.
+  - Athletes may also gain a couple of seconds to **catch their breath** while removing it at T1?
+- An **interesting real-world experiment**: At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/) some athletes **opted out of wetsuits** for the first 300m swim:
+  - [5/16 women](https://www.youtube.com/watch?v=asUQlc3Ic98&t=666)
+  - [5/16 men](https://www.youtube.com/watch?v=asUQlc3Ic98&t=5163)
+
+---
+
+Appendix: Deriving that 300m swim takes **about 3:30 - 4:00**.
+- Here are some swim-times measured for 300m, **without wetsuit**:
+  - The 5-th **man** out of water was at **~3:35** at [2024 Hamburg ( :de: )](https://youtu.be/WyfYD2wsHPg?t=76) during the first leg.
+  - The 5-th **man** was at **~3:37** at [2023 Hamburg ( :de: )](https://youtu.be/nJ4sm5ULXj8?t=1322) during the first leg.
+  - The 5-th **man** was at **~3:41** at [2023 Super-Sprint Hamburg ( :de: )](https://triathlon.org/results/result/2023_world_triathlon_sprint_relay_championships_hamburg/582516) .
+  - The 5-th **women** was at **~3:46** at [2021 Tokyo ( :jp: )](https://youtu.be/oQQEa_je2Vg?t=777).
+  - The 5-th **women** was at **~3:58** at [2018 Hamburg ( :de: )](https://youtu.be/oAwzJnX44Yg?t=42).
+  - The 5-th **woman** was at **~4:05** at [2023 Super-Sprint Hamburg ( :de: )](https://triathlon.org/results/result/2023_world_triathlon_sprint_relay_championships_hamburg/582517).
+- Variations occur depending on the **actual swim distance** (buoys positions) and the **position of the timing mat**.
+- Considering the broad **range (3:30 - 4:00)** seems relevant for our computation.
+
+| Benefit | 03:20 | 03:25 | 03:30 | 03:35 | 03:40 | 03:45 | 03:50 | 03:55 | 04:00 | 04:05 | 04:10 |
+|:-------:||:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| 3.0% | 6.0 | 6.1 | 6.3 | 6.4 | 6.6 | 6.8 | 6.9 | 7.0 | 7.2 | 7.4 | 7.5 |
+| 3.2% | 6.4 | 6.6 | 6.7 | 6.9 | 7.0 | 7.2 | 7.4 | 7.5 | 7.7 | 7.8 | 8.0 |
+| 3.4% | 6.8 | 7.0 | 7.1 | 7.3 | 7.5 | 7.6 | 7.8 | 8.0 | 8.2 | 8.3 | 8.5 |
+| 3.6% | 7.2 | 7.4 | 7.6 | 7.7 | **7.9** | **8.1** | **8.3** | 8.5 | 8.6 | 8.8 | 9.0 |
+| 3.8% | 7.6 | 7.8 | 8.0 | 8.2 | **8.4** | **8.6** | **8.7** | 8.9 | 9.1 | 9.3 | 9.5 |
+| 4.0% | 8.0 | 8.2 | 8.4 | 8.6 | **8.8** | **9.0** | **9.2** | 9.4 | 9.6 | 9.8 | 10.0 |
+| 4.2% | 8.4 | 8.6 | 8.8 | 9.0 | **9.2** | **9.5** | **9.7** | 9.9 | 10.1 | 10.3 | 10.5 |
+| 4.4% | 8.8 | 9.0 | 9.2 | 9.5 | **9.7** | **9.9** | **10.1** | 10.3 | 10.6 | 10.8 | 11.0 |
+| 4.6% | 9.2 | 9.4 | 9.7 | 9.9 | **10.1** | **10.4** | **10.6** | 10.8 | 11.0 | 11.3 | 11.5 |
+| 4.8% | 9.6 | 9.8 | 10.1 | 10.3 | **10.6** | **10.8** | **11.0** | 11.3 | 11.5 | 11.8 | 12.0 |
+| 5.0% | 10.0 | 10.3 | 10.5 | 10.8 | **11.0** | **11.3** | **11.5** | 11.8 | 12.0 | 12.3 | 12.5 |
+| 5.2% | 10.4 | 10.7 | 10.9 | 11.2 | **11.4** | **11.7** | **12.0** | 12.2 | 12.5 | 12.7 | 13.0 |
+| 5.4% | 10.8 | 11.1 | 11.3 | 11.6 | **11.9** | **12.2** | **12.4** | 12.7 | 13.0 | 13.2 | 13.5 |
+| 5.6% | 11.2 | 11.5 | 11.8 | 12.0 | 12.3 | 12.6 | 12.9 | 13.2 | 13.4 | 13.7 | 14.0 |
+| 5.8% | 11.6 | 11.9 | 12.2 | 12.5 | 12.8 | 13.1 | 13.3 | 13.6 | 13.9 | 14.2 | 14.5 |
+| 6.0% | 12.0 | 12.3 | 12.6 | 12.9 | 13.2 | 13.5 | 13.8 | 14.1 | 14.4 | 14.7 | 15.0 |
+| 6.2% | 12.4 | 12.7 | 13.0 | 13.3 | 13.6 | 14.0 | 14.3 | 14.6 | 14.9 | 15.2 | 15.5 |
+| 6.4% | 12.8 | 13.1 | 13.4 | 13.8 | 14.1 | 14.4 | 14.7 | 15.0 | 15.4 | 15.7 | 16.0 |
+| 6.6% | 13.2 | 13.5 | 13.9 | 14.2 | 14.5 | 14.9 | 15.2 | 15.5 | 15.8 | 16.2 | 16.5 |
+| 6.8% | 13.6 | 13.9 | 14.3 | 14.6 | 15.0 | 15.3 | 15.6 | 16.0 | 16.3 | 16.7 | 17.0 |
 
 </details>
 
@@ -1443,19 +1472,19 @@ Parameters:
 
 The derived `f_from_men_to_women_no_wetsuit` function is applied to events featuring the **women-without / men-with** scenario:
 
-|  YEAR  |                                                      EVENT                                                      |  **EXTRA TIME FOR WETSUIT** (women) (s)  |  EVENT CATEGORY  |
-|:------:|:---------------------------------------------------------------------------------------------------------------:|:----------------------------------------:|:----------------:|
-|  2011  |       [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **6.5**                  |    WORLD-CUP     |
-|  2020  | [Cannigione, Arzachena](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup) ( :it: ) |                 **6.8**                  |    WORLD-CUP     |
-|  2021  |          [Haeundae](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) ( :kr: )          |                 **7.8**                  |    WORLD-CUP     |
-|  2014  |       [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **8.1**                  |    WORLD-CUP     |
-|  2024  |  [Cagliari](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) ( :it: )  |                 **8.6**                  |       WTCS       |
-|  2012  |        [Sydney](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney) ( :australia: )         |                 **8.8**                  |       WTCS       |
-|  2022  |  [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )  |                 **9.5**                  |       WTCS       |
-|  2024  | [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )  |                 **9.6**                  |       WTCS       |
-|  2015  |       [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )       |                 **9.9**                  |       WTCS       |
-|  2016  |       [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **10.0**                 |    WORLD-CUP     |
-|  2021  |    [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )    |                 **11.3**                 |       WTCS       |
+| YEAR  |                                                      EVENT                                                      | **EXTRA TIME FOR WETSUIT** (s) (women)  | EVENT CATEGORY |
+|:-----:|:---------------------------------------------------------------------------------------------------------------:|:---------------------------------------:|:--------------:|
+| 2011  |       [Tongyeong](https://www.triathlon.org/events/event/2011_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **6.5**                 |   WORLD-CUP    |
+| 2020  | [Cannigione, Arzachena](https://www.triathlon.org/events/event/2020_arzachena_itu_triathlon_world_cup) ( :it: ) |                 **6.8**                 |   WORLD-CUP    |
+| 2021  |          [Haeundae](https://www.triathlon.org/events/event/2021_world_triathlon_cup_haeundae) ( :kr: )          |                 **7.8**                 |   WORLD-CUP    |
+| 2014  |       [Tongyeong](https://www.triathlon.org/events/event/2014_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                 **8.1**                 |   WORLD-CUP    |
+| 2024  |  [Cagliari](https://www.triathlon.org/events/event/2024_world_triathlon_championship_series_cagliari) ( :it: )  |                 **8.6**                 |      WTCS      |
+| 2012  |        [Sydney](https://www.triathlon.org/events/event/2012_itu_world_triathlon_sydney) ( :australia: )         |                 **8.8**                 |      WTCS      |
+| 2022  |  [Yokohama](https://www.triathlon.org/events/event/2022_world_triathlon_championship_series_yokohama) ( :jp: )  |                 **9.5**                 |      WTCS      |
+| 2024  | [Yokohama](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_yokohama1) ( :jp: )  |                 **9.6**                 |      WTCS      |
+| 2015  |       [Stockholm](https://www.triathlon.org/events/event/2015_itu_world_triathlon_stockholm) ( :sweden: )       |                 **9.9**                 |      WTCS      |
+| 2016  |       [Tongyeong](https://www.triathlon.org/events/event/2016_tongyeong_itu_triathlon_world_cup) ( :kr: )       |                **10.0**                 |   WORLD-CUP    |
+| 2021  |    [Edmonton](https://www.triathlon.org/events/event/2021_world_triathlon_grand_final_edmonton) ( :canada: )    |                **11.3**                 |      WTCS      |
 
 Results:
 - mean = median = **8.8 seconds** (from 11 events).
