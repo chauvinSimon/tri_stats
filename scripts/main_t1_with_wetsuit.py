@@ -316,10 +316,67 @@ class Model1p5d(Model):
 
     def fit(self, df):
         df = self.clean_up_df(df)
-        df[f"t1_diff"] = df[f"t1_mean_w"] - df[f"t1_mean_m"]  # the two helmet terms cancel
-        df[f"t1_diff_percent"] = df[f"t1_diff"] / (df[f"t1_mean_m"] - self.helmet)
-        self.wm_diff_run = df[f"t1_diff_percent"].mean()
-        print(f"w/m difference at running during T1: {self.wm_diff_run = :.2%}")
+        df["t1_diff"] = df["t1_mean_w"] - df["t1_mean_m"]  # the two helmet terms cancel
+        df["t1_diff_percent"] = df["t1_diff"] / (df["t1_mean_m"] - self.helmet)
+
+        # remove outliers
+        diff_min = 0
+        diff_max = 0.3
+        df = df[df["t1_diff_percent"]>diff_min]
+        df = df[df["t1_diff_percent"]<diff_max]
+
+        mean = df['t1_diff_percent'].mean()
+        median = df['t1_diff_percent'].median()
+        std = df['t1_diff_percent'].std()
+        self.wm_diff_run = mean
+
+        # plot distribution
+        fig, ax = plt.subplots(figsize=(16, 16))
+        data_min = df["t1_diff_percent"].min()
+        data_max = df["t1_diff_percent"].max()
+        bins = np.arange(int(data_min) - 1, int(data_max) + 1, 0.01)
+        kwargs_hist = {
+            "density": True,
+            "bins": bins,
+        }
+        ax.set_xlim(data_min - 0.05, data_max + 0.05)
+        ax.xaxis.set_major_formatter(PercentFormatter(1))
+        ax.axvline(
+            mean,
+            linestyle="-",
+            color="red",
+            label=f"{mean = :.1%}"
+        )
+        ax.axvline(
+            median,
+            color="k",
+            linestyle="--",
+            label=f"{median = :.1%}"
+        )
+        ax.legend()
+        ax.grid()
+        ax.set_xlabel("wm_diff_run")
+        ax.set_ylabel("percentage")
+
+        plt.hist(df["t1_diff_percent"], **kwargs_hist)
+        title = (
+            f"w/m difference at running during T1: {self.wm_diff_run = :.2%}"
+            f"\nmedian = {median:.2%}"
+            f"\nstd = {std:.2%}"
+        )
+        plt.title(title)
+        print(title)
+
+        from scipy.stats import norm
+        mu, std = norm.fit(df["t1_diff_percent"])
+        xmin, xmax = plt.xlim()
+        x = np.linspace(xmin, xmax, 100)
+        p = norm.pdf(x, mu, std)
+        plt.plot(x, p, 'gray', linewidth=1, linestyle="-",
+                 label=f"Normal distribution ($\mu={mu:.1f}$, $\sigma={std:.1f}$)")
+
+        plt.savefig(res_dir / "wm_diff_run_t1.png")
+        plt.show()
 
     def infer(self, t1_men):
         """

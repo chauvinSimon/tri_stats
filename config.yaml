@@ -142,6 +142,13 @@ events:
       helmet: 3
       min_t1: 10  # how many seconds should t1 last (without wetsuit)? The larger, the less important the part of "static phase putting the helmet on", therefore the more focus on the running part.
 
+  wetsuit_benefit_from_recurring_events:
+    max_year_gap: 5
+    min_wet_gain_percent: -5
+    max_wet_gain_percent: 14
+
+  n_repetitions_min: 4
+
 seasons:
   suffix: "w"
 #  suffix: "m"

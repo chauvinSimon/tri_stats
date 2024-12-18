@@ -18,6 +18,9 @@ def process_results_wetsuit(
         distance_categories,
         sport_outliers
 ):
+    # ? ignore World Cups
+    # df = df[df["event_category"] != "world-cup"]
+
     # remove outliers?
     outliers = df[df["swim_diff_percent"] >= swim_diff_percent_max]
     print(f"{len(outliers)} swim outliers:")
@@ -159,12 +162,14 @@ def process_results_wetsuit(
         colalign=["center"] * len(df_table.columns)
     ))
 
-    # ? ignore World Cups
+    # remove Sydney 2012 outlier
+    swim_diff_percent_women_fast = swim_diff_percent_women_fast[swim_diff_percent_women_fast["event_id"] != 54370]
+    # remove Haeundae 2021 outlier
+    swim_diff_percent_women_fast = swim_diff_percent_women_fast[swim_diff_percent_women_fast["event_id"] != 154591]
+
+    # ? ignore World Cups for women_fast
     swim_diff_percent_women_fast = swim_diff_percent_women_fast[
         swim_diff_percent_women_fast["event_category"] != "world-cup"]
-
-    # remove Sydney outlier
-    swim_diff_percent_women_fast = swim_diff_percent_women_fast[swim_diff_percent_women_fast["event_id"] != 54370]
 
     if len(swim_diff_percent_women_fast) == 0:
         print("no data where [women with wetsuit] and [men without wetsuit]")
@@ -389,7 +394,7 @@ def process_results_wetsuit(
             print(f"\twet_mean    = {wet_mean:.0f} ±{wet_std:.0f} ({len(wet):,})")
             print(f"\tno_wet_mean = {no_wet_mean:.0f} ±{no_wet_std:.0f} ({len(no_wet):,})")
             improve_percent = (no_wet_mean - wet_mean) / no_wet_mean
-            print(f"\timprove_percent = {improve_percent :.1%}")
+            print(f"\timprove_percent = {improve_percent :.2%}")
             print(f"\t range wetsuit: {wet.min()} - {wet.max()} = {wet.max() - wet.min()}")
             print(f"\t range no wetsuit: {no_wet.min()} - {no_wet.max()} = {no_wet.max() - no_wet.min()}")
             improve_percents.append(improve_percent)
@@ -832,9 +837,9 @@ def process_results_repeated_events(
         df,
         distance_categories,
         sports,
-        sport_outliers
+        sport_outliers,
+        n_repetitions_min
 ):
-    n_repetitions_min = 4
 
     df = df.sort_values("event_date_m")
 
@@ -2678,7 +2683,10 @@ def process_wetsuit_from_repeated_events(
         df,
         swim_diff_percent_max: float,
         distance_categories,
-        sport_outliers
+        sport_outliers,
+        max_year_gap,
+        min_wet_gain_percent,
+        max_wet_gain_percent,
 ):
     # remove outliers?
     outliers = df[df["swim_diff_percent"] >= swim_diff_percent_max]
@@ -2691,13 +2699,6 @@ def process_wetsuit_from_repeated_events(
     df = drop_outliers(df, i_sport=0, sport_outliers=sport_outliers)
 
     # rows with no wetsuit info have already been dropped
-
-
-    # todo: config
-    max_year_gap = 5
-    # todo: config
-    min_wet_gain_percent = -5
-    max_wet_gain_percent = 14
 
     swim_time_infos = []
     groups = df.groupby(["event_venue"])
@@ -2957,6 +2958,7 @@ def main():
 
     distance_categories = events_config["distance_categories"]
     sports = events_config["sports"]
+    n_repetitions_min = events_config["n_repetitions_min"]
     swim_diff_percent_max = events_config["cleaning"]["swim_diff_percent_max"]
     sport_outliers = events_config["cleaning"]["sport_outliers"]
     ###
