@@ -2344,11 +2344,13 @@ def process_sport_proportion(df, distance_categories):
                 table_info.append({
                     "t_time": ".",
                     "EVENT": ".",
+                    "DISTANCE": ".",
                 })
 
             table_info.append({
                 "t_time": "...",
                 "EVENT": "...",
+                "DISTANCE": "...",
             })
 
         # print markdown

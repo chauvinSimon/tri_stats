@@ -1,23 +1,23 @@
 This document **analyses data** of [**World Triathlon**](https://triathlon.org/), formerly International Triathlon Union (ITU), to **try** to answer questions such as:
 
-- :one_piece_swimsuit: How much faster do elite triathletes **swim when wearing a neoprene wetsuit**? [[link](#penguin-wetsuit-benefit)]
-- :penguin: Should **"poor" swimmers rejoice** when **wetsuits are allowed**? [[link](#swimmer-swim-gaps)]
-- :athletic_shoe: Are runs faster since **carbon plates shoes**? [[link](#spiral_calendar-level-over-years)] 
-- :balance_scale: Is the **wetsuit worth for 300m**? [[link](#is-the-wetsuit-worth-for-300m)]
-- :three: Does each sport (swim - bike - run) accounts for 1/3 of race durations? What about transitions? [[link](#question-three-sports)]
-- :couple: How much faster are **men over women**? In which sport is the gap larger/smaller? How has the gap evolved over the years? [[link](#couple-women-vs-men)]
-- :hourglass_flowing_sand: How much faster are athletes in **_sprint_ over _olympic_** distance? [[link](#stopwatch-paces)]
-- :chart_with_upwards_trend: Does the level increase **over years**? [[link](#spiral_calendar-level-over-years)]
-- :shower: How much time does the **wetsuit add to T1**? [[link](#shower-wetsuit-at-t1)]
-- :dart: How often does an athlete **win from a bike breakaway**? [[link](#dart-race-scenario)]
-- :runner: How often does the **best runner win**? [[link](#runner-how-often-does-the-best-runner-win-trophy)]
-- :rocket: How often is the win decided with a **sprint finish**? [[link](#rocket-sprint-finish)]
-- :thermometer: Do **water and air temperatures** affect swimming and running performance? [[link](#thermometer-temperatures)] 
-- :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**? [[link](#earth_africa-athlete-nations)]
-- :muscle: What is the typical **age** of performing athletes and how has it evolved over years? [[link](#baby-age)]
-- :stop_button: **How old** are athletes when they **stop racing** elite short distance triathlon? [[link](#checkered_flag-age-of-last-race)]
-- :weight_lifting: What is the **body mass index** of performing triathletes? [[link](#weight_lifting-body-mass-index)]
-- :birthday: Are two kids, born the same year but **on two different months**, equally likely to become professional triathletes? [[link](#date-month-of-birth)]
+- :one_piece_swimsuit: How much faster do elite triathletes **swim when wearing a neoprene wetsuit**? [[link]](#penguin-wetsuit-benefit)
+- :penguin: Should **weaker swimmers rejoice** when **wetsuits are allowed**? [[link]](#swimmer-swim-gaps)
+- :athletic_shoe: Are runs faster since **carbon plates shoes**? [[link]](#spiral_calendar-level-over-years) 
+- :balance_scale: Is the **wetsuit worth for 300m**? [[link]](#is-the-wetsuit-worth-for-300m)
+- :three: Does each sport (swim - bike - run) accounts for 1/3 of race durations? What about transitions? [[link]](#question-three-sports)
+- :couple: How much faster are **men over women**? In which sport is the gap larger/smaller? How has the gap evolved over the years? [[link]](#couple-women-vs-men)
+- :hourglass_flowing_sand: How much faster are athletes in **_sprint_ over _olympic_** distance? [[link]](#stopwatch-paces)
+- :chart_with_upwards_trend: Does the level increase **over years**? [[link]](#spiral_calendar-level-over-years)
+- :shower: How much time does the **wetsuit add to T1**? [[link]](#shower-wetsuit-at-t1)
+- :dart: How often does an athlete **win from a bike breakaway**? [[link]](#dart-race-scenario)
+- :runner: How often does the **best runner win**? [[link]](#runner-how-often-does-the-best-runner-win-trophy)
+- :rocket: How often is the win decided with a **sprint finish**? [[link]](#rocket-sprint-finish)
+- :thermometer: Do **water and air temperatures** affect swimming and running performance? [[link]](#thermometer-temperatures) 
+- :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**? [[link]](#earth_africa-athlete-nations)
+- :muscle: What is the typical **age** of performing athletes and how has it evolved over years? [[link]](#baby-age)
+- :stop_button: **How old** are athletes when they **stop racing** elite short distance triathlon? [[link]](#checkered_flag-age-of-last-race)
+- :weight_lifting: What is the **body mass index** of performing triathletes? [[link]](#weight_lifting-body-mass-index)
+- :birthday: Are two kids, born the same year but **on two different months**, equally likely to become professional triathletes? [[link]](#date-month-of-birth)
 
 ---
 
@@ -153,31 +153,32 @@ The duration of **T1** depends the **distance between the water and the transiti
   - That is **a shame**: in such cases **swim split times are incorrect**!
   - Mooloolaba ( :australia: ) has apparently **corrected** the position of the timing mats: the fastest T1 in 2015 was **01:15** (against **00:13** in 2012).
 
-|  T1   |                                                                           EVENT                                                                            |
-|:-----:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| 00:13 |         [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup)          |
-| 00:16 |             [2010 Huatulco ITU Triathlon World Cup ( :mexico: )](https://www.triathlon.org/events/event/2010_huatulco_itu_triathlon_world_cup)             |
-| 00:16 |                 [2009 Hy-Vee ITU Triathlon Elite Cup ( :us: )](https://www.triathlon.org/events/event/2009_hy-vee_itu_triathlon_elite_cup)                 |
-|  ...  |                                                                            ...                                                                             |
-| 01:25 |                 [2019 Madrid ITU Triathlon World Cup ( :es: )](https://www.triathlon.org/events/event/2019_madrid_itu_triathlon_world_cup)                 |
-| 01:33 | [2017 ITU World Triathlon Grand Final Rotterdam ( :netherlands: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)  |
-| 01:40 | [2023 World Triathlon Championship Series Montreal ( :canada: )](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal) |
-| 02:35 |             [2011 Guatape ITU Triathlon World Cup ( :colombia: )](https://www.triathlon.org/events/event/2011_guatape_itu_triathlon_world_cup)             |
+|  T1   |                                                                                                       EVENT                                                                                                        | DISTANCE |
+|:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------:|
+| 00:13 |                                     [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup)                                      | OLYMPIC  |
+| 00:16 |                                         [2010 Huatulco ITU Triathlon World Cup ( :mexico: )](https://www.triathlon.org/events/event/2010_huatulco_itu_triathlon_world_cup)                                         | OLYMPIC  |
+| 00:16 |                                             [2009 Hy-Vee ITU Triathlon Elite Cup ( :us: )](https://www.triathlon.org/events/event/2009_hy-vee_itu_triathlon_elite_cup)                                             | OLYMPIC  |
+|  ...  |                                                                                                        ...                                                                                                         |   ...    |
+| 01:26 |                                             [2017 Madrid ITU Triathlon World Cup ( :es: )](https://www.triathlon.org/events/event/2017_madrid_itu_triathlon_world_cup)                                             | OLYMPIC  |
+| 01:33 |                             [2017 ITU World Triathlon Grand Final Rotterdam ( :netherlands: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)                              | OLYMPIC  |
+| 01:40 |                             [2023 World Triathlon Championship Series Montreal ( :canada: )](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal)                             |  SPRINT  |
+| 02:35 |                                         [2011 Guatape ITU Triathlon World Cup ( :colombia: )](https://www.triathlon.org/events/event/2011_guatape_itu_triathlon_world_cup)                                         |  SPRINT  |
 
 #### T2
 
 The duration of T2 is mainly related to the **size of the transition area** (impacted by the number of participants) and to the position of the timing mats.
 - Variations are smaller than for T1.
 
-|  T2   |                                                           EVENT                                                           |
-|:-----:|:-------------------------------------------------------------------------------------------------------------------------:|
-| 00:14 | [2011 Mooloolaba ITU Triathlon World Cup](https://www.triathlon.org/events/event/2011_mooloolaba_itu_triathlon_world_cup) |
-| 00:14 | [2012 Mooloolaba ITU Triathlon World Cup](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup) |
-| 00:15 |  [2010 Monterrey ITU Triathlon World Cup](https://www.triathlon.org/events/event/2010_monterrey_itu_triathlon_world_cup)  |
-|  ...  |                                                            ...                                                            |
-| 00:35 |   [2019 Banyoles ITU Triathlon World Cup](https://www.triathlon.org/events/event/2019_banyoles_itu_triathlon_world_cup)   |
-| 00:36 |   [2016 Montreal ITU Triathlon World Cup](https://www.triathlon.org/events/event/2016_montreal_itu_triathlon_world_cup)   |
-| 00:41 |    [2017 Salinas ITU Triathlon World Cup](https://www.triathlon.org/events/event/2017_salinas_itu_triathlon_world_cup)    |
+|  T2   |                                                                    EVENT                                                                    | DISTANCE |
+|:-----:|:-------------------------------------------------------------------------------------------------------------------------------------------:|:--------:|
+| 00:14 |  [2011 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2011_mooloolaba_itu_triathlon_world_cup)  | OLYMPIC  |
+| 00:14 |  [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup)  | OLYMPIC  |
+| 00:15 |    [2010 Monterrey ITU Triathlon World Cup ( :mexico: )](https://www.triathlon.org/events/event/2010_monterrey_itu_triathlon_world_cup)     | OLYMPIC  |
+|  ...  |                                                                     ...                                                                     |   ...    |
+| 00:35 |       [2019 Banyoles ITU Triathlon World Cup ( :es: )](https://www.triathlon.org/events/event/2019_banyoles_itu_triathlon_world_cup)        |  SPRINT  |
+| 00:36 |     [2016 Montreal ITU Triathlon World Cup ( :canada: )](https://www.triathlon.org/events/event/2016_montreal_itu_triathlon_world_cup)      |  SPRINT  |
+| 00:36 | [2013 Tiszaujvaros ITU Triathlon World Cup ( :hungary: )](https://www.triathlon.org/events/event/2013_tiszaujvaros_itu_triathlon_world_cup) |  SPRINT  |
+| 00:41 |      [2017 Salinas ITU Triathlon World Cup ( :ecuador: )](https://www.triathlon.org/events/event/2017_salinas_itu_triathlon_world_cup)      |  SPRINT  |
 
 #### T1+T2
 
@@ -187,17 +188,18 @@ On average, T1+T2 takes **01:11** (men) and **01:18** (women).
   - In Montreal ( :canada: ) 2023, it was 02:13: **more than one minute than usual**.
   - For a sprint format, this is **substantial**: compared to the 15:05 average men's 5k, this long transition makes the **run 7% longer**!
 
-| T1+T2 |                                                                     EVENT                                                                     | DISTANCe |
-|:-----:|:---------------------------------------------------------------------------------------------------------------------------------------------:|:--------:|
-| 00:27 |           [2012 Mooloolaba ITU Triathlon World Cup](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup)           | OLYMPIC  |
-| 00:34 |               [2009 Hy-Vee ITU Triathlon Elite Cup](https://www.triathlon.org/events/event/2009_hy-vee_itu_triathlon_elite_cup)               | OLYMPIC  |
-| 00:37 |             [2010 Huatulco ITU Triathlon World Cup](https://www.triathlon.org/events/event/2010_huatulco_itu_triathlon_world_cup)             | OLYMPIC  |
-| 00:44 |             [2022 World Triathlon Cup Vina del Mar](https://www.triathlon.org/events/event/2022_world_triathlon_cup_vina_del_mar)             |  SPRINT  |
-|  ...  |                                                                      ...                                                                      |   ...    |
-| 01:48 |                [2014 ITU World Triathlon Stockholm](https://www.triathlon.org/events/event/2014_itu_world_triathlon_stockholm)                |  SPRINT  |
-| 01:56 |    [2017 ITU World Triathlon Grand Final Rotterdam](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)    | OLYMPIC  |
-| 02:13 | [2023 World Triathlon Championship Series Montreal](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal) |  SPRINT  |
-| 02:57 |              [2011 Guatape ITU Triathlon World Cup](https://www.triathlon.org/events/event/2011_guatape_itu_triathlon_world_cup)              |  SPRINT  |
+| T1+T2 |                                                                                                       EVENT                                                                                                        | DISTANCE |
+|:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------:|
+| 00:26 |                                           [2011 Ishigaki ITU Triathlon World Cup ( :jp: )](https://www.triathlon.org/events/event/2011_ishigaki_itu_triathlon_world_cup)                                           | OLYMPIC  |
+| 00:27 |                                     [2012 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2012_mooloolaba_itu_triathlon_world_cup)                                      | OLYMPIC  |
+| 00:28 |                                          [2010 Tongyeong ITU Triathlon World Cup ( :kr: )](https://www.triathlon.org/events/event/2010_tongyeong_itu_triathlon_world_cup)                                          | OLYMPIC  |
+| 00:31 |                                     [2010 Mooloolaba ITU Triathlon World Cup ( :australia: )](https://www.triathlon.org/events/event/2010_mooloolaba_itu_triathlon_world_cup)                                      | OLYMPIC  |
+|  ...  |                                                                                                        ...                                                                                                         |   ...    |
+| 01:48 |                                            [2014 ITU World Triathlon Stockholm ( :sweden: )](https://www.triathlon.org/events/event/2014_itu_world_triathlon_stockholm)                                            |  SPRINT  |
+| 01:56 |                             [2017 ITU World Triathlon Grand Final Rotterdam ( :netherlands: )](https://www.triathlon.org/events/event/2017_itu_world_triathlon_grand_final_rotterdam)                              | OLYMPIC  |
+| 02:13 |                             [2023 World Triathlon Championship Series Montreal ( :canada: )](https://www.triathlon.org/events/event/2023_world_triathlon_championship_series_montreal)                             |  SPRINT  |
+| 02:57 |                                         [2011 Guatape ITU Triathlon World Cup ( :colombia: )](https://www.triathlon.org/events/event/2011_guatape_itu_triathlon_world_cup)                                         |  SPRINT  |
+
 
 </details>
 
@@ -982,7 +984,7 @@ Here are **some findings of related scientific works**:
   - Sources are not explicitly referenced, but the article probably mentions [this 1995 research by Chatard et al.](https://www.researchgate.net/publication/15406796_Wet_suit_effect_A_comparison_between_competitive_swimmers_and_triathletes) which apart from computing improvements, shows that the **impact of the wetsuit** is very different for **competitive swimmers than for competitive triathletes**.
 
 The **4-5% improvement** observed in top swimmers (ranked 5th-9th) based on **World Triathlon race data** appears to align reasonably well with the findings of related research publications.
-- :warning: It is important to note that the **conditions in most of the referenced studies differ significantly** from the **real-world, open-water race** environment.
+- :warning: It is important to note that the **lab- or pool-conditions** used by **most studies differ significantly** from the **open-water race environment**.
 
 ---
 
@@ -999,10 +1001,10 @@ When they can choose, **pro athletes decide to use the wetsuit** for **~300m swi
   <summary>Click to expand - 🐧 <strong>Answering the question <i>"wetsuit for 300m?"</i></strong></summary>
 
 **Two quantities** must be compared:
-- 1) How much **time is spent** for the wetsuit during T1?
+- (1) How much **time is spent** for the wetsuit during T1?
   - According to [the next section](#shower-wetsuit-at-t1), the **extra-time added by the wetsuit during T1** is **around 9 seconds**.
   - _Before this analysis, I would have estimated a lower impact, around 6s._
-- 2) How much **time is saved** by the wetsuit during the 300m swim?
+- (2) How much **time is saved** by the wetsuit during the 300m swim?
   - According to the present section, the benefit of the wetsuit ranges **between 3.6% and 5.4%**.
   - _These estimates are based on the 1500m swim in Olympic-distance triathlons. Are they applicable to a 300m swim?_
   - A 300m swim typically takes between 3:30 and 4:00. See justification below.
@@ -1017,7 +1019,7 @@ When they can choose, **pro athletes decide to use the wetsuit** for **~300m swi
   - Athletes may also gain a couple of seconds to **catch their breath** while removing it at T1?
 - **Unique conditions**.
   - The 300m swim is featured in events like the [mixed team relay](https://www.youtube.com/watch?v=d2Z0cyUmvr8) and [supertri](https://supertri.com/), with **smaller fields** compared to the **55-athlete mass starts** typical of sprint or olympic formats.
-  - Could it be more advantageous to **"quietly draft"** at the back **without a wetsuit**, prioritizing a fast T1, rather than **fighting for a front position and risking delays from wetsuit removal failures**?
+  - Could it be more advantageous to **try to draft without a wetsuit** at the back of the small group, prioritizing a fast T1, rather than **fighting for a front position** and **risking delays from wetsuit removal failures**?
     - This is particularly relevant for the **first relay** athlete, as subsequent (2nd, 3rd, and 4th) often **swim in smaller groups or even alone**, reducing the drafting and position-fighting dynamics. 
   - Further research is needed to determine if **skipping the wetsuit in these particular contexts** could provide a **strategic advantage**.
 - An **interesting real-world experiment**: At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/) some athletes **opted out of wetsuits** for the first 300m swim:
@@ -1037,28 +1039,28 @@ Appendix: Deriving that 300m swim takes **about 3:30 - 4:00**.
 - Variations occur depending on the **actual swim distance** (buoys positions) and the **position of the timing mat**.
 - Considering the broad **range (3:30 - 4:00)** seems relevant for our computation.
 
-| Benefit | 03:20 | 03:25 | 03:30 | 03:35 | 03:40 | 03:45 | 03:50 | 03:55 | 04:00 | 04:05 | 04:10 |
-|:-------:||:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
-| 3.0% | 6.0 | 6.1 | 6.3 | 6.4 | 6.6 | 6.8 | 6.9 | 7.0 | 7.2 | 7.4 | 7.5 |
-| 3.2% | 6.4 | 6.6 | 6.7 | 6.9 | 7.0 | 7.2 | 7.4 | 7.5 | 7.7 | 7.8 | 8.0 |
-| 3.4% | 6.8 | 7.0 | 7.1 | 7.3 | 7.5 | 7.6 | 7.8 | 8.0 | 8.2 | 8.3 | 8.5 |
-| 3.6% | 7.2 | 7.4 | 7.6 | 7.7 | **7.9** | **8.1** | **8.3** | 8.5 | 8.6 | 8.8 | 9.0 |
-| 3.8% | 7.6 | 7.8 | 8.0 | 8.2 | **8.4** | **8.6** | **8.7** | 8.9 | 9.1 | 9.3 | 9.5 |
-| 4.0% | 8.0 | 8.2 | 8.4 | 8.6 | **8.8** | **9.0** | **9.2** | 9.4 | 9.6 | 9.8 | 10.0 |
-| 4.2% | 8.4 | 8.6 | 8.8 | 9.0 | **9.2** | **9.5** | **9.7** | 9.9 | 10.1 | 10.3 | 10.5 |
-| 4.4% | 8.8 | 9.0 | 9.2 | 9.5 | **9.7** | **9.9** | **10.1** | 10.3 | 10.6 | 10.8 | 11.0 |
-| 4.6% | 9.2 | 9.4 | 9.7 | 9.9 | **10.1** | **10.4** | **10.6** | 10.8 | 11.0 | 11.3 | 11.5 |
-| 4.8% | 9.6 | 9.8 | 10.1 | 10.3 | **10.6** | **10.8** | **11.0** | 11.3 | 11.5 | 11.8 | 12.0 |
-| 5.0% | 10.0 | 10.3 | 10.5 | 10.8 | **11.0** | **11.3** | **11.5** | 11.8 | 12.0 | 12.3 | 12.5 |
-| 5.2% | 10.4 | 10.7 | 10.9 | 11.2 | **11.4** | **11.7** | **12.0** | 12.2 | 12.5 | 12.7 | 13.0 |
-| 5.4% | 10.8 | 11.1 | 11.3 | 11.6 | **11.9** | **12.2** | **12.4** | 12.7 | 13.0 | 13.2 | 13.5 |
-| 5.6% | 11.2 | 11.5 | 11.8 | 12.0 | 12.3 | 12.6 | 12.9 | 13.2 | 13.4 | 13.7 | 14.0 |
-| 5.8% | 11.6 | 11.9 | 12.2 | 12.5 | 12.8 | 13.1 | 13.3 | 13.6 | 13.9 | 14.2 | 14.5 |
-| 6.0% | 12.0 | 12.3 | 12.6 | 12.9 | 13.2 | 13.5 | 13.8 | 14.1 | 14.4 | 14.7 | 15.0 |
-| 6.2% | 12.4 | 12.7 | 13.0 | 13.3 | 13.6 | 14.0 | 14.3 | 14.6 | 14.9 | 15.2 | 15.5 |
-| 6.4% | 12.8 | 13.1 | 13.4 | 13.8 | 14.1 | 14.4 | 14.7 | 15.0 | 15.4 | 15.7 | 16.0 |
-| 6.6% | 13.2 | 13.5 | 13.9 | 14.2 | 14.5 | 14.9 | 15.2 | 15.5 | 15.8 | 16.2 | 16.5 |
-| 6.8% | 13.6 | 13.9 | 14.3 | 14.6 | 15.0 | 15.3 | 15.6 | 16.0 | 16.3 | 16.7 | 17.0 |
+| Benefit | 03:20 | 03:25 | 03:30 | 03:35 |  03:40   |  03:45   |  03:50   | 03:55 | 04:00 | 04:05 | 04:10 |
+|:-------:|:-----:|:-----:|:-----:|:-----:|:--------:|:--------:|:--------:|:-----:|:-----:|:-----:|:-----:|
+|  3.0%   |  6.0  |  6.1  |  6.3  |  6.4  |   6.6    |   6.8    |   6.9    |  7.0  |  7.2  |  7.4  |  7.5  |
+|  3.2%   |  6.4  |  6.6  |  6.7  |  6.9  |   7.0    |   7.2    |   7.4    |  7.5  |  7.7  |  7.8  |  8.0  |
+|  3.4%   |  6.8  |  7.0  |  7.1  |  7.3  |   7.5    |   7.6    |   7.8    |  8.0  |  8.2  |  8.3  |  8.5  |
+|  3.6%   |  7.2  |  7.4  |  7.6  |  7.7  | **7.9**  | **8.1**  | **8.3**  |  8.5  |  8.6  |  8.8  |  9.0  |
+|  3.8%   |  7.6  |  7.8  |  8.0  |  8.2  | **8.4**  | **8.6**  | **8.7**  |  8.9  |  9.1  |  9.3  |  9.5  |
+|  4.0%   |  8.0  |  8.2  |  8.4  |  8.6  | **8.8**  | **9.0**  | **9.2**  |  9.4  |  9.6  |  9.8  | 10.0  |
+|  4.2%   |  8.4  |  8.6  |  8.8  |  9.0  | **9.2**  | **9.5**  | **9.7**  |  9.9  | 10.1  | 10.3  | 10.5  |
+|  4.4%   |  8.8  |  9.0  |  9.2  |  9.5  | **9.7**  | **9.9**  | **10.1** | 10.3  | 10.6  | 10.8  | 11.0  |
+|  4.6%   |  9.2  |  9.4  |  9.7  |  9.9  | **10.1** | **10.4** | **10.6** | 10.8  | 11.0  | 11.3  | 11.5  |
+|  4.8%   |  9.6  |  9.8  | 10.1  | 10.3  | **10.6** | **10.8** | **11.0** | 11.3  | 11.5  | 11.8  | 12.0  |
+|  5.0%   | 10.0  | 10.3  | 10.5  | 10.8  | **11.0** | **11.3** | **11.5** | 11.8  | 12.0  | 12.3  | 12.5  |
+|  5.2%   | 10.4  | 10.7  | 10.9  | 11.2  | **11.4** | **11.7** | **12.0** | 12.2  | 12.5  | 12.7  | 13.0  |
+|  5.4%   | 10.8  | 11.1  | 11.3  | 11.6  | **11.9** | **12.2** | **12.4** | 12.7  | 13.0  | 13.2  | 13.5  |
+|  5.6%   | 11.2  | 11.5  | 11.8  | 12.0  |   12.3   |   12.6   |   12.9   | 13.2  | 13.4  | 13.7  | 14.0  |
+|  5.8%   | 11.6  | 11.9  | 12.2  | 12.5  |   12.8   |   13.1   |   13.3   | 13.6  | 13.9  | 14.2  | 14.5  |
+|  6.0%   | 12.0  | 12.3  | 12.6  | 12.9  |   13.2   |   13.5   |   13.8   | 14.1  | 14.4  | 14.7  | 15.0  |
+|  6.2%   | 12.4  | 12.7  | 13.0  | 13.3  |   13.6   |   14.0   |   14.3   | 14.6  | 14.9  | 15.2  | 15.5  |
+|  6.4%   | 12.8  | 13.1  | 13.4  | 13.8  |   14.1   |   14.4   |   14.7   | 15.0  | 15.4  | 15.7  | 16.0  |
+|  6.6%   | 13.2  | 13.5  | 13.9  | 14.2  |   14.5   |   14.9   |   15.2   | 15.5  | 15.8  | 16.2  | 16.5  |
+|  6.8%   | 13.6  | 13.9  | 14.3  | 14.6  |   15.0   |   15.3   |   15.6   | 16.0  | 16.3  | 16.7  | 17.0  |
 
 </details>
 
@@ -2995,33 +2997,33 @@ The **python code** to fetch the data, set the parameters and generate plots is 
 - For instance **race-averages** are computed from the 5th to 9th best times of **each leg**, and sometimes **averaged** over multiples years.
 
 Here are some simplified **key takeaways**:
-- :stopwatch: The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%. [[link](#question-three-sports)]
-- :athletic_shoe: While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k. [[link](#stopwatch-paces)]
-- :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**. [[link](#couple-women-vs-men)]
-- :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**. [[link](#couple-women-vs-men)]
-- :runner: Women run the 10k at **3:33 min/km** (3:26 for 5k), men at **3:07 min/km** (3:00 for 5k). [[link](#couple-women-vs-men)]
-- :shower: The time charged to the **wetsuit during the T1** transition is **~9s**. [[link](#shower-wetsuit-at-t1)]
-- :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower. [[link](#focus-on-the-swim-swimmer)]
-- :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year). [[link](#couple-women-vs-men)]
-- :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers. [[link](#swimmer-swim-gaps)]
-- :one_piece_swimsuit: Swim is **4-5% faster with wetsuit**. [[link](#penguin-wetsuit-benefit)]
-- :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**. [[link](#spiral_calendar-level-over-years)]
-- :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer. [[link](#dart-race-scenario)]
-- :bicyclist: The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races. [[link](#dart-race-scenario)]
-- :athletic_shoe: Over **2/3 of races** are won by the **best runner**. [[link](#runner-how-often-does-the-best-runner-win-trophy)]
-- :camera_flash: In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races. [[link](#rocket-sprint-finish)]
-- :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**. [[link](#rocket-sprint-finish)]
-- :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men. [[link](#rocket-sprint-finish)]
-- :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**. [[link](#spiral_calendar-level-over-years)]
-- :penguin: The wetsuit is allowed in **~1/3 of races**. More often for women (37%) than for men (32%). [[link](#penguin-wetsuit-benefit)]
-- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** (lower estimates) fall between **17°C** and **30°C** and almost uniformly so. [[link](#thermometer-temperatures)]
-- :hot_face: **Heat** tends to **slow down** running pace. [[link](#parasol_on_ground-air-temperatures-and-run-times)]
-- :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**. [[link](#athlete-seasons)]
-- :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023. [[link](#calendar-season-duration)]
-- :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:. [[link](#earth_africa-athlete-nations)]
-- :birthday: Athletes finishing 5th-9th are, on average, **between 26 and 28** years old. [[link](#baby-age)]
-- :checkered_flag: Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations. [[link](#checkered_flag-age-of-last-race)]
-- :bar_chart: Someone **born earlier in the year** is **more likely** to become professional triathletes compared to those born later in the same year. [[link](#date-month-of-birth)]
+- :stopwatch: The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%. [[link]](#question-three-sports)
+- :athletic_shoe: While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k. [[link]](#stopwatch-paces)
+- :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**. [[link]](#couple-women-vs-men)
+- :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**. [[link]](#couple-women-vs-men)
+- :runner: Women run the 10k at **3:33 min/km** (3:26 for 5k), men at **3:07 min/km** (3:00 for 5k). [[link]](#couple-women-vs-men)
+- :shower: The time charged to the **wetsuit during the T1** transition is **~9s**. [[link]](#shower-wetsuit-at-t1)
+- :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower. [[link]](#focus-on-the-swim-swimmer)
+- :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year). [[link]](#couple-women-vs-men)
+- :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers. [[link]](#swimmer-swim-gaps)
+- :one_piece_swimsuit: Swim is **4-5% faster with wetsuit**. [[link]](#penguin-wetsuit-benefit)
+- :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**. [[link]](#spiral_calendar-level-over-years)
+- :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer. [[link]](#dart-race-scenario)
+- :bicyclist: The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races. [[link]](#dart-race-scenario)
+- :athletic_shoe: Over **2/3 of races** are won by the **best runner**. [[link]](#runner-how-often-does-the-best-runner-win-trophy)
+- :camera_flash: In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races. [[link]](#rocket-sprint-finish)
+- :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**. [[link]](#rocket-sprint-finish)
+- :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men. [[link]](#rocket-sprint-finish)
+- :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**. [[link]](#spiral_calendar-level-over-years)
+- :penguin: The wetsuit is allowed in **~1/3 of races**. More often for women (37%) than for men (32%). [[link]](#penguin-wetsuit-benefit)
+- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** (lower estimates) fall between **17°C** and **30°C** and almost uniformly so. [[link]](#thermometer-temperatures)
+- :hot_face: **Heat** tends to **slow down** running pace. [[link]](#parasol_on_ground-air-temperatures-and-run-times)
+- :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**. [[link]](#athlete-seasons)
+- :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023. [[link]](#calendar-season-duration)
+- :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:. [[link]](#earth_africa-athlete-nations)
+- :birthday: Athletes finishing 5th-9th are, on average, **between 26 and 28** years old. [[link]](#baby-age)
+- :checkered_flag: Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations. [[link]](#checkered_flag-age-of-last-race)
+- :bar_chart: Someone **born earlier in the year** is **more likely** to become professional triathletes compared to those born later in the same year. [[link]](#date-month-of-birth)
 
 ---
 
