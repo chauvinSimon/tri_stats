@@ -1,23 +1,23 @@
 This document **analyses data** of [**World Triathlon**](https://triathlon.org/), formerly International Triathlon Union (ITU), to **try** to answer questions such as:
 
-- :one_piece_swimsuit: [[link](#penguin-wetsuit-benefit)] How much faster do elite triathletes **swim when wearing a neoprene wetsuit**?
-- :penguin: [[link](#swimmer-swim-gaps)] Should **"poor" swimmers rejoice** when **wetsuits are allowed**?
-- :athletic_shoe: [[link](#spiral_calendar-level-over-years)] Are runs faster since **carbon plates shoes**? 
-- :balance_scale: [[link](#is-the-wetsuit-worth-for-300m)] Is the **wetsuit worth for 300m**?
-- :three: [[link](#question-three-sports)] Does each sport (swim - bike - run) accounts for 1/3 of race durations? What about transitions?
-- :couple: [[link](#couple-women-vs-men)] How much faster are **men over women**? In which sport is the gap larger/smaller? How has the gap evolved over the years?
-- :hourglass_flowing_sand: [[link](#stopwatch-paces)] How much faster are athletes in **_sprint_ over _olympic_** distance?
-- :chart_with_upwards_trend: [[link](#spiral_calendar-level-over-years)] Does the level increase **over years**?
-- :shower: [[link](#shower-wetsuit-at-t1)] How much time does the **wetsuit add to T1**?
-- :dart: [[link](#dart-race-scenario)] How often does an athlete **win from a bike breakaway**?
-- :runner: [[link](#runner-how-often-does-the-best-runner-win-trophy)] How often does the **best runner win**?
-- :rocket: [[link](#rocket-sprint-finish)] How often is the win decided with a **sprint finish**?
-- :thermometer: [[link](#thermometer-temperatures)] Do **water and air temperatures** affect swimming and running performance? 
-- :white_flag: [[link](#earth_africa-athlete-nations)] What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**?
-- :muscle: [[link](#baby-age)] What is the typical **age** of performing athletes and how has it evolved over years?
-- :stop_button: [[link](#checkered_flag-age-of-last-race)] **How old** are athletes when they **stop racing** elite short distance triathlon?
-- :weight_lifting: [[link](#weight_lifting-body-mass-index)] What is the **body mass index** of performing triathletes?
-- :birthday: [[link](#date-month-of-birth)] Are two kids, born the same year but **on two different months**, equally likely to become professional triathletes?
+- :one_piece_swimsuit: How much faster do elite triathletes **swim when wearing a neoprene wetsuit**? [[link](#penguin-wetsuit-benefit)]
+- :penguin: Should **"poor" swimmers rejoice** when **wetsuits are allowed**? [[link](#swimmer-swim-gaps)]
+- :athletic_shoe: Are runs faster since **carbon plates shoes**? [[link](#spiral_calendar-level-over-years)] 
+- :balance_scale: Is the **wetsuit worth for 300m**? [[link](#is-the-wetsuit-worth-for-300m)]
+- :three: Does each sport (swim - bike - run) accounts for 1/3 of race durations? What about transitions? [[link](#question-three-sports)]
+- :couple: How much faster are **men over women**? In which sport is the gap larger/smaller? How has the gap evolved over the years? [[link](#couple-women-vs-men)]
+- :hourglass_flowing_sand: How much faster are athletes in **_sprint_ over _olympic_** distance? [[link](#stopwatch-paces)]
+- :chart_with_upwards_trend: Does the level increase **over years**? [[link](#spiral_calendar-level-over-years)]
+- :shower: How much time does the **wetsuit add to T1**? [[link](#shower-wetsuit-at-t1)]
+- :dart: How often does an athlete **win from a bike breakaway**? [[link](#dart-race-scenario)]
+- :runner: How often does the **best runner win**? [[link](#runner-how-often-does-the-best-runner-win-trophy)]
+- :rocket: How often is the win decided with a **sprint finish**? [[link](#rocket-sprint-finish)]
+- :thermometer: Do **water and air temperatures** affect swimming and running performance? [[link](#thermometer-temperatures)] 
+- :white_flag: What are the most represented **nations**? Which nations have serious problems for their **Olympics selection**? [[link](#earth_africa-athlete-nations)]
+- :muscle: What is the typical **age** of performing athletes and how has it evolved over years? [[link](#baby-age)]
+- :stop_button: **How old** are athletes when they **stop racing** elite short distance triathlon? [[link](#checkered_flag-age-of-last-race)]
+- :weight_lifting: What is the **body mass index** of performing triathletes? [[link](#weight_lifting-body-mass-index)]
+- :birthday: Are two kids, born the same year but **on two different months**, equally likely to become professional triathletes? [[link](#date-month-of-birth)]
 
 ---
 
@@ -1015,6 +1015,11 @@ When they can choose, **pro athletes decide to use the wetsuit** for **~300m swi
 - Beyond **time saving**, wetsuits provide additional benefits:
   - **Temperature comfort** and potential **energy savings in the legs**.
   - Athletes may also gain a couple of seconds to **catch their breath** while removing it at T1?
+- **Unique conditions**.
+  - The 300m swim is featured in events like the [mixed team relay](https://www.youtube.com/watch?v=d2Z0cyUmvr8) and [supertri](https://supertri.com/), with **smaller fields** compared to the **55-athlete mass starts** typical of sprint or olympic formats.
+  - Could it be more advantageous to **"quietly draft"** at the back **without a wetsuit**, prioritizing a fast T1, rather than **fighting for a front position and risking delays from wetsuit removal failures**?
+    - This is particularly relevant for the **first relay** athlete, as subsequent (2nd, 3rd, and 4th) often **swim in smaller groups or even alone**, reducing the drafting and position-fighting dynamics. 
+  - Further research is needed to determine if **skipping the wetsuit in these particular contexts** could provide a **strategic advantage**.
 - An **interesting real-world experiment**: At the [2024 Toulouse ( :fr: ) supertri](https://supertri.com/results/2024-toulouse-results-men/) some athletes **opted out of wetsuits** for the first 300m swim:
   - [5/16 women](https://www.youtube.com/watch?v=asUQlc3Ic98&t=666)
   - [5/16 men](https://www.youtube.com/watch?v=asUQlc3Ic98&t=5163)
@@ -2990,33 +2995,33 @@ The **python code** to fetch the data, set the parameters and generate plots is 
 - For instance **race-averages** are computed from the 5th to 9th best times of **each leg**, and sometimes **averaged** over multiples years.
 
 Here are some simplified **key takeaways**:
-- :stopwatch: [[link](#question-three-sports)] The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%.
-- :athletic_shoe: [[link](#stopwatch-paces)] While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k.
-- :swimmer: [[link](#couple-women-vs-men)] Women swim at **1:18 / 100m**, men at **1:12 / 100m**.
-- :bicyclist: [[link](#couple-women-vs-men)] Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**.
-- :runner: [[link](#couple-women-vs-men)] Women run the 10k at **3:33 min/km** (3:26 for 5k), men at **3:07 min/km** (3:00 for 5k).
-- :shower: [[link](#shower-wetsuit-at-t1)] The time charged to the **wetsuit during the T1** transition is **~9s**.
-- :couple: [[link](#focus-on-the-swim-swimmer)] **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower.
-- :chart_with_downwards_trend: [[link](#couple-women-vs-men)] The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year).
-- :penguin: [[link](#swimmer-swim-gaps)] There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers.
-- :one_piece_swimsuit: [[link](#penguin-wetsuit-benefit)] Swim is **4-5% faster with wetsuit**.
-- :fr: [[link](#spiral_calendar-level-over-years)] The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**.
-- :zap: [[link](#dart-race-scenario)] Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer.
-- :bicyclist: [[link](#dart-race-scenario)] The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races.
-- :athletic_shoe: [[link](#runner-how-often-does-the-best-runner-win-trophy)] Over **2/3 of races** are won by the **best runner**.
-- :camera_flash: [[link](#rocket-sprint-finish)] In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races.
-- :woman_cartwheeling: [[link](#rocket-sprint-finish)] Women's races occasionally feature **wins by very large margins**.
-- :straight_ruler: [[link](#rocket-sprint-finish)] The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men.
-- :rocket: [[link](#spiral_calendar-level-over-years)] **Bike** and **run** times in WTCS olympic races have reached **all-time lows**.
-- :penguin: [[link](#penguin-wetsuit-benefit)] The wetsuit is allowed in **~1/3 of races**. More often for women (37%) than for men (32%).
-- :thermometer: [[link](#thermometer-temperatures)] Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** (lower estimates) fall between **17°C** and **30°C** and almost uniformly so.
-- :hot_face: [[link](#parasol_on_ground-air-temperatures-and-run-times)] **Heat** tends to **slow down** running pace.
-- :calendar: [[link](#athlete-seasons)] On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**.
-- :calendar: [[link](#calendar-season-duration)] Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023.
-- :ticket: [[link](#earth_africa-athlete-nations)] The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:.
-- :birthday: [[link](#baby-age)] Athletes finishing 5th-9th are, on average, **between 26 and 28** years old.
-- :checkered_flag: [[link](#checkered_flag-age-of-last-race)] Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations.
-- :bar_chart: [[link](#date-month-of-birth)] Someone **born earlier in the year** is **more likely** to become professional triathletes compared to those born later in the same year.
+- :stopwatch: The three sports account for **16.4%** ( :swimmer: ), **53.1%** ( :bicyclist: ), **28.9%** ( :runner: ) of the overall time. Transitions for 1.1% and 0.5%. [[link](#question-three-sports)]
+- :athletic_shoe: While **swim and bike paces are similar** between sprint and olympic formats, the **10k run** requires **7 s/km** more than the 5k. [[link](#stopwatch-paces)]
+- :swimmer: Women swim at **1:18 / 100m**, men at **1:12 / 100m**. [[link](#couple-women-vs-men)]
+- :bicyclist: Women ride **4 km/h slower**, at **37.4 km/h**, compared to men at **41.4 km/h**. [[link](#couple-women-vs-men)]
+- :runner: Women run the 10k at **3:33 min/km** (3:26 for 5k), men at **3:07 min/km** (3:00 for 5k). [[link](#couple-women-vs-men)]
+- :shower: The time charged to the **wetsuit during the T1** transition is **~9s**. [[link](#shower-wetsuit-at-t1)]
+- :couple: **Women swim 8.8% slower** than men with the same equipment. They also **ride 10.6%** and **run 14.2%** slower. [[link](#focus-on-the-swim-swimmer)]
+- :chart_with_downwards_trend: The **women/men difference has not significantly reduced** on the years, except for the run leg of the sprint-format races (-0.13 % / year) and for the swim of WTCS (-11 % / year). [[link](#couple-women-vs-men)]
+- :penguin: There is **no evidence that wetsuits reduce swim gaps** between top and less competitive swimmers. [[link](#swimmer-swim-gaps)]
+- :one_piece_swimsuit: Swim is **4-5% faster with wetsuit**. [[link](#penguin-wetsuit-benefit)]
+- :fr: The **swim** of 2024 Paris Olympics was **unusually long** (more than **2:30 longer**), probably because of the current in La Seine. In particular, the 5-9th women swam **more than 1:30 / 100m**. [[link](#spiral_calendar-level-over-years)]
+- :zap: Winning by a **run comeback**, i.e. after not ending the bike in the front group, is entertaining but **rare** in the olympic format (28% for men and 7% for women) and is getting even rarer. [[link](#dart-race-scenario)]
+- :bicyclist: The **size of the front group** after bike averages around **15**. It decreases to 4 or fewer (**small breakaway**) in about **1/4 of women's** and **1/3 of men's** olympic-races. [[link](#dart-race-scenario)]
+- :athletic_shoe: Over **2/3 of races** are won by the **best runner**. [[link](#runner-how-often-does-the-best-runner-win-trophy)]
+- :camera_flash: In men's races, **17%** (sprint format) and **10%** (olympic) are **won by a sprint finish**, occurring **50% more often** than in women's races. [[link](#rocket-sprint-finish)]
+- :woman_cartwheeling: Women's races occasionally feature **wins by very large margins**. [[link](#rocket-sprint-finish)]
+- :straight_ruler: The gaps between the **winner and the second** are, on average, **twice as large** in olympic formats compared to sprint formats, and **twice as large** for women compared to men. [[link](#rocket-sprint-finish)]
+- :rocket: **Bike** and **run** times in WTCS olympic races have reached **all-time lows**. [[link](#spiral_calendar-level-over-years)]
+- :penguin: The wetsuit is allowed in **~1/3 of races**. More often for women (37%) than for men (32%). [[link](#penguin-wetsuit-benefit)]
+- :thermometer: Athletes must compete in a **variety of conditions**: Notably, 80% of the **recorded air temperatures** (lower estimates) fall between **17°C** and **30°C** and almost uniformly so. [[link](#thermometer-temperatures)]
+- :hot_face: **Heat** tends to **slow down** running pace. [[link](#parasol_on_ground-air-temperatures-and-run-times)]
+- :calendar: On average, athletes raced **10 times** (world cups and WTCS) in 2019 and 2023, compared to **6 times in 2009**. [[link](#athlete-seasons)]
+- :calendar: Their World Triathlon sprint- and olympic-distance season has extended from **130 days** in 2009 to **200 days** in 2023. [[link](#calendar-season-duration)]
+- :ticket: The limit of **3 athletes per nation** for the Olympics creates challenges for the highly represented nations such as :us:, :gb:, :australia:, :de: and :fr:. [[link](#earth_africa-athlete-nations)]
+- :birthday: Athletes finishing 5th-9th are, on average, **between 26 and 28** years old. [[link](#baby-age)]
+- :checkered_flag: Women and men typically race their last world-cup or WTCS at an average age of **31 years**, thought there are significant variations. [[link](#checkered_flag-age-of-last-race)]
+- :bar_chart: Someone **born earlier in the year** is **more likely** to become professional triathletes compared to those born later in the same year. [[link](#date-month-of-birth)]
 
 ---
 
