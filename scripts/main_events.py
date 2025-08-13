@@ -2712,8 +2712,8 @@ def process_wetsuit_from_repeated_events(
             wetsuit_dict = df_group[f"wetsuit_{suffix}"].value_counts().to_dict()
             if len(wetsuit_dict) > 1:
                 # print(f"\t{wetsuit_dict}")
-                df_wet = df_group[df_group[f"wetsuit_{suffix}"]]
-                df_no_wet = df_group[~df_group[f"wetsuit_{suffix}"]]
+                df_wet = df_group[df_group[f"wetsuit_{suffix}"].astype(bool)]
+                df_no_wet = df_group[~df_group[f"wetsuit_{suffix}"].astype(bool)]
                 for row_no_wet in df_no_wet.itertuples(index=False):
                     for row_wet in df_wet.itertuples(index=False):
                         # if row_no_wet.event_year >= row_wet.event_year:
@@ -2961,6 +2961,7 @@ def main():
     distance_categories = events_config["distance_categories"]
     sports = events_config["sports"]
     n_repetitions_min = events_config["n_repetitions_min"]
+    wetsuit_benefit_from_recurring_events=events_config["wetsuit_benefit_from_recurring_events"]
     swim_diff_percent_max = events_config["cleaning"]["swim_diff_percent_max"]
     sport_outliers = events_config["cleaning"]["sport_outliers"]
     ###
@@ -2973,9 +2974,9 @@ def main():
 
     process_sports(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
     process_results_wetsuit(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers)
-    process_wetsuit_from_repeated_events(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers)
+    process_wetsuit_from_repeated_events(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sport_outliers=sport_outliers, **wetsuit_benefit_from_recurring_events)
     process_results_w_vs_m(df.copy(), swim_diff_percent_max=swim_diff_percent_max, distance_categories=distance_categories, sports=sports)
-    process_results_repeated_events(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers)
+    process_results_repeated_events(df.copy(), distance_categories=distance_categories, sports=sports, sport_outliers=sport_outliers, n_repetitions_min=n_repetitions_min)
     process_scenarios(df.copy(), distance_categories=distance_categories)
     process_sprint_finish(df.copy(), distance_categories=distance_categories)
     process_ages(df.copy())
