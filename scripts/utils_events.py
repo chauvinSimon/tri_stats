@@ -946,6 +946,13 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
                 raise ValueError(f"{event_dict.values() = }")
             events_result[shared_key] = event_dict[prog_ids[0]][shared_key]
             if shared_key == "event_venue":
+                if events_result[shared_key] is None:
+                    # manual fix
+                    if (shared_key == "event_venue") and ("Florianopolis" in events_result["event_title"]):
+                        events_result[shared_key] = "Florianopolis"
+                    else:
+                        print(f"{shared_key = } {events_result} is None and cannot be processed")
+                        continue
                 # remove space as last char, if the case
                 events_result[shared_key] = events_result[shared_key].rstrip()
 
@@ -1191,10 +1198,16 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
 
 def add_year_and_event_cat(df, event_category_mapping):
     def give_event_category(event_category_ids):
-        # if len(event_category_ids) != 1:
-        #     print(f"not an single event_cat: {event_category_ids}")
-        assert isinstance(event_category_ids[0], int)
-        return event_category_mapping[event_category_ids[0]]
+        # keep only the IDs present in the mapping
+        filtered_ids = [idx for idx in event_category_ids if idx in event_category_mapping]
+        if len(filtered_ids) == 0:
+            print(f"no event category found for {event_category_ids}")
+            return None
+        if len(filtered_ids) == 1:
+            return event_category_mapping[filtered_ids[0]]
+        else:
+            print(f"not an single event_cat for {event_category_ids} -> {filtered_ids}")
+            return event_category_mapping[filtered_ids[0]]
 
     df["event_category"] = df["event_category_ids_m"].apply(give_event_category)
 

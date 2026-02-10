@@ -1558,5 +1558,30 @@
         "wetsuit": false,
         "event_title": "2012 Guatape ITU Triathlon World Cup",
         "event_listing": "https://www.triathlon.org/events/event/2012_guatape_itu_triathlon_world_cup"
+    },
+    "188992_w": {
+        "wetsuit": true,
+        "event_title": "2025 World Triathlon Championship Finals Wollongong",
+        "event_listing": "https://www.triathlon.org/events/2025-world-triathlon-championships-finals-wollongong"
+    },
+    "188992_m": {
+        "wetsuit": true,
+        "event_title": "2025 World Triathlon Championship Finals Wollongong",
+        "event_listing": "https://www.triathlon.org/events/2025-world-triathlon-championships-finals-wollongong"
+    },
+    "194203_w": {
+        "wetsuit": false,
+        "event_title": "2025 World Triathlon Cup Tiszaujvaros",
+        "event_listing": "https://www.triathlon.org/events/2025-world-triathlon-cup-tiszaujvaros"
+    },
+    "194203_m": {
+        "wetsuit": false,
+        "event_title": "2025 World Triathlon Cup Tiszaujvaros",
+        "event_listing": "https://www.triathlon.org/events/2025-world-triathlon-cup-tiszaujvaros"
+    },
+    "194996_w": {
+        "wetsuit": false,
+        "event_title": "2025 World Triathlon Championship Series French Riviera",
+        "event_listing": "https://www.triathlon.org/events/2025-world-triathlon-championship-series-french-riviera"
     }
 }
