@@ -709,7 +709,9 @@ def extract_air_water_and_wetsuit(
 
     wetsuit_key = f'{prog_data["event_id"]}{suffix}'
     if wetsuit_key in manual_labelled_wetsuit:
-        wetsuits.append(manual_labelled_wetsuit[wetsuit_key]["wetsuit"])
+        # manual editing should be treated as overwriting truth
+        # therefore prepend, instead of append
+        wetsuits = [manual_labelled_wetsuit[wetsuit_key]["wetsuit"],] + wetsuits
 
     # resolve air temperature
     air_temperatures = [t for t in air_temperatures if t is not None]
