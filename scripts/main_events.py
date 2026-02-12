@@ -738,9 +738,9 @@ def process_ages(df):
     ax0 = fig.add_subplot(gs[0, :])
 
     df_m = df[["age_mean_m", "event_year", "prog_distance_category"]].groupby(
-        ["prog_distance_category", "event_year"]).mean("age_mean_m")
+        ["prog_distance_category", "event_year"]).mean()
     df_w = df[["age_mean_w", "event_year", "prog_distance_category"]].groupby(
-        ["prog_distance_category", "event_year"]).mean("age_mean_w")
+        ["prog_distance_category", "event_year"]).mean()
 
     count_m = df[["age_mean_m", "event_year", "prog_distance_category"]].groupby(
         ["prog_distance_category", "event_year"]).count()
