@@ -2995,6 +2995,22 @@ The **python code** to fetch the data, set the parameters and generate plots is 
 
 ---
 
+## :mortar_board: CITING THIS REPOSITORY
+
+To cite this repository in publications or projects:
+
+```bibtex
+@misc{tri_stats,
+  author = {Simon Chauvin},
+  title = {Analyse 15 years of World Triathlon data to try to answer key questions about elite triathlon.},
+  year = {2024},
+  publisher = {GitHub},
+  url = {https://github.com/chauvinSimon/tri_stats}
+}
+```
+
+---
+
 ## :takeout_box: TAKEAWAYS
 
 :warning: Most **summary numbers** given in this section are **AVERAGES**.
