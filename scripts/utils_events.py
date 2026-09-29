@@ -617,8 +617,11 @@ def extract_air_and_water_temperatures(long_string):
             temperature_str = match.group(1)
             if temperature_str[-1] == ".":
                 temperature_str = temperature_str[:-1]
-            # Convert the extracted value to float
-            temperature = float(temperature_str)
+            if temperature_str == "":
+                temperature = None
+            else:
+                # Convert the extracted value to float
+                temperature = float(temperature_str)
 
             res.append(temperature)
         else:
@@ -1188,6 +1191,12 @@ def get_events_results(events_config: dict) -> pd.DataFrame:
     print(f"{n_none_wetsuit_w}/{len(df)} = {n_none_wetsuit_w / len(df):.1%} rows have 'wetsuit_w' None:")
     for row in none_wetsuit_w.itertuples(index=False):  # index=False excludes the index column from the tuple
         print(f"- {row.event_id}: {row.event_title}\n\t{row.event_listing}")
+
+    # fix missing venues
+    df.loc[df["event_id"] == 195380, "event_venue"] = "Haikou"
+    df.loc[df["event_id"] == 195154, "event_venue"] = "Chengdu"
+    df.loc[df["event_id"] == 195156, "event_venue"] = "Tiszaujvaros"
+    df.loc[df["event_id"] == 195159, "event_venue"] = "Asuncion"
 
     # save df for faster access
     df.to_csv(str(tmp_results_file_path), index=False)
