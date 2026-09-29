@@ -140,7 +140,32 @@ def process_results_wetsuit(
             print(f"{row.event_venue} ( {country_emojis[row.event_country_noc] if row.event_country_noc in country_emojis else row.event_country_noc} ) ({row.event_year}): {row.swim_diff_percent:.1%} {row.event_listing}")
 
         wm_percent_w_slow = swim_diff_percent_women_slow['swim_diff_percent'].mean()
-        improve_percent = (wm_percent_w_slow - wm_percent) / (1 - wm_percent)
+        improve_percent = (wm_percent_w_slow - wm_percent) / (1 + wm_percent_w_slow)
+        """
+        # VARIABLES
+          swim_m_wet:         time of men. with wetsuit.
+          swim_w:             time of women. no wetsuit.
+          wm_percent:         relative delay of women over men, same equipment.
+          wm_percent_w_slow:  relative delay when women have no wetsuit, but men do.
+        
+        # FORMULA
+          would M have not had wetsuit:
+            (1)  swim_m_wet = swim_m * (1 - improve_percent)
+            (2)  swim_w = swim_m * (1 + wm_percent)
+          substituting swim_m from (1) into (2):
+            (3)  swim_w = swim_m_wet * (1 + wm_percent) / (1 - improve_percent)
+        
+          on the other hand:
+            (4)  swim_w = swim_m_wet * (1 + wm_percent_w_slow)
+        
+          using (4) == (3):
+            (5)  (1 + wm_percent_w_slow) = (1 + wm_percent) / (1 - improve_percent)
+          re-written:
+                 (1 - improve_percent) = (1 + wm_percent) / (1 + wm_percent_w_slow)
+          hence
+                 improve_percent = 1 - (1 + wm_percent) / (1 + wm_percent_w_slow)
+                                 = (wm_percent_w_slow - wm_percent) / (1 + wm_percent_w_slow)
+        """
         print(f"improve_percent = {improve_percent:.1%} "
               f"from substitution ({wm_percent = :.1%}) "
               f"({wm_percent_w_slow = :.1%}) "
