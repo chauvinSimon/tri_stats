@@ -134,8 +134,17 @@ def process_results_wetsuit(
     for row in swim_diff_percent_women_fast.itertuples():
         print(f"{row.event_venue} ( {country_emojis[row.event_country_noc] if row.event_country_noc in country_emojis else row.event_country_noc} ) ({row.event_year}): {row.swim_diff_percent:.1%} {row.event_listing}")
     print(swim_diff_percent_women_fast.event_venue.tolist())
-    for listing in list(swim_diff_percent_women_slow["event_listing"]):
-        print(listing)
+    if len(swim_diff_percent_women_slow) > 0:
+        print(f"men without wetsuit, while women with wetsuit: {len(swim_diff_percent_women_slow)}:")
+        for row in swim_diff_percent_women_slow.itertuples():
+            print(f"{row.event_venue} ( {country_emojis[row.event_country_noc] if row.event_country_noc in country_emojis else row.event_country_noc} ) ({row.event_year}): {row.swim_diff_percent:.1%} {row.event_listing}")
+
+        wm_percent_w_slow = swim_diff_percent_women_slow['swim_diff_percent'].mean()
+        improve_percent = (wm_percent_w_slow - wm_percent) / (1 - wm_percent)
+        print(f"improve_percent = {improve_percent:.1%} "
+              f"from substitution ({wm_percent = :.1%}) "
+              f"({wm_percent_w_slow = :.1%}) "
+              f"using {len(swim_diff_percent_women_slow)} event(s):")
 
     # create markdown table
     df_table = swim_diff_percent_women_fast[
